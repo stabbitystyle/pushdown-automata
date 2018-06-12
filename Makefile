@@ -1,14 +1,14 @@
 CC = g++
 CFLAGS = -g -Wall
-OBJECTS = pda.o
+OBJECTS = main.o
 
 all: pda
 
 pda: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o $@
 
-pda.o: main.cpp
-	$(CC) $(CFLAGS) -c tm.cpp
+main.o: main.cpp
+	$(CC) $(CFLAGS) -c main.cpp
 
 .PHONY: clean
 clean:

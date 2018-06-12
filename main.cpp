@@ -2,8 +2,6 @@
 #include <iomanip>
 #include <string>
 
-#include "intinput.hpp"
-
 int main(int argc, char* argv[])
 {
     std::string lineInput;
@@ -264,9 +262,9 @@ int main(int argc, char* argv[])
                     std::cout << "\u03B4(s0, B, Y)" << " = " << "(s1, Y)" << std::endl;
                     std::cout << "\u03B4(s0, B, Z)" << " = " << "(s0, YZ)" << std::endl;
                     std::cout << "\u03B4(s0, B, Z)" << " = " << "(s1, Z)" << std::endl;
-                    std::cout << "\u03B4(s1, A, X)" << " = " << "(s1, \)" << std::endl;
-                    std::cout << "\u03B4(s1, B, Y)" << " = " << "(s1, \)" << std::endl;
-                    std::cout << "\u03B4(s1, \, Z)" << " = " << "(s2, \)" << std::endl;
+                    std::cout << "\u03B4(s1, A, X)" << " = " << "(s1, \\)" << std::endl;
+                    std::cout << "\u03B4(s1, B, Y)" << " = " << "(s1, \\)" << std::endl;
+                    std::cout << "\u03B4(s1, \\, Z)" << " = " << "(s2, \\)" << std::endl;
                     // q0 is the initial state
                     std::cout << "q0 = " << "s0" << std::endl;
                     // Z0 is the ??????
