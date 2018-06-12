@@ -111,7 +111,6 @@ int main(int argc, char* argv[])
                     // Output for success (shown) and also one for failure if string is not in language or already on list
                     std::cout << std::endl;
                     std::cout << "Input a string to be added to the string list: " << "ABBA" << std::endl;
-                    std::cout << std::endl;
                     std::cout << "String " << "ABBA" << " was added to the string list." << std::endl;
                     std::cout << std::endl;
                     break;
@@ -143,6 +142,7 @@ int main(int argc, char* argv[])
                     // error message if failure but stay in application
                     std::cout << "Pushdown automata definition loaded correctly" << std::endl;
                     // if loaded, attempt to load string file associated with definition file, no message?
+                    std::cout << std::endl;
                     break;
                 }
                 // Quit
