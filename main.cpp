@@ -163,10 +163,16 @@ int main(int argc, char* argv[])
                     // Need message if string rejected by PDA
                     const int runWidth = 8;
                     std::cout << std::endl;
-                    std::cout << "Input number of string in string file to run: " << "2" << std::endl;
-                    //std::cout << std::endl;
-                    std::cout << std::right << std::setw(runWidth) << "0. " << "" << "[s0]" << "AAB>" << std::endl;
-                    std::cout << std::right << std::setw(runWidth) << "10. " << "<ABB" << "[s10]" << "BB" << std::endl;
+                    std::cout << "Input number of string in string file to run: " << "1" << std::endl;
+                    std::cout << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "0. " << "[0] " << "(s0, ABA, Z)" << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "1. " << "[1] " << "(s0, BA, XZ)" << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "2. " << "[2] " << "(s0, A, YXZ)" << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "3. " << "[3] " << "(s0, \\, XYXZ)" << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "Crash " << "1" << " occured." << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "4. " << "[3] " << "(s1, \\, YXZ)" << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "Crash " << "2" << " occured." << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "5. " << "[2] " << "(s1, A, XZ)" << std::endl;
                     std::cout << std::endl;
                     break;
                 }
