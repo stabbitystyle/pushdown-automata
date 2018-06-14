@@ -36,8 +36,8 @@ int main(int argc, char* argv[])
                     std::cout << std::endl;
                     // error if no PDA currently loaded
                     // if running on a string, end operation
-                    std::cout << "String " << "ABBA" << " was neither accepted nor rejected in " << "20" << " transitions." << std::endl;
                     // if definition is loaded, unload it
+                    std::cout << "The pushdown automaton has been successfully closed" << std::endl;
                     // if string list has been modified, write to file
                     std::cout << "The string list file has been successfully modified" << std::endl;
                     std::cout << std::endl;
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
                 case 'd':
                 {
                     std::cout << std::endl;
-                    std::cout << "Select a string from the string list to delete: " << "2" << std::endl;
+                    std::cout << "Select a string number from the string list to delete: " << "2" << std::endl;
                     //std::cout << std::endl;
                     std::cout << "String number " << "2" << " which was " << "ABA" << " was successfully deleted." << std::endl;
                     std::cout << std::endl;
@@ -60,9 +60,7 @@ int main(int argc, char* argv[])
                 {
                     // Need error message if input not n, N, y, or Y
                     std::cout << std::endl;
-                    std::cout << "Set whether to display complete paths (y/n): " << "y" << std::endl;
-                    //std::cout << std::endl;
-                    std::cout << "The display complete path setting is " << "on" << "." << std::endl;
+                    std::cout << "The display complete path setting is yes" << "." << std::endl;
                     std::cout << std::endl;
                     break;
                 }
@@ -88,7 +86,7 @@ int main(int argc, char* argv[])
                     std::cout << std::endl;
                     std::cout << std::right << std::setw(helpWidth) << "(C)lose  " << "Close a pushdown automata definition" << std::endl;
                     std::cout << std::right << std::setw(helpWidth) << "(D)elete  " << "Delete input string from list" << std::endl;
-                    std::cout << std::right << std::setw(helpWidth) << "Dis(p)lay  " << "Display the complete paths through the pushdown automata" << std::endl;
+                    std::cout << std::right << std::setw(helpWidth) << "Dis(p)lay  " << "Display the complete paths through the pushdown automaton" << std::endl;
                     std::cout << std::right << std::setw(helpWidth) << "E(x)it  " << "Exit application" << std::endl;
                     std::cout << std::right << std::setw(helpWidth) << "(H)elp  " << "Help user" << std::endl;
                     std::cout << std::right << std::setw(helpWidth) << "(I)nsert  " << "Insert input string into list" << std::endl;
@@ -132,13 +130,15 @@ int main(int argc, char* argv[])
                 case 'o':
                 {
                     std::cout << std::endl;
-                    // if no input, skip and go back to Command: prompt
+                    // if no input, skip and go back to Command: prompt, still close
                     // if running on a string, end operation
-                    std::cout << "String " << "ABBA" << " was neither accepted nor rejected in " << "20" << " transitions." << std::endl;
                     // if definition is loaded, unload it, no message?
                     // if string list has been modified, write to file
                     std::cout << "The string list file has been successfully modified" << std::endl;
+                    std::cout << std::endl;
                     // attempt to load definition file
+                    std::cout << "File: " << "pda2" << std::endl;
+                    std::cout << std::endl;
                     // error message if failure but stay in application
                     std::cout << "Pushdown automata definition loaded correctly" << std::endl;
                     // if loaded, attempt to load string file associated with definition file, no message?
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
                 {
                     // Also have an error message if TM was not currently running
                     std::cout << std::endl;
-                    std::cout << "String " << "ABBA" << " was neither accepted nor rejected in " << "20" << " transitions." << std::endl;
+                    std::cout << "String " << "ABBA" << " was neither accepted nor rejected in " << "20" << " transitions and " << "3" << " crashes." << std::endl;
                     std::cout << std::endl;
                     break;
                 }
@@ -169,9 +169,9 @@ int main(int argc, char* argv[])
                     std::cout << std::right << std::setw(runWidth) << "1. " << "[1] " << "(s0, BA, XZ)" << std::endl;
                     std::cout << std::right << std::setw(runWidth) << "2. " << "[2] " << "(s0, A, YXZ)" << std::endl;
                     std::cout << std::right << std::setw(runWidth) << "3. " << "[3] " << "(s0, \\, XYXZ)" << std::endl;
-                    std::cout << std::right << std::setw(runWidth) << "Crash " << "1" << " occured." << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "Crash " << "1" << " occurred." << std::endl;
                     std::cout << std::right << std::setw(runWidth) << "4. " << "[3] " << "(s1, \\, YXZ)" << std::endl;
-                    std::cout << std::right << std::setw(runWidth) << "Crash " << "2" << " occured." << std::endl;
+                    std::cout << std::right << std::setw(runWidth) << "Crash " << "2" << " occurred." << std::endl;
                     std::cout << std::right << std::setw(runWidth) << "5. " << "[2] " << "(s1, A, XZ)" << std::endl;
                     std::cout << std::endl;
                     break;
@@ -251,10 +251,13 @@ int main(int argc, char* argv[])
                     std::cout << std::endl;
                     // Q is finite set of states
                     std::cout << "Q = {" << "s0, s1, s2" << "}" << std::endl;
+                    std::cout << std::endl;
                     // Sigma is finite input alphabet
                     std::cout << "\u03A3 = {" << "A, B" << "}" << std::endl;
+                    std::cout << std::endl;
                     // Gamma is finite tape alphabet
                     std::cout << "\u0393 = {" << "X, Y, Z" << "}" << std::endl;
+                    std::cout << std::endl;
                     // Delta are the transition functions
                     std::cout << "\u03B4(s0, A, X)" << " = " << "(s0, XX)" << std::endl;
                     std::cout << "\u03B4(s0, A, X)" << " = " << "(s1, X)" << std::endl;
@@ -271,10 +274,13 @@ int main(int argc, char* argv[])
                     std::cout << "\u03B4(s1, A, X)" << " = " << "(s1, \\)" << std::endl;
                     std::cout << "\u03B4(s1, B, Y)" << " = " << "(s1, \\)" << std::endl;
                     std::cout << "\u03B4(s1, \\, Z)" << " = " << "(s2, \\)" << std::endl;
+                    std::cout << std::endl;
                     // q0 is the initial state
                     std::cout << "q0 = " << "s0" << std::endl;
+                    std::cout << std::endl;
                     // Z0 is the ??????
                     std::cout << "Z0 = " << "Z" << std::endl;
+                    std::cout << std::endl;
                     // F is the set of final states
                     std::cout << "F = {" << "s2" << "}" << std::endl;
                     std::cout << std::endl;
