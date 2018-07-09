@@ -7,6 +7,11 @@
 #include <string>
 #include <vector>
 
+#include "inputalphabet.hpp"
+#include "stackalphabet.hpp"
+#include "states.hpp"
+#include "finalstates.hpp"
+#include "transitionfunction.hpp"
 #include "instantaneous_description.hpp"
 
 using namespace std;
@@ -14,15 +19,23 @@ using namespace std;
 class PushdownAutomata
 {
     private:
+        InputAlphabet inputAlphabet;
+        StackAlphabet stackAlphabet;
+        TransitionFunction transitionFunction;
+        States states;
+        FinalStates finalStates;
+
         vector<string> description;
         string initialState;
         string currentState;
         char initialStackCharacter;
         string originalInputString;
-        int numberOfTransitions;
         InstantaneousDescription initialID;
+        
+        int numberOfTransitions;
         int numberOfCrashes;
         int numberOfTransitionsInSuccessfulPath;
+
         bool valid;
         bool used;
         bool operating;

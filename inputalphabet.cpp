@@ -6,7 +6,7 @@
 #include <iterator>
 
 #include "inputalphabet.hpp"
-#include "tapealphabet.hpp"
+#include "stackalphabet.hpp"
 #include "uppercase.hpp"
 
 using namespace std;
@@ -49,11 +49,11 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
 // The method validate checks whether the input alphabet is in the tape alphabet.
 // If all of the input alphabet isn’t in the tape alphabet, then valid is set to false,
 //     which will end the loading of the pushdown automata definition elsewhere in the application.
-void InputAlphabet::validate(const TapeAlphabet& tapeAlphabet, bool& valid) const
+void InputAlphabet::validate(const StackAlphabet& stackAlphabet, bool& valid) const
 {
     for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++ it)
     {
-        if(!tapeAlphabet.isElement(*it))
+        if(!stackAlphabet.isElement(*it))
         {
             cout << "Input character " << *it << " is not in tape alphabet" << endl;
             valid = false;

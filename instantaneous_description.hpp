@@ -15,6 +15,7 @@ class InstantaneousDescription
 		string remainingInputString;
 		string stack;
 	public:
+		InstantaneousDescription();
 		InstantaneousDescription(string initialState, string inputString, char startCharacter);
 		void performTransition(string destinationState, string pushString, InstantaneousDescription nextID);
 		void performLambdaTransition(string destinationState, string pushString, InstantaneousDescription nextID);

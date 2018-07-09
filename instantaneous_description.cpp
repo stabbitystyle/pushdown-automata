@@ -7,10 +7,14 @@
 
 using namespace std;
 
+InstantaneousDescription::InstantaneousDescription() : 
+    currentState(""), remainingInputString(""), stack("")
+{
+}
+
 InstantaneousDescription::InstantaneousDescription(string initialState, string inputString, char startCharacter) : 
     currentState(""), remainingInputString(""), stack("")
 {
-
 }
 
 void InstantaneousDescription::performTransition(string destinationState, string pushString, InstantaneousDescription nextID)
