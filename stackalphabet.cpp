@@ -1,11 +1,11 @@
-// Tape Alphabet class
+// Stack Alphabet class
 // Rev0 7/4/18 by William Frank
 
 #include <fstream>
 #include <iostream>
 #include <iterator>
 
-#include "tapealphabet.hpp"
+#include "stackalphabet.hpp"
 #include "uppercase.hpp"
 
 using namespace std;
@@ -18,7 +18,7 @@ using namespace std;
 //     which will then end the loading of the pushdown automata definition elsewhere in the application.
 // Load also checks whether all of the characters from the input alphabet is contained in the tape alphabet.
 // And it also checks whether the blank character is in the tape alphabet.
-void TapeAlphabet::load(ifstream& definition, bool& valid)
+void StackAlphabet::load(ifstream& definition, bool& valid)
 {
     string value;
     while((definition >> value) && (uppercase(value) != "TRANSITION_FUNCTION:"))
@@ -48,7 +48,7 @@ void TapeAlphabet::load(ifstream& definition, bool& valid)
 }
 
 // The method view prints out the tape alphabet.
-void TapeAlphabet::view() const
+void StackAlphabet::view() const
 {
     cout << "\u0393 = {";
     for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++it)
@@ -68,7 +68,7 @@ void TapeAlphabet::view() const
 // The method isElement accepts a character value as a parameter.
 // If value is found within the tape alphabet, true is returned.
 // Otherwise, false is returned.
-bool TapeAlphabet::isElement(const char value) const
+bool StackAlphabet::isElement(const char value) const
 {
     bool isElement = false;
     for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++it)
