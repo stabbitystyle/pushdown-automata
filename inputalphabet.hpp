@@ -7,7 +7,7 @@
 #include <vector>
 #include <fstream>
 
-#include "tapealphabet.hpp"
+#include "stackalphabet.hpp"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ class InputAlphabet
         vector<char> alphabet;
     public:
         void load(ifstream& definition, bool& valid);
-        void validate(const TapeAlphabet& tapeAlphabet, bool& valid) const;
+        void validate(const StackAlphabet& stackAlphabet, bool& valid) const;
         void view() const;
         bool isElement(const char value) const;
 };
