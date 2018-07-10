@@ -8,10 +8,16 @@
 
 #include "states.hpp"
 #include "finalstates.hpp"
-#include "instantaneous_description.hpp"
+#include "instantaneousdescription.hpp"
 #include "pushdownautomata.hpp"
+#include "stackalphabet.hpp"
+#include "transitionfunction.hpp"
+#include "inputalphabet.hpp"
+//#include "configurationsettings.hpp"
 
 using namespace std;
+
+ConfigurationSettingsPointer PushdownAutomata::configurationsettingsPointer = 0;
 
 PushdownAutomata::PushdownAutomata(string definitionFileName)
 {
@@ -24,7 +30,16 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
         cout << "Error: failed to open file " << definitionFileName << endl;
         valid = false;
     }
-    //initialID(initialState, originalInputString, initialStackCharacter);
+}
+
+bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
+{
+
+}
+
+void PushdownAutomata::link(Configurationsettings& configurationSettings)
+{
+    configurationSettingsPointer = &configurationSettings;
 }
 
 void PushdownAutomata::viewDefinition() const
@@ -33,11 +48,6 @@ void PushdownAutomata::viewDefinition() const
 }
 
 void PushdownAutomata::initialize(string inputString)
-{
-
-}
-
-bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
 
 }

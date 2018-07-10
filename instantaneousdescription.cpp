@@ -3,17 +3,16 @@
 
 #include <string>
 
-#include "instantaneous_description.hpp"
+#include "instantaneousdescription.hpp"
 
 using namespace std;
 
-InstantaneousDescription::InstantaneousDescription() : 
+InstantaneousDescription::InstantaneousDescription(string initialState, string inputString, char startCharacter) : 
     currentState(""), remainingInputString(""), stack("")
 {
 }
 
-InstantaneousDescription::InstantaneousDescription(string initialState, string inputString, char startCharacter) : 
-    currentState(""), remainingInputString(""), stack("")
+void InstantaneousDescription::view()
 {
 }
 
