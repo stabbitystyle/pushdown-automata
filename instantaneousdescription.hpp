@@ -1,8 +1,8 @@
 // Instantaneous Description class
 // Rev0 7/8/18 by William Frank
 
-#ifndef INSTANTANEOUS_DESCRIPTION_HPP
-#define INSTANTANEOUS_DESCRIPTION_HPP
+#ifndef INSTANTANEOUSDESCRIPTION_HPP
+#define INSTANTANEOUSDESCRIPTION_HPP
 
 #include <string>
 
@@ -15,8 +15,8 @@ class InstantaneousDescription
 		string remainingInputString;
 		string stack;
 	public:
-		InstantaneousDescription();
 		InstantaneousDescription(string initialState, string inputString, char startCharacter);
+		void view();
 		void performTransition(string destinationState, string pushString, InstantaneousDescription nextID);
 		void performLambdaTransition(string destinationState, string pushString, InstantaneousDescription nextID);
 		string state() const;

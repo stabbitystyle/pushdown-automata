@@ -12,7 +12,8 @@
 #include "states.hpp"
 #include "finalstates.hpp"
 #include "transitionfunction.hpp"
-#include "instantaneous_description.hpp"
+#include "instantaneousdescription.hpp"
+//#include "configurationsettings.hpp"
 
 using namespace std;
 
@@ -24,23 +25,27 @@ class PushdownAutomata
         TransitionFunction transitionFunction;
         States states;
         FinalStates finalStates;
-
-        vector<string> description;
+        
         string initialState;
         string currentState;
         char initialStackCharacter;
+
+        // these 3 aren't in example?
+        vector<string> description;
+        int numberOfTransitionsInSuccessfulPath;
         string originalInputString;
-        InstantaneousDescription initialID;
         
         int numberOfTransitions;
         int numberOfCrashes;
-        int numberOfTransitionsInSuccessfulPath;
 
+        // these 5 aren't in example?
         bool valid;
         bool used;
         bool operating;
         bool accepted;
         bool rejected;
+
+        static ConfigurationSettingsPointer configurationSettingsPointer;
     public:
         PushdownAutomata(string definitionFileName);
         void viewDefinition() const;
@@ -55,6 +60,9 @@ class PushdownAutomata
         bool isOperating() const;
         bool isAcceptedInputString() const;
         bool isRejectedInputString() const;
+
+        static void link(ConfigurationSettings& configurationSettings);
 };
+typedef PushdownAutomata* PushdownAutomataPointer;
 
 #endif
