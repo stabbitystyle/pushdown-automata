@@ -6,6 +6,8 @@
 
 #include <string>
 
+//#include "configurationsettings.hpp"
+
 using namespace std;
 
 class InstantaneousDescription
