@@ -1,5 +1,6 @@
 // Input Strings class
 // Rev0 7/4/18 by William Frank
+// Rev1 7/10/18 by Cole Woodford
 
 #include <string>
 #include <iostream>
@@ -17,23 +18,24 @@ InputStrings::InputStrings() : stringListModified(false)
 
 // The method load accepts stringFileName as a parameter.
 // The parameter stringFileName is the name of the file containing the list of strings to be used in the pushdown automata application.
-// The method load reads the stringFileName file, verifies that they’re valid strings to test against the pushdown automata, and if they are, they’re added to the strings attribute.
+// The method load reads the stringFileName file, verifies that they’re valid strings to test against the pushdown automata, 
+// and if they are, they’re added to the strings attribute.
 // If not, they are ignored and the stringListModified attribute is set to true.
 void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownAutomata)
 {
     ifstream definition(stringFileName.c_str(), ifstream::in);
     string value;
-    /*if(definition.fail())
+    if(definition.fail())
     {
         cout << "Failed to open input string file." << endl;
-    }*/
+    }
     while(!definition.fail() && getline(definition, value))
     {
         for(string::iterator it = value.begin(); it != value.end(); ++it)
         {
             if(isspace(*it) || (value.find('\\') != string::npos && value.size() != 1))
             {
-                //cout << value << " is rejected." << endl;
+                cout << value << " is rejected." << endl;
                 stringListModified = true;
                 break;
             }
@@ -44,7 +46,7 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
         }
         else
         {
-            //cout << value << "is invalid input string." << endl;
+            cout << value << "is invalid input string." << endl;
             stringListModified = true;
         }
     }
