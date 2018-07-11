@@ -21,10 +21,14 @@ string ConfigurationSettings::getDisplayFullPath(){
     return displayFullPath;
 };
 void ConfigurationSettings::setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput){
-    maximumNumberOfTransitions = maximumNumberOfTransitionsInput;
+    if(maximumNumberOfTransitionsInput>0){
+        maximumNumberOfTransitions = maximumNumberOfTransitionsInput;
+    }
 };
 void ConfigurationSettings::setMaximumNumberOfCells(int maximumNumberOfCellsInput){
-    maximumNumberOfCells = maximumNumberOfCellsInput;
+    if(maximumNumberOfCellsInput>0){
+        maximumNumberOfCells = maximumNumberOfCellsInput;
+    }
 };
 void ConfigurationSettings::toggleDisplayFullPath(){
     if(displayFullPath.compare("yes"))
