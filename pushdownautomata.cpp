@@ -17,7 +17,7 @@
 
 using namespace std;
 
-ConfigurationSettingsPointer PushdownAutomata::configurationsettingsPointer = 0;
+ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 
 PushdownAutomata::PushdownAutomata(string definitionFileName)
 {
@@ -34,10 +34,61 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
+    bool performedTransition = false;
+    int index = 0;
+    int count = 0;
+    string destinationState;
+    string pushString;
+    InstantaneousDescription nextID;
 
+    cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
+    id.view(configurationSettingsPointer);
+    cout << endl;
+
+    if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
+    {
+        return true;
+    }
+    if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
+    {
+        count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
+        for(index = 0; index < count; ++index)
+        {
+            transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
+            id.performTransition(destinationState, pushString, nextID);
+            performedTransition = true;
+            ++numberOfTransitions;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+        }
+    }
+
+    if(!id.isEmptyStack())
+    {
+        count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
+        for(index = 0; index < count; ++index)
+        {
+            transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
+            id.performLamdaTransition(destinationState, pushString, nextID);
+            performedTransition = true;
+            ++numberOfTransitions;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+        }
+    }
+    if(!performedTransition)
+    {
+        cout << "Crash " << ++numberOfCrashes << " occured." << endl;
+    }
+    
+    return false;
 }
 
-void PushdownAutomata::link(Configurationsettings& configurationSettings)
+void PushdownAutomata::link(ConfigurationSettings& configurationSettings)
 {
     configurationSettingsPointer = &configurationSettings;
 }

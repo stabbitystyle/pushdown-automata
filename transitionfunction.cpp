@@ -218,3 +218,18 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
         }
 	}
 }
+
+int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
+{
+
+}
+
+int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
+{
+
+}
+
+void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)
+{
+
+}
