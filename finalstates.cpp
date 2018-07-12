@@ -1,5 +1,6 @@
 // Final States class
 // Rev0 7/4/18 by William Frank
+// Rev1 7/10/18 by Cole Woodford
 
 #include <string>
 #include <fstream>
@@ -23,7 +24,7 @@ void FinalStates::load(ifstream& definition, bool& valid)
     while((definition >> value))
     {
         string uppercaseValue = uppercase(value);
-        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "TAPE_ALPHABET:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
+        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
         {
             cout << "Improper keyword used in Final States: " << uppercaseValue << "." << endl;
             valid = false;

@@ -1,5 +1,6 @@
 // Stack Alphabet class
 // Rev0 7/4/18 by William Frank
+// Rev1 7/10/18 by Cole Woodford
 
 #include <fstream>
 #include <iostream>
@@ -11,32 +12,30 @@
 using namespace std;
 
 // The method load accepts a definition file and a valid Boolean as parameters.
-// The definition file is checked for the tape alphabet, which is then loaded into the alphabet attribute.
-// If there are any characters without spaces between them, if the tape alphabet keyword cannot be found,
-//     if one of the tape alphabet characters is from the reserved list of characters, if there are any duplicate characters,
+// The definition file is checked for the stack alphabet, which is then loaded into the alphabet attribute.
+// If there are any characters without spaces between them, if the stack alphabet keyword cannot be found,
+//     if one of the stack alphabet characters is from the reserved list of characters, if there are any duplicate characters,
 //     or if the next keyword after the input alphabet isn’t found, valid is set to false,
 //     which will then end the loading of the pushdown automata definition elsewhere in the application.
-// Load also checks whether all of the characters from the input alphabet is contained in the tape alphabet.
-// And it also checks whether the blank character is in the tape alphabet.
 void StackAlphabet::load(ifstream& definition, bool& valid)
 {
     string value;
     while((definition >> value) && (uppercase(value) != "TRANSITION_FUNCTION:"))
     {
         string uppercaseValue = uppercase(value);
-        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "TAPE_ALPHABET:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
+        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
         {
-            cout << "Improper keyword used in Tape Alphabet: " << uppercaseValue << endl;
+            cout << "Improper keyword used in Stack Alphabet: " << uppercaseValue << endl;
             valid = false;
             return;
         }
-        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] >= '!') && (value[0] <= '~'))
+        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] > '!') && (value[0] < '~'))
         {
             alphabet.push_back(value[0]);
         }
         else
         {
-            cout << "Illegal tape alphabet character " << value << endl;
+            cout << "Illegal stack alphabet character " << value << endl;
             valid = false;
         }
     }
@@ -47,7 +46,7 @@ void StackAlphabet::load(ifstream& definition, bool& valid)
     }
 }
 
-// The method view prints out the tape alphabet.
+// The method view prints out the stack alphabet.
 void StackAlphabet::view() const
 {
     cout << "\u0393 = {";
@@ -66,7 +65,7 @@ void StackAlphabet::view() const
 }
 
 // The method isElement accepts a character value as a parameter.
-// If value is found within the tape alphabet, true is returned.
+// If value is found within the stack alphabet, true is returned.
 // Otherwise, false is returned.
 bool StackAlphabet::isElement(const char value) const
 {

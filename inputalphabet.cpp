@@ -1,5 +1,6 @@
 // Input Alphabet class
 // Rev0 7/4/18 by William Frank
+// Rev1 7/10/18 by Cole Woodford
 
 #include <fstream>
 #include <iostream>
@@ -20,7 +21,7 @@ using namespace std;
 void InputAlphabet::load(ifstream& definition, bool& valid)
 {
     string value;
-    while((definition >> value) && (uppercase(value) != "TAPE_ALPHABET:"))
+    while((definition >> value) && (uppercase(value) != "STACK_ALPHABET:"))
     {
         string uppercaseValue = uppercase(value);
         if((uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STATES:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
@@ -29,7 +30,7 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
             valid = false;
             return;
         }
-        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] >= '!') && (value[0] <= '~'))
+        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] > '!') && (value[0] < '~'))
         {
             alphabet.push_back(value[0]);
         }
@@ -46,8 +47,8 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
     }
 }
 
-// The method validate checks whether the input alphabet is in the tape alphabet.
-// If all of the input alphabet isn’t in the tape alphabet, then valid is set to false,
+// The method validate checks whether the input alphabet is in the stack alphabet.
+// If all of the input alphabet isn’t in the stack alphabet, then valid is set to false,
 //     which will end the loading of the pushdown automata definition elsewhere in the application.
 void InputAlphabet::validate(const StackAlphabet& stackAlphabet, bool& valid) const
 {
@@ -55,7 +56,7 @@ void InputAlphabet::validate(const StackAlphabet& stackAlphabet, bool& valid) co
     {
         if(!stackAlphabet.isElement(*it))
         {
-            cout << "Input character " << *it << " is not in tape alphabet" << endl;
+            cout << "Input character " << *it << " is not in stack alphabet" << endl;
             valid = false;
         }
     }
