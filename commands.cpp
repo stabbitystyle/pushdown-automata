@@ -15,18 +15,28 @@ using namespace std;
 
 
 Commands::Commands(){
+    pda = 0;
+    pdaLoaded = false;
     config.load();
 
 }
 
 
 Commands::Commands(string fileName){
+    pda = 0;
+    pdaLoaded = false;
+    config.load();
+
     pdaName = fileName;
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
-    pda = new pushdownautomata(definitionFileName);
-    strings.load(stringFileName);
-    config.load();
+    pda = new PushdownAutomata(definitionFileName);
+    if(pda->isValidDefinition()){
+        pdaLoaded = true;
+        strings.load(stringFileName);
+    }else{
+        delete pda
+    }
 
 
 }
@@ -70,30 +80,30 @@ void Commands::show(){
         cout << right << setw(showWidth) << "Name of Pushdown Automata:  " << pdaName << endl;
         // If currently running, need to output input string and # of transitions performed so far
         // If completed, need to output input string, result, and # of transitions performed
-        if(!pda.isUsed()){
+        if(!pda->isUsed()){
             cout << right << setw(showWidth) << "The pushdown automata hasn’t been tested on a string yet." << endl;
-        }else if(pda.isOperating()){
-            cout << right << setw(showWidth) << "Current Input String:  " << pda.inputString() << endl;
+        }else if(pda->isOperating()){
+            cout << right << setw(showWidth) << "Current Input String:  " << pda->inputString() << endl;
             cout << "Result of Test:  " << "currently running" << endl; 
-            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda.totalNumberOfTransitions() << endl;
-            cout << right << setw(showWidth) << "Number of Crashes:  " << pda.totalNumberOfCrashes() << endl;
+            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
+            cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
 
-        }else if(pda.isAcceptedInputString()){
+        }else if(pda->isAcceptedInputString()){
             cout << "Result of Test:  " << "Accepted" << endl; 
-            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda.totalNumberOfTransitions() << endl;
-            cout << right << setw(showWidth) << "Number of Crashes:  " << pda.totalNumberOfCrashes() << endl;
+            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
+            cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
             
 
-        }else if(pda.isRejectedInputString()){
+        }else if(pda->isRejectedInputString()){
             cout << "Result of Test:  " << "Rejected" << endl; 
-            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda.totalNumberOfTransitions() << endl;
-            cout << right << setw(showWidth) << "Number of Crashes:  " << pda.totalNumberOfCrashes() << endl;
+            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
+            cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
             
 
-        }else if(pda.isUsed() && !pda.isOperating() && !pda.isAcceptedInputString() && !pda.isRejectedInputString()){
+        }else if(pda->isUsed() && !pda->isOperating() && !pda->isAcceptedInputString() && !pda->isRejectedInputString()){
             cout << right << setw(showWidth) << "Result of Test:  " << "Neither Accepted nor Rejected" << endl;
-            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda.totalNumberOfTransitions() << endl;
-            cout << right << setw(showWidth) << "Number of Crashes:  " << pda.totalNumberOfCrashes() << endl;
+            cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
+            cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
 
         }
         
@@ -104,41 +114,52 @@ void Commands::show(){
     
 }
 void Commands::view(){
-    pda.viewDefinition();
+    pda->viewDefinition();
 }
 void Commands::list(){
-    strings.view();
+    if(pdaLoaded){
+        strings.view();
+    }
 }
 void Commands::insert(){
     string stringToAdd;
     std::cout << std::endl;
-    cout << "Enter String to be added: ";
-    getline(cin,stringToAdd);
-    if(pda.isValidInputString(stringToAdd)){
-        strings.addToStrings(stringToAdd);
+    if(pdaLoaded){
+        cout << "Enter String to be added: ";
+        getline(cin,stringToAdd);
+        if(pda->isValidInputString(stringToAdd)){
+            strings.addToStrings(stringToAdd);
+        }else{
+            cout << "ERROR: inlavaid string" << endl << endl;
+        }
     }else{
-        cout << "ERROR: inlavaid string" << endl << endl;
+        cout <<"no pda loaded" << endl;
     }
 
 }
 void Commands::deleteString(){
     string input;
     bool validString = true;
-    std::cout << std::endl;
-    cout << "Enter number of String to be removed: ";
-    getline(cin,input);
 
-    for(int i = 0;i <input.length()-1;i++){
-        if(!isdigit(input.at(i))){
-            validString = false;
+    if(pdaLoaded){
+        std::cout << std::endl;
+        cout << "Enter number of String to be removed: ";
+        getline(cin,input);
+
+        for(int i = 0;i <input.length()-1;i++){
+            if(!isdigit(input.at(i))){
+                validString = false;
+            }
         }
-    }
 
-    if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
-        strings.removeFromStrings(stoi(input,nullptr));
+        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+            strings.removeFromStrings(stoi(input,nullptr));
+        }else{
+            cout << "ERROR: invalid string" << endl;
+
+        }
     }else{
-        cout << "ERROR: invalid string" << endl;
-
+        cout << "no pda loaded" << endl;
     }
 
 }
@@ -185,19 +206,23 @@ void Commands::truncate(){
 void Commands::run(){
     string input;
     bool validString = true;
-    cout <<  "Enter number of string to run: ";
-    getline(cin,input);
+    if(pdaLoaded){
+        cout <<  "Enter number of string to run: ";
+        getline(cin,input);
 
-    for(int i = 0;i <input.length()-1;i++){
-        if(!isdigit(input.at(i))){
-            validString = false;
+        for(int i = 0;i <input.length()-1;i++){
+                if(!isdigit(input.at(i))){
+                    validString = false;
+            }
         }
-    }
 
-    if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
-        pda.initialize(strings.getInputString(stoi(input,nullptr)));
+        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+            pda->initialize(strings.getInputString(stoi(input,nullptr)));
+        }else{
+            cout << "ERROR: Invalid input string" << endl;
+        }
     }else{
-        cout << "ERROR: Invalid input string" << endl;
+        cout << "ERROR: no pda loaded" << endl;
     }
 
 }
@@ -209,16 +234,23 @@ void Commands::quit(){
 }
 void Commands::exit(){
     config.writeFile();
-    strings.saveToFile(stringFileName);
+    if(pdaLoaded){
+        strings.saveToFile(stringFileName);
+        delete pda;
+    }
     exit();
 
 }
 void Commands::open(){
-    pdaLoaded = false;
-    strings.saveToFile(stringFileName);
-    stringFileName = "";
-    definitionFileName = "";
-    pdaName = "";
+    if(pdaLoaded){
+        pdaLoaded = false;
+        delete pda;
+        pda = 0;
+        strings.saveToFile(stringFileName);
+        stringFileName = "";
+        definitionFileName = "";
+        pdaName = "";
+    }
 
     
     std::cout << std::endl;
@@ -228,16 +260,27 @@ void Commands::open(){
     stringFileName = pdaName + ".str";
 
     pda = PushdownAutomata(input);
-    strings.load(stringFileName);
+    if(pda->isValidDefinition()){
+        pdaLoaded = true;
+        strings.load(stringFileName);
+    }else{
+        delete pda;
+        pda = 0;
+    }
+    
 
     
 }
 void Commands::close(){
-    pdaLoaded = false;
-    strings.saveToFile(stringFileName);
-    stringFileName = "";
-    definitionFileName = "";
-    pdaName = "";
+    if(pdaLoaded){
+        pdaLoaded = false;
+        delete pda;
+        pda = 0;
+        strings.saveToFile(stringFileName);
+        stringFileName = "";
+        definitionFileName = "";
+        pdaName = "";
+    }
 
 }
 void Commands::display(){
@@ -247,7 +290,9 @@ void Commands::display(){
     cout << endl;
 }
 void Commands::sort(){
-    strings.sort();
+    if(pdaLoaded){
+        strings.sort();
+    }
 }
 void Commands::inputCommand(){
 

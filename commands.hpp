@@ -21,12 +21,13 @@ class Commands{
         bool valid;
         bool pdaLoaded;
 
-        PushdownAutomata pda;
+        PushdownAutomata * pda;
         InputStrings strings;
         ConfigurationSettings config;
         
 
     public:
+        Commands();
         Commands(string fileName);
         void help();
         void show();
