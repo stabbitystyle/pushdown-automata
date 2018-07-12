@@ -143,33 +143,33 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
     }
 }
 
-// // The method validate checks whether each of the transitions found within the transitions vector contain valid states and characters.
-// void TransitionFunction::validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const
-// {
-//     for(int index = 0; index < (int)transitions.size(); ++index)
-// 	{
-// 		if(finalStates.isElement(transitions[index].sourceState()))
-//         {
-//             cout << "Source state " << transitions[index].sourceState() << " is in final states.\n";
-//             valid = false;
-//         }
-//         if(! states.isElement(transitions[index].sourceState()))
-//         {
-//             cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
-//             valid = false;
-//         }
-//         if(! tapeAlphabet.isElement(transitions[index].readCharacter()))
-//         {
-//             cout << "Read character " << transitions[index].readCharacter() << " is not in tape alphabet.\n";
-//             valid = false;
-//         }
-//         if(! tapeAlphabet.isElement(transitions[index].writeCharacter()))
-//         {
-//             cout << "Write character " << transitions[index].writeCharacter() << " is not in tape alphabet.\n";
-//             valid = false;
-//         }
-//     }
-// }
+// The method validate checks whether each of the transitions found within the transitions vector contain valid states and characters.
+void TransitionFunction::validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const
+{
+    for(int index = 0; index < (int)transitions.size(); ++index)
+	{
+		if(finalStates.isElement(transitions[index].sourceState()))
+        {
+            cout << "Source state " << transitions[index].sourceState() << " is in final states.\n";
+            valid = false;
+        }
+        if(! states.isElement(transitions[index].sourceState()))
+        {
+            cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
+            valid = false;
+        }
+        if(! tapeAlphabet.isElement(transitions[index].readCharacter()))
+        {
+            cout << "Stack character " << transitions[index].readCharacter() << " is not in stack alphabet.\n";
+            valid = false;
+        }
+        if(! tapeAlphabet.isElement(transitions[index].writeCharacter()))
+        {
+            cout << "Write character " << transitions[index].writeCharacter() << " is not in stack alphabet.\n";
+            valid = false;
+        }
+    }
+}
 
 // The method view prints out all of the transition functions in the pushdown automata, stored in the attribute transitions.
 void TransitionFunction::view() const
