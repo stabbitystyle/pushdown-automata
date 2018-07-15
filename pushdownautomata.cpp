@@ -34,7 +34,58 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
+    bool performedTransition = false;
+    int index = 0;
+    int count = 0;
+    string destinationState;
+    string pushString;
+    InstantaneousDescription nextID;
 
+    cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
+    id.view(configurationSettingsPointer);
+    cout << endl;
+
+    if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
+    {
+        return true;
+    }
+    if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
+    {
+        count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
+        for(index = 0; index < count; ++index)
+        {
+            transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
+            id.performTransition(destinationState, pushString, nextID);
+            performedTransition = true;
+            ++numberOfTransitions;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+        }
+    }
+
+    if(!id.isEmptyStack())
+    {
+        count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
+        for(index = 0; index < count; ++index)
+        {
+            transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
+            id.performLamdaTransition(destinationState, pushString, nextID);
+            performedTransition = true;
+            ++numberOfTransitions;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+        }
+    }
+    if(!performedTransition)
+    {
+        cout << "Crash " << ++numberOfCrashes << " occured." << endl;
+    }
+    
+    return false;
 }
 
 // points the configurationSettingsPointer at a configurationSettings object referenced by configurationSettings
@@ -115,7 +166,7 @@ bool PushdownAutomata::isValidDefinition() const
     return valid;
 }
 
-// The method isValidInputString accepts a String named value as a parameter, which it then checks against the Pushdown Automaton definition to determine whether it’s a valid string.
+// The method isValidInputString accepts a String named value as a parameter, which it then checks against the Pushdown Automaton definition to determine whether itï¿½s a valid string.
 // It returns a Boolean value depending on the result.
 bool PushdownAutomata::isValidInputString(string value) const
 {

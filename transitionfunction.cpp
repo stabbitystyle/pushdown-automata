@@ -143,7 +143,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
     }
 }
 
-// // The method validate checks whether each of the transitions found within the transitions vector contain valid states and characters.
+// The method validate checks whether each of the transitions found within the transitions vector contain valid states and characters.
  void TransitionFunction::validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const
  {
      for(int index = 0; index < (int)transitions.size(); ++index)
@@ -217,4 +217,19 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
             transitionsParameter.push_back(transitions[index]);
         }
 	}
+}
+
+int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
+{
+
+}
+
+int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
+{
+
+}
+
+void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)
+{
+
 }

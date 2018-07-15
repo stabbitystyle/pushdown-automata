@@ -60,12 +60,22 @@ string InstantaneousDescription::state() const
 // The method inputCharacter returns the first character of the remaining input string.
 char InstantaneousDescription::inputCharacter() const
 {
+    if(remainingInputString.empty())
+    {
+        // still shakey about this, probably need advice on how to handle exceptions
+        throw emptyRemainingInputString("Remaining input string is empty");
+    }
     return remainingInputString.at(0);
 }
 
 // The method topOfStack returns the character on the top of the stack.
 char InstantaneousDescription::topOfStack() const
 {
+    if(stack.empty())
+    {
+        // still shakey about this, probably need advice on how to handle exceptions
+        throw emptyStack("Stack is empty");
+    }
     return stack.at(0);
 }
 
