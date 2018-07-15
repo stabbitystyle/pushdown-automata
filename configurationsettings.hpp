@@ -28,6 +28,6 @@ class ConfigurationSettings
         void load();
         void writeFile();
 };
-
+typedef ConfigurationSettings* ConfigurationSettingsPointer;
 
 #endif
