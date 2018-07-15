@@ -13,7 +13,7 @@
 #include "finalstates.hpp"
 #include "transitionfunction.hpp"
 #include "instantaneousdescription.hpp"
-//#include "configurationsettings.hpp"
+#include "configurationsettings.hpp"
 
 using namespace std;
 

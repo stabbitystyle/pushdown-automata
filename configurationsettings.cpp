@@ -98,7 +98,6 @@ void ConfigurationSettings::load(){
                             if(isspace(configline[i]) && firstNumFound){
                                 spaceAfterNum = true;
                             }
-
                         }
                         if(invalidString){
                             invalidString = false;
@@ -110,8 +109,6 @@ void ConfigurationSettings::load(){
                             tranNotFound = false;
                         }
                     }
-
-
                 }
 
                 //cheaks for the charaters to truncate setting
@@ -139,23 +136,18 @@ void ConfigurationSettings::load(){
                             if(isspace(configline[i]) && firstNumFound){
                                 spaceAfterNum = true;
                             }
-
                         }
+
                         if(invalidString){
                             invalidString = false;
                             continue;
                         }
 
-
-
                         if(charNotFound && (stoi(configline,nullptr) > 0)){
                             maximumNumberOfCells= stoi(configline, nullptr);
                             charNotFound = false;
                         }
-
                     }
-                    
-
                 }
 
                 //cheaks for the display paths setting 
@@ -171,15 +163,10 @@ void ConfigurationSettings::load(){
                     if(found != string::npos && displayNotFound){
                         displayNotFound = false;
                     }
-
                 }
-
             }
-
-
         }
     }
-
 };
 void ConfigurationSettings::writeFile(){
     ofstream configFile("pda.cfg");
@@ -189,6 +176,4 @@ void ConfigurationSettings::writeFile(){
         configFile << "MAXIMUM_CHARACTERS=" << maximumNumberOfCells << endl;
         configFile << "COMPLETE_PATHS=" << displayFullPath << endl;
     }
-
-
 };
