@@ -47,21 +47,6 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
     }
 }
 
-// The method validate checks whether the input alphabet is in the stack alphabet.
-// If all of the input alphabet isn’t in the stack alphabet, then valid is set to false,
-//     which will end the loading of the pushdown automata definition elsewhere in the application.
-void InputAlphabet::validate(const StackAlphabet& stackAlphabet, bool& valid) const
-{
-    for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++ it)
-    {
-        if(!stackAlphabet.isElement(*it))
-        {
-            cout << "Input character " << *it << " is not in stack alphabet" << endl;
-            valid = false;
-        }
-    }
-}
-
 // The method view prints out the input alphabet.
 void InputAlphabet::view() const
 {
