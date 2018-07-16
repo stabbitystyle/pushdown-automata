@@ -233,3 +233,8 @@ void TransitionFunction::getTransition(int index, string state, char inputCharac
 {
 
 }
+
+void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string destinationState, string pushString)
+{
+
+}

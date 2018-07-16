@@ -54,6 +54,7 @@ class PushdownAutomata
         void terminateOperation();
         string inputString() const;
         int totalNumberOfTransitions() const;
+		int totalNumberOfCrashes() const;
         bool isValidDefinition() const;
         bool isValidInputString(string value) const;
         bool isUsed() const;

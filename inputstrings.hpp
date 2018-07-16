@@ -31,6 +31,7 @@ class InputStrings
         void removeFromStrings(int stringIndex);
         void saveToFile(string stringFileName);
         int numberOfStrings() const;
+		void sort();
 };
 
 #endif
