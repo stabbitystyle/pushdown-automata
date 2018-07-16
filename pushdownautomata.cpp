@@ -71,7 +71,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
         for(index = 0; index < count; ++index)
         {
             transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
-            id.performLamdaTransition(destinationState, pushString, nextID);
+            id.performLambdaTransition(destinationState, pushString, nextID);
             performedTransition = true;
             ++numberOfTransitions;
             if(isAccepted(nextID, numberInCurrentPath + 1))
