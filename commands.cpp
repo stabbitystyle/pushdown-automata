@@ -33,9 +33,9 @@ Commands::Commands(string fileName){
     pda = new PushdownAutomata(definitionFileName);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
-        strings.load(stringFileName);
+        strings.load(stringFileName, *pda);
     }else{
-        delete pda
+		delete pda;
     }
 
 
@@ -259,10 +259,10 @@ void Commands::open(){
     definitionFileName = pdaName + ".def";
     stringFileName = pdaName + ".str";
 
-    pda = PushdownAutomata(input);
+    pda = new PushdownAutomata(definitionFileName);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
-        strings.load(stringFileName);
+        strings.load(stringFileName, *pda);
     }else{
         delete pda;
         pda = 0;

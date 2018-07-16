@@ -160,6 +160,12 @@ int PushdownAutomata::totalNumberOfTransitions() const
     return numberOfTransitions;
 }
 
+// The method totalNumberOfCrashes returns the numberOfCrashes attribute.
+int PushdownAutomata::totalNumberOfCrashes() const
+{
+	return numberOfCrashes;
+}
+
 // The method isValidDefinition returns the attribute valid.
 bool PushdownAutomata::isValidDefinition() const
 {
