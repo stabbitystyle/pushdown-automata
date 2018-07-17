@@ -17,9 +17,8 @@ using namespace std;
 // If there are any characters without spaces between them, if the transition function keyword cannot be found, if there is a duplicate function,
 //     if one of the reserved characters is used within any of the transition functions, or if the next keyword after the transition function isn’t found,
 //     valid is set to false, which will then terminate the Turing machine application elsewhere in the application.
-void TransitionFunction::load(ifstream& definition, bool& valid)
+void TransitionFunction::load(ifstream& definition, string& value, bool& valid)
 {
-    string value;
     int i = 1;
     string sourceState;
     string destinationState;
@@ -47,7 +46,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
                 {
                     if((!isalnum(*it)) && (*it != '_'))
                     {
-                        cout << "Illegal character used in transition function state: " << value << endl;
+                        cout << "Illegal character used in transition function source state: " << value << endl;
                         valid = false;
                     }
                 }
@@ -61,7 +60,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
             // Read Character
             case 2:
             {
-                if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != ',') && (value[0] != '>'))
+                if(value.length() == 1 && (value[0] != '(') && (value[0] != ')') && (value[0] != ',') && (value[0] != '>'))
                 {
                     readCharacter = value[0];
                 }
@@ -73,14 +72,29 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
                 i++;
                 break;
             }
-            // Destination State
+            // stack character
             case 3:
+            {
+                if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != ',') && (value[0] != '>'))
+                {
+                    stackCharacter = value[0];
+                }
+                else
+                {
+                    cout << "Illegal transition function stack character: " << value << endl;
+                    valid = false;
+                }
+                i++;
+                break;
+            }
+            // Destination State
+            case 4:
             {
                 for(string::iterator it = value.begin(); it != value.end(); ++it)
                 {
                     if((!isalnum(*it)) && (*it != '_'))
                     {
-                        cout << "Illegal character used in transition function state: " << value << endl;
+                        cout << "Illegal character used in transition function destination state: " << value << endl;
                         valid = false;
                     }
                 }
@@ -91,29 +105,14 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
                 i++;
                 break;
             }
-            // Stack Character
-            case 4:
-            {
-                if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != ',') && (value[0] != '>'))
-                {
-                    stackCharacter = value[0];
-                }
-                else
-                {
-                    cout << "Illegal transition function write character: " << value << endl;
-                    valid = false;
-                }
-                i++;
-                break;
-            }
             // Push String
             case 5:
             {
                 for(string::iterator it = value.begin(); it != value.end(); ++it)
                 {
-                    if((*it == '\\') || (*it == '(') || (*it == ')') || (*it == ',') || (*it == '>'))
+                    if((*it == '(') || (*it == ')') || (*it == ',') || (*it == '>'))
                     {
-                        cout << "Illegal transition function read character: " << value << endl;
+                        cout << "Illegal transition function push string: " << value << endl;
                         valid = false;
                     }
                 }
@@ -144,7 +143,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
 }
 
 // The method validate checks whether each of the transitions found within the transitions vector contain valid states and characters.
- void TransitionFunction::validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const
+ void TransitionFunction::validate(const StackAlphabet& stackAlphabet, const InputAlphabet& inputAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const
  {
      for(int index = 0; index < (int)transitions.size(); ++index)
  	{
@@ -158,9 +157,9 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
              cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
              valid = false;
          }
-         if(! stackAlphabet.isElement(transitions[index].readCharacter()))
+         if(! inputAlphabet.isElement(transitions[index].readCharacter()))
          {
-             cout << "Read character " << transitions[index].readCharacter() << " is not in stack alphabet.\n";
+             cout << "Read character " << transitions[index].readCharacter() << " is not in input alphabet.\n";
              valid = false;
          }
          if(! stackAlphabet.isElement(transitions[index].stackCharacter()))
@@ -221,12 +220,12 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
 
 int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
 {
-
+    return 0;
 }
 
 int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
 {
-
+    return 0;
 }
 
 void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)

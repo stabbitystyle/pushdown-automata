@@ -17,9 +17,8 @@ using namespace std;
 //     if one of the stack alphabet characters is from the reserved list of characters, if there are any duplicate characters,
 //     or if the next keyword after the input alphabet isn’t found, valid is set to false,
 //     which will then end the loading of the pushdown automata definition elsewhere in the application.
-void StackAlphabet::load(ifstream& definition, bool& valid)
+void StackAlphabet::load(ifstream& definition, string& value, bool& valid)
 {
-    string value;
     while((definition >> value) && (uppercase(value) != "TRANSITION_FUNCTION:"))
     {
         string uppercaseValue = uppercase(value);

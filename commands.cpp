@@ -146,7 +146,7 @@ void Commands::deleteString(){
         cout << "Enter number of String to be removed: ";
         getline(cin,input);
 
-        for(int i = 0;i <input.length()-1;i++){
+        for(string::size_type i = 0;i <input.length()-1;i++){
             if(!isdigit(input.at(i))){
                 validString = false;
             }
@@ -170,7 +170,7 @@ void Commands::set(){
     std::cout << "Set the maximum number of transitions[" << config.getMaximumNumberOfTransitions() << "]: " << std::endl;
     getline(cin,input);
 
-    for(int i = 0;i <input.length()-1;i++){
+    for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
             validString = false;
         }
@@ -189,7 +189,7 @@ void Commands::truncate(){
     std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: " << std::endl;
     getline(cin,input);
 
-    for(int i = 0;i <input.length()-1;i++){
+    for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
             validString = false;
         }
@@ -210,7 +210,7 @@ void Commands::run(){
         cout <<  "Enter number of string to run: ";
         getline(cin,input);
 
-        for(int i = 0;i <input.length()-1;i++){
+        for(string::size_type i = 0;i <input.length()-1;i++){
                 if(!isdigit(input.at(i))){
                     validString = false;
             }

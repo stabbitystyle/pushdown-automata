@@ -4,9 +4,11 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <string>
 
 #include "transition.hpp"
 #include "stackalphabet.hpp"
+#include "inputalphabet.hpp"
 #include "states.hpp"
 #include "finalstates.hpp"
 #include "instantaneousdescription.hpp"
@@ -19,8 +21,8 @@ class TransitionFunction
 	private:
 		vector<Transition> transitions;
 	public:
-		void load(ifstream& definition, bool& valid);
-		void validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const;
+		void load(ifstream& definition, string& value, bool& valid);
+		void validate(const StackAlphabet& stackAlphabet, const InputAlphabet& inputAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const;
 		void view() const;
 		void findTransitions(string sourceState, char readCharacter, char topOfStack, vector<Transition>& transitions) const;
 		int transitionCount(string state, char inputCharacter, char stackCharacter);

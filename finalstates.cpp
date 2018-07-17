@@ -18,9 +18,8 @@ using namespace std;
 // If the states function keyword cannot be found, if there is a duplicate state,
 //     or if one of the reserved characters is used within any of the state names, valid is set to false,
 //     which will then end the loading of the pushdown automata definition elsewhere in the application.
-void FinalStates::load(ifstream& definition, bool& valid)
+void FinalStates::load(ifstream& definition, string& value, bool& valid)
 {
-    string value;
     while((definition >> value))
     {
         string uppercaseValue = uppercase(value);

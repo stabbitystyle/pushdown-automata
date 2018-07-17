@@ -1,0 +1,28 @@
+This pushdown automaton accepts the language of odd palindromes of a's and b's.
+
+STATES: s0 s1 s2
+
+INPUT_ALPHABET: a b
+
+STACK_ALPHABET: X Y Z
+
+TRANSITION_FUNCTION:
+  s0 a X  s0 XX
+  s0 a X  s1 X
+  s0 a Y  s0 XY
+  s0 a Y  s1 Y
+  s0 a Z  s0 XZ
+  s0 a Z  s1 X
+  s0 b Y  s0 YY
+  s0 b Y  s1 Y
+  s0 b Z  s0 YZ
+  s0 b Z  s1 Z
+  s1 a X  s1 \
+  s1 b Y  s1 \
+  s1 \ Z  s2 \
+
+INITIAL_STATE: s0
+
+START_CHARACTER: Z
+
+FINAL_STATES: s2

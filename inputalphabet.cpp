@@ -18,9 +18,8 @@ using namespace std;
 //     if one of the input alphabet characters is from the reserved list of characters, if there are any duplicate characters,
 //     or if the next keyword after the input alphabet isn’t found, valid is set to false,
 //     which will then end the loading of the pushdown automata definition elsewhere in the application.
-void InputAlphabet::load(ifstream& definition, bool& valid)
+void InputAlphabet::load(ifstream& definition, string& value, bool& valid)
 {
-    string value;
     while((definition >> value) && (uppercase(value) != "STACK_ALPHABET:"))
     {
         string uppercaseValue = uppercase(value);
@@ -44,21 +43,6 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
     {
         cout << "End of file reached too soon." << endl;
         valid = false;
-    }
-}
-
-// The method validate checks whether the input alphabet is in the stack alphabet.
-// If all of the input alphabet isn’t in the stack alphabet, then valid is set to false,
-//     which will end the loading of the pushdown automata definition elsewhere in the application.
-void InputAlphabet::validate(const StackAlphabet& stackAlphabet, bool& valid) const
-{
-    for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++ it)
-    {
-        if(!stackAlphabet.isElement(*it))
-        {
-            cout << "Input character " << *it << " is not in stack alphabet" << endl;
-            valid = false;
-        }
     }
 }
 
@@ -89,6 +73,11 @@ bool InputAlphabet::isElement(const char value) const
     for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++it)
     {
         if(*it == value)
+        {
+            isElement = true;
+            break;
+        }
+        else if(value == '\\')
         {
             isElement = true;
             break;
