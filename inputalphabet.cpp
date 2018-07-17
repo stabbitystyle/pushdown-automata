@@ -24,13 +24,13 @@ void InputAlphabet::load(ifstream& definition, bool& valid)
     while((definition >> value) && (uppercase(value) != "STACK_ALPHABET:"))
     {
         string uppercaseValue = uppercase(value);
-        if((uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STATES:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
+        if((uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STATES:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "START_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
         {
             cout << "Improper keyword used in Input Alphabet: " << uppercaseValue << endl;
             valid = false;
             return;
         }
-        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] > '!') && (value[0] < '~'))
+        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != '>') && (value[0] != ','))
         {
             alphabet.push_back(value[0]);
         }

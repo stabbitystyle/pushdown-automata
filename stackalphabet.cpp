@@ -23,13 +23,13 @@ void StackAlphabet::load(ifstream& definition, bool& valid)
     while((definition >> value) && (uppercase(value) != "TRANSITION_FUNCTION:"))
     {
         string uppercaseValue = uppercase(value);
-        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
+        if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "START_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
         {
-            cout << "Improper keyword used in Stack Alphabet: " << uppercaseValue << endl;
+            cout << "Improper keyword used in Stack Alphabet: " << value << endl;
             valid = false;
             return;
         }
-        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '[') && (value[0] != ']') && (value[0] != '<') && (value[0] != '>') && (value[0] > '!') && (value[0] < '~'))
+        if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != '>') && (value[0] != ','))
         {
             alphabet.push_back(value[0]);
         }
