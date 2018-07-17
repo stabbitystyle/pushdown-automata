@@ -23,7 +23,7 @@ void States::load(ifstream& definition, bool& valid)
     while((definition >> value) && (uppercase(value) != "INPUT_ALPHABET:"))
     {
         string uppercaseValue = uppercase(value);
-        if((uppercaseValue == "STATES:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "BLANK_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
+        if((uppercaseValue == "STATES:") || (uppercaseValue == "STACK_ALPHABET:") || (uppercaseValue == "TRANSITION_FUNCTION:") || (uppercaseValue == "INITIAL_STATE:") || (uppercaseValue == "START_CHARACTER:") || (uppercaseValue == "FINAL_STATES:"))
         {
             cout << "Improper keyword used in States: " << uppercaseValue << endl;
             valid = false;

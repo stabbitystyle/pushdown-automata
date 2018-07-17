@@ -27,18 +27,14 @@ class PushdownAutomata
         FinalStates finalStates;
         
         string initialState;
-        string currentState;
-        char initialStackCharacter;
+		char initialStackCharacter;
+		vector<string> description;
 
-        // these 3 aren't in example?
-        vector<string> description;
-        int numberOfTransitionsInSuccessfulPath;
+        string currentState;
         string originalInputString;
-        
+		int numberOfTransitionsInSuccessfulPath;
         int numberOfTransitions;
         int numberOfCrashes;
-
-        // these 5 aren't in example?
         bool valid;
         bool used;
         bool operating;
@@ -46,6 +42,9 @@ class PushdownAutomata
         bool rejected;
 
         static ConfigurationSettingsPointer configurationSettingsPointer;
+
+		void loadInitialState(ifstream& definition, bool& valid);
+		void loadInitialStackCharacter(ifstream& definition, bool& valid);
     public:
         PushdownAutomata(string definitionFileName);
         void viewDefinition() const;
@@ -54,6 +53,7 @@ class PushdownAutomata
         void terminateOperation();
         string inputString() const;
         int totalNumberOfTransitions() const;
+		int totalNumberOfCrashes() const;
         bool isValidDefinition() const;
         bool isValidInputString(string value) const;
         bool isUsed() const;

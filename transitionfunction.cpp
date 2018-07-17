@@ -27,7 +27,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
     char readCharacter = ' ';
     char stackCharacter = ' ';
 
-    while((valid != false) && (definition >> value) && (uppercase(value) != "INITIAL_STATE:"))
+    while((definition >> value) && (uppercase(value) != "INITIAL_STATE:"))
     {
         string uppercaseValue = uppercase(value);
         if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:")
@@ -230,6 +230,11 @@ int TransitionFunction::transitionCount(string state, char inputCharacter, char 
 }
 
 void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)
+{
+
+}
+
+void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string destinationState, string pushString)
 {
 
 }

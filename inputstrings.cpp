@@ -151,3 +151,9 @@ int InputStrings::numberOfStrings() const
 {
     return strings.size();
 }
+
+// The method sort sorts the inputStrings strings vector attribute into canonical order
+void InputStrings::sort()
+{
+
+}

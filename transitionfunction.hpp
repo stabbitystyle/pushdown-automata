@@ -20,9 +20,9 @@ class TransitionFunction
 		vector<Transition> transitions;
 	public:
 		void load(ifstream& definition, bool& valid);
-    void validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const;
+		void validate(const StackAlphabet& stackAlphabet, const States& states, const FinalStates& finalStates, bool& valid) const;
 		void view() const;
-    void findTransitions(string sourceState, char readCharacter, char topOfStack, vector<Transition>& transitions) const;
+		void findTransitions(string sourceState, char readCharacter, char topOfStack, vector<Transition>& transitions) const;
 		int transitionCount(string state, char inputCharacter, char stackCharacter);
 		int lambdaTransitionCount(string state, char topOfStack);
 		void getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString);
