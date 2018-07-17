@@ -122,8 +122,6 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	if (valid != false)
 	{
 		finalStates.validate(states, valid);
-		// not sure if we need to validate input alphabet
-		inputAlphabet.validate(stackAlphabet, valid);
 		transitionFunction.validate(stackAlphabet, states, finalStates, valid);
 		if (!states.isElement(initialState))
 		{

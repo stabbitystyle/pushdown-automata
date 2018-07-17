@@ -16,17 +16,17 @@ void CommandsInOperation::run(){
 
 }
 void CommandsInOperation::quit(){
-    pda->endRecrustion("quit");
+    //pda->endRecrustion("quit");
 
 }
 void CommandsInOperation::exit(){
-    pda->endRecrustion("exit");
+    //pda->endRecrustion("exit");
 
 }
 void CommandsInOperation::open(){
-    pda->endRecrustion("open");
+    //pda->endRecrustion("open");
 } 
 void CommandsInOperation::close(){
-    pda->endRecrustion("close");
+    //pda->endRecrustion("close");
 
 }

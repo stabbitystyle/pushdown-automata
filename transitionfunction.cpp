@@ -221,12 +221,12 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
 
 int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
 {
-
+    return 0;
 }
 
 int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
 {
-
+    return 0;
 }
 
 void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)

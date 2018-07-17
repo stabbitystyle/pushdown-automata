@@ -77,7 +77,7 @@ void ConfigurationSettings::load(){
             //cheak for a  = sign on the line
             if(found != string::npos){
 
-                //cheaks for the number of transitins setting
+                //checks for the number of transitins setting
 
                 found = configline.find("MAXIMUM_TRANSITIONS");
                 if(found != string::npos){
@@ -90,7 +90,7 @@ void ConfigurationSettings::load(){
                             continue;
                         }
 
-                        for(int i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length())-1;i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -128,7 +128,7 @@ void ConfigurationSettings::load(){
                             continue;
                         }
 
-                        for(int i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length())-1;i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
