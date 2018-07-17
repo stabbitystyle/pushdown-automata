@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ class StackAlphabet
     private:
         vector<char> alphabet;
     public:
-        void load(ifstream& definition, bool& valid);
+        void load(ifstream& definition, string& value, bool& valid);
         void view() const;
         bool isElement(const char value) const;
 };

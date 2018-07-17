@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <fstream>
+#include <string>
 
 #include "stackalphabet.hpp"
 
@@ -17,7 +18,7 @@ class InputAlphabet
     private:
         vector<char> alphabet;
     public:
-        void load(ifstream& definition, bool& valid);
+        void load(ifstream& definition, string& value, bool& valid);
         void view() const;
         bool isElement(const char value) const;
 };

@@ -43,8 +43,8 @@ class PushdownAutomata
 
         static ConfigurationSettingsPointer configurationSettingsPointer;
 
-		void loadInitialState(ifstream& definition, bool& valid);
-		void loadInitialStackCharacter(ifstream& definition, bool& valid);
+		void loadInitialState(ifstream& definition, string& value, bool& valid);
+		void loadInitialStackCharacter(ifstream& definition, string& value, bool& valid);
     public:
         PushdownAutomata(string definitionFileName);
         void viewDefinition() const;

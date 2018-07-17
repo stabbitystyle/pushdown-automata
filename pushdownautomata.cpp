@@ -22,6 +22,7 @@ ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 
 PushdownAutomata::PushdownAutomata(string definitionFileName)
 {
+	valid = true;
     ifstream definition(definitionFileName.c_str(), ifstream::in);
     string value;
 
@@ -50,7 +51,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// States
 	if (uppercase(value) == "STATES:")
 	{
-		states.load(definition, valid);
+		states.load(definition, value, valid);
 	}
 	else
 	{
@@ -60,7 +61,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Input Alphabet
 	if (uppercase(value) == "INPUT_ALPHABET:")
 	{
-		inputAlphabet.load(definition, valid);
+		inputAlphabet.load(definition, value, valid);
 	}
 	else
 	{
@@ -70,7 +71,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Stack Alphabet
 	if (uppercase(value) == "STACK_ALPHABET:")
 	{
-		stackAlphabet.load(definition, valid);
+		stackAlphabet.load(definition, value, valid);
 	}
 	else
 	{
@@ -80,7 +81,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Transition Function
 	if (uppercase(value) == "TRANSITION_FUNCTION:")
 	{
-		transitionFunction.load(definition, valid);
+		transitionFunction.load(definition, value, valid);
 	}
 	else
 	{
@@ -90,7 +91,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Initial State
 	if (uppercase(value) == "INITIAL_STATE:")
 	{
-		loadInitialState(definition, valid);
+		loadInitialState(definition, value, valid);
 	}
 	else
 	{
@@ -100,7 +101,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Start Character
 	if (uppercase(value) == "START_CHARACTER:")
 	{
-		loadInitialStackCharacter(definition, valid);
+		loadInitialStackCharacter(definition, value, valid);
 	}
 	else
 	{
@@ -110,7 +111,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	// Final States
 	if (uppercase(value) == "FINAL_STATES:")
 	{
-		finalStates.load(definition, valid);
+		finalStates.load(definition, value, valid);
 	}
 	else
 	{
@@ -122,7 +123,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	if (valid != false)
 	{
 		finalStates.validate(states, valid);
-		transitionFunction.validate(stackAlphabet, states, finalStates, valid);
+		transitionFunction.validate(stackAlphabet, inputAlphabet, states, finalStates, valid);
 		if (!states.isElement(initialState))
 		{
 			cout << "Error: Initial state " << initialState << " is not an element of States" << endl;
@@ -145,9 +146,8 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	cout << endl;
 }
 
-void PushdownAutomata::loadInitialState(ifstream& definition, bool& valid)
+void PushdownAutomata::loadInitialState(ifstream& definition, string& value, bool& valid)
 {
-	string value;
 	if ((definition >> value))
 	{
 		string uppercaseValue = uppercase(value);
@@ -190,9 +190,8 @@ void PushdownAutomata::loadInitialState(ifstream& definition, bool& valid)
 	}
 }
 
-void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, bool& valid)
+void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& value, bool& valid)
 {
-	string value;
 	if ((definition >> value) && (value.length() == 1) && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != '>') && (value[0] != ','))
 	{
 		initialStackCharacter = value[0];

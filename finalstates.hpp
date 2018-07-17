@@ -18,7 +18,7 @@ class FinalStates
     private:
         vector<string> names;
     public:
-        void load(ifstream& definition, bool& valid);
+        void load(ifstream& definition, string& value, bool& valid);
         void validate(const States& states, bool& valid) const;
         void view() const;
         bool isElement(const string value) const;
