@@ -27,7 +27,7 @@ void TransitionFunction::load(ifstream& definition, bool& valid)
     char readCharacter = ' ';
     char stackCharacter = ' ';
 
-    while((valid != false) && (definition >> value) && (uppercase(value) != "INITIAL_STATE:"))
+    while((definition >> value) && (uppercase(value) != "INITIAL_STATE:"))
     {
         string uppercaseValue = uppercase(value);
         if((uppercaseValue == "STATES:") || (uppercaseValue == "INPUT_ALPHABET:") || (uppercaseValue == "STACK_ALPHABET:")
