@@ -115,7 +115,12 @@ void Commands::show(){
     
 }
 void Commands::view(){
-    pda->viewDefinition();
+    if(pdaLoaded){
+        pda->viewDefinition();
+    }else{
+        cout << "No PDA loaded" << endl;
+    }
+    
 }
 void Commands::list(){
     if(pdaLoaded){
@@ -187,8 +192,9 @@ void Commands::truncate(){
     string input;
     bool validString = true;
     std::cout << std::endl;
-    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: " << std::endl;
+    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: ";
     getline(cin,input);
+    cout <<endl;
 
     for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
