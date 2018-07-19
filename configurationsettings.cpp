@@ -85,11 +85,20 @@ void ConfigurationSettings::load(){
                     found = configline.find("=");
                     if(found+1 != configline.length()){
 
+                        //gives you a string of everything after the = sign
                         configline = configline.substr(found+1,configline.length()-1);
+                        //cheaks if there are any letters mixed with the numbers
                         if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
                             continue;
                         }
 
+                        //reset cheack conditions 
+                        firstNumFound = false;
+                        spaceAfterNum = false;
+                        
+
+                        //cheaks if is any spaces or letters mixed in with numbers
+                        // if it finds a space in middle of the number is will invalidate the string
                         for(string::size_type i=0;i<(configline.length())-1;i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
@@ -103,6 +112,7 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
+                        //skips the  line
                         if(invalidString){
                             invalidString = false;
                             continue;
@@ -122,12 +132,21 @@ void ConfigurationSettings::load(){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
+                        //gives you a string of everything after the = sign
                         configline = configline.substr(found+1,configline.length()-1);
 
+                        //cheaks if there are any letters mixed with the numbers
                         if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
                             continue;
                         }
 
+                        //reset cheack conditions 
+                        firstNumFound = false;
+                        spaceAfterNum = false;
+                        
+
+                        //cheaks if is any spaces or letters mixed in with numbers
+                        // if it finds a space in middle of the number is will invalidate the string
                         for(string::size_type i=0;i<(configline.length())-1;i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
@@ -141,7 +160,7 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
-
+                        //skips the  line
                         if(invalidString){
                             invalidString = false;
                             continue;
