@@ -16,13 +16,12 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		// too few arguments
+		// no arguments
 		if (argc == 1)
 		{
-			cout << endl;
-			cout << "Error: Too few arguments." << endl;
-			cout << "Expected ./pda [name]" << endl;
-			cout << endl;
+			Commands commands;
+			commands.inputCommand();
+			
 		}
 		// too many arguments
 		else if (argc > 2)
@@ -32,8 +31,7 @@ int main(int argc, char* argv[])
 			cout << "Expected ./pda [name]" << endl;
 			cout << endl;
 		}
-		Commands commands;
-		commands.inputCommand();
+		
 	}
 
 	return 0;
