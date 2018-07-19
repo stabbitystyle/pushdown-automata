@@ -25,12 +25,12 @@ Commands::Commands(){
 Commands::Commands(string fileName){
     pda = 0;
     pdaLoaded = false;
-    config.load(configFileName);
+    config.load();
 
     pdaName = fileName;
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
-    configFileName = fileName + ".cfg";
+    
     pda = new PushdownAutomata(definitionFileName);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
