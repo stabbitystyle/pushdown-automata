@@ -191,6 +191,7 @@ void ConfigurationSettings::load(string configFileName){
         }
     }
 };
+
 void ConfigurationSettings::writeFile(string configFileName){
     ofstream configFile(configFileName);
 

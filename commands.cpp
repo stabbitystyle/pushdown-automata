@@ -17,8 +17,7 @@ using namespace std;
 Commands::Commands(){
     pda = 0;
     pdaLoaded = false;
-    config.load();
-
+    config.load(configFileName);
 }
 
 
@@ -35,6 +34,7 @@ Commands::Commands(string fileName){
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);
+        pda->link(config);
     }else{
 		delete pda;
     }
@@ -153,7 +153,7 @@ void Commands::deleteString(){
             }
         }
 
-        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings()){
             strings.removeFromStrings(stoi(input,nullptr));
         }else{
             cout << "ERROR: invalid string" << endl;
@@ -217,8 +217,11 @@ void Commands::run(){
             }
         }
 
-        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings()){
+            //if not running
             pda->initialize(strings.getInputString(stoi(input,nullptr)));
+            //if running
+
         }else{
             cout << "ERROR: Invalid input string" << endl;
         }

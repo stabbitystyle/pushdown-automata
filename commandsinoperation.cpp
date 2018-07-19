@@ -16,22 +16,22 @@ void CommandsInOperation::run(){
 
 }
 void CommandsInOperation::quit(){
-    CommandsInOperation::pda->endRecrustion("quit");
+    //CommandsInOperation::pda->endRecrustion("quit");
 
 }
 void CommandsInOperation::exit(){
-    CommandsInOperation::pda->endRecrustion("exit");
+    //CommandsInOperation::pda->endRecrustion("exit");
 
 }
 void CommandsInOperation::open(){
-    CommandsInOperation::pda->endRecrustion("open");
+    //CommandsInOperation::pda->endRecrustion("open");
 } 
 void CommandsInOperation::close(){
-    CommandsInOperation::pda->endRecrustion("close");
+    //CommandsInOperation::pda->endRecrustion("close");
 
 }
  void CommandsInOperation::link(PushdownAutomata * linker){
-     CommandsInOperation::pda = linker; 
+     //CommandsInOperation::pda = linker; 
  }
 void CommandsInOperation::inputCommand(){
 

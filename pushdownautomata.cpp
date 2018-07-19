@@ -23,6 +23,7 @@ ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 PushdownAutomata::PushdownAutomata(string definitionFileName)
 {
 	valid = true;
+
     ifstream definition(definitionFileName.c_str(), ifstream::in);
     string value;
 
@@ -324,6 +325,19 @@ void PushdownAutomata::initialize(string inputString)
 	operating = true;
 	accepted = false;
 	rejected = false;
+
+	InstantaneousDescription startingId(currentState, originalInputString, initialStackCharacter);
+	accepted = this->isAccepted(startingId, numberOfTransitions);
+	rejected = !accepted;
+
+	if (accepted)
+	{
+		cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " with " << numberOfCrashes << " crashes." << endl;
+	}
+	if (rejected)
+	{
+		cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " with " << numberOfCrashes << " crashes." << endl;
+	}
 }
 
 // The method terminateOperation terminates operation of the Pushdown Automaton.

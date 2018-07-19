@@ -218,22 +218,38 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
 	}
 }
 
+//Returns the number of transitions available for a given configuration of state, lambdacharacter, and stackcharacter
 int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
 {
-    return 0;
+    vector<Transition> temp;
+    findTransitions(state, '\\', topOfStack, temp);
+    return temp.size();
 }
 
+//Returns the number of transitions available for a given configuration of state, inputcharacter, and stackcharacter
 int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
 {
-    return 0;
+    vector<Transition> temp;
+    findTransitions(state, inputCharacter, stackCharacter, temp);
+    return temp.size();
 }
 
-void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)
+//Find the transitions that matches the state, inputCharacter, and stackCharacter params sent in. Then chooses one based
+//on what index value is set. Sets the destinationState and pushString values by reference for the user.
+void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string& destinationState, string& pushString)
 {
-
+    vector<Transition> temp;
+    findTransitions(state, inputCharacter, stackCharacter, temp);
+    destinationState = temp[index].destinationState();
+    pushString = temp[index].pushString();
 }
 
-void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string destinationState, string pushString)
+//Find the transitions that matches the state, lambdaCharacter, and stackCharacter params sent in. Then chooses one based
+//on what index value is set. Sets the destinationState and pushString values by reference for the user.
+void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string& destinationState, string& pushString)
 {
-
+    vector<Transition> temp;
+    findTransitions(state, '\\', stackCharacter, temp);
+    destinationState = temp[index].destinationState();
+    pushString = temp[index].pushString();
 }
