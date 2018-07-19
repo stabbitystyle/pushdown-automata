@@ -234,7 +234,7 @@ void Commands::quit(){
 
 }
 void Commands::exit(){
-    config.writeFile(configFileName);
+    config.writeFile();
     if(pdaLoaded){
         strings.saveToFile(stringFileName);
         delete pda;
