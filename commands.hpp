@@ -21,6 +21,7 @@ class Commands{
         string pdaName;
         string definitionFileName;
         string stringFileName;
+        string configFileName;
         bool valid;
         bool pdaLoaded;
 

@@ -25,11 +25,12 @@ Commands::Commands(){
 Commands::Commands(string fileName){
     pda = 0;
     pdaLoaded = false;
-    config.load();
+    config.load(configFileName);
 
     pdaName = fileName;
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
+    configFileName = fileName + ".cfg";
     pda = new PushdownAutomata(definitionFileName);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
@@ -233,13 +234,11 @@ void Commands::quit(){
 
 }
 void Commands::exit(){
-    config.writeFile();
+    config.writeFile(configFileName);
     if(pdaLoaded){
         strings.saveToFile(stringFileName);
         delete pda;
     }
-    exit();
-
 }
 void Commands::open(){
     if(pdaLoaded){
