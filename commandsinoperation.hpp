@@ -19,11 +19,13 @@ class CommandsInOperation : public Commands
         PushdownAutomata * pda;
 
     public:
+        void link(PushdownAutomata * linker);
         void run(); 
         void quit(); 
         void exit(); 
         void open(); 
         void close(); 
+        void inputCommand();
 };
 
 
