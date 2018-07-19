@@ -21,6 +21,7 @@ class InputStrings
     private:
         vector<string> strings;
         bool stringListModified;
+        bool notSorted;
     public:
         InputStrings();
         void load(string stringFileName, const PushdownAutomata& pushdownAutomata);
@@ -32,6 +33,7 @@ class InputStrings
         void saveToFile(string stringFileName);
         int numberOfStrings() const;
 		void sort();
+        
 };
 
 #endif

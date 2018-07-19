@@ -6,11 +6,15 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
+#include <algorithm>
+
 
 #include "inputstrings.hpp"
 #include "pushdownautomata.hpp"
 
 using namespace std;
+
+static bool stringCompaire(const string& right, const string& left);
 
 InputStrings::InputStrings() : stringListModified(false)
 {
@@ -25,6 +29,7 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
 {
     ifstream definition(stringFileName.c_str(), ifstream::in);
     string value;
+    notSorted = true;
     if(definition.fail())
     {
         cout << "Failed to open input string file." << endl;
@@ -103,6 +108,7 @@ void InputStrings::addToStrings(string inputString)
 {
     strings.push_back(inputString);
     stringListModified = true;
+    notSorted =true;
 }
 
 // The method removeFromStrings accepts an integer stringIndex, which is the index of the string to delete + 1, as a parameter.
@@ -111,6 +117,7 @@ void InputStrings::removeFromStrings(int stringIndex)
 {
     strings.erase(strings.begin() + (stringIndex - 1));
     stringListModified = true;
+    notSorted = true;
 }
 
 // The method saveToFile accepts a string stringFileName as a parameter.
@@ -155,5 +162,31 @@ int InputStrings::numberOfStrings() const
 // The method sort sorts the inputStrings strings vector attribute into canonical order
 void InputStrings::sort()
 {
+    if(notSorted){
+        std::sort(strings.begin(),strings.end());
+        std::sort(strings.begin(),strings.end(),stringCompaire);
+        notSorted =false;
+    }else{
+        cout << "strings alrerady sorted" << endl;
+    }
+    
+    
+
+
+    
+    
+}
+
+static bool stringCompaire(const string& right, const string& left){
+    
+    /*
+    if(right.length() > left.length()){
+        return false;
+    }else if(right > left){
+        return false;
+    }
+    return true;
+    */
+   return !(right.length() > left.length());
 
 }
