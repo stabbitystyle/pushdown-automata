@@ -237,3 +237,26 @@ void TransitionFunction::getLambdaTransition(int index, string state, char stack
 {
 
 }
+
+void TransitionFunction::getTransitions(string state, char inputCharacter, char stackCharacter, vector<Transition>& list)
+{
+    for(int i=0; i < transitions.size()-1;i++){
+
+        if(transitions[i].sourceState() == state && transitions[i].topOfStack() == stackCharacter && transitions[i].readCharacter() == inputCharacter){
+            list.push_back(transitions[i]);
+
+        }
+    }
+
+}
+
+void TransitionFunction::getLambdaTransitions(string state, char stackCharacter,vector<Transition>& list)
+{
+    for(int i=0; i < transitions.size()-1;i++){
+
+        if(transitions[i].sourceState() == state && transitions[i].topOfStack() == stackCharacter && transitions[i].readCharacter() == "\\"){
+            list.push_back(transitions[i]);
+
+        }
+    }
+}

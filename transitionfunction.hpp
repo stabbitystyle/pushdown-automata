@@ -29,6 +29,8 @@ class TransitionFunction
 		int lambdaTransitionCount(string state, char topOfStack);
 		void getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString);
 		void getLambdaTransition(int index, string state, char stackCharacter, string destinationState, string pushString);
+		void getLambdaTransitions(string state, char stackCharacter,vector<Transition>& list);
+		void getTransitions(string state, char inputCharacter, char stackCharacter, vector<Transition>& list);
 };
 
 #endif
