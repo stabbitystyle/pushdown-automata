@@ -228,6 +228,14 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	vector<Transition> transitionsToPerform;
 	vector<Transition> lambdaTransitionsToPerform;
 
+	//stop runing after a number of transitions here
+	if(configurationSettingsPointer->getMaximumNumberOfTransitions() == numberOfTransitionsInSet){
+
+		numberOfTransitionsInSet = 0;
+		commandsInOperation.inputCommand();
+
+	}
+
     cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
     id.view(configurationSettingsPointer);
     cout << endl;
@@ -256,6 +264,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 			id.performTransition(transitionsToPerform[i].destinationState(),transitionsToPerform[i].pushString(),nextID);
 			performedTransition = true;
             ++numberOfTransitions;
+			++numberOfTransitionsInSet;
             if(isAccepted(nextID, numberInCurrentPath + 1))
             {
                 return true;
@@ -282,6 +291,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 			id.performTransition(lambdaTransitionsToPerform[i].destinationState(),lambdaTransitionsToPerform[i].pushString(),nextID);
 			performedTransition = true;
             ++numberOfTransitions;
+			++numberOfTransitionsInSet;
             if(isAccepted(nextID, numberInCurrentPath + 1))
             {
                 return true;

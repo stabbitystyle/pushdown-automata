@@ -14,6 +14,7 @@
 #include "transitionfunction.hpp"
 #include "instantaneousdescription.hpp"
 #include "configurationsettings.hpp"
+#include "commandsinoperation"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ class PushdownAutomata
         TransitionFunction transitionFunction;
         States states;
         FinalStates finalStates;
+        CommandsInOperation commandsInOperation;
         
         string initialState;
 		char initialStackCharacter;
@@ -34,6 +36,7 @@ class PushdownAutomata
         string originalInputString;
 		int numberOfTransitionsInSuccessfulPath;
         int numberOfTransitions;
+        int numberOfTransitionsInSet;
         int numberOfCrashes;
         bool valid;
         bool used;
