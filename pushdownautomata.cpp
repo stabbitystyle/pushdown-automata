@@ -221,8 +221,8 @@ void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& v
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
     bool performedTransition = false;
-    int index = 0;
-    int count = 0;
+    unsigned int index = 0;
+    //int count = 0;
     string destinationState;
     string pushString;
     InstantaneousDescription nextID;
@@ -261,8 +261,8 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
             }
 
         }*/
-		for(index = 0;index < transitionsToPerform.size()-1;i++){
-			id.performTransition(transitionsToPerform[i].destinationState(),transitionsToPerform[i].pushString(),nextID);
+		for(index = 0;index < transitionsToPerform.size()-1;index++){
+			id.performTransition(transitionsToPerform[index].destinationState(),transitionsToPerform[index].pushString(),nextID);
 			performedTransition = true;
             ++numberOfTransitions;
 			++numberOfTransitionsInSet;
@@ -288,8 +288,8 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
             }
         }*/
 		transitionFunction.getLambdaTransitions(id.state(),id.topOfStack(), lambdaTransitionsToPerform);
-		for(index = 0;index < lambdaTransitionsToPerform.size()-1;i++){
-			id.performTransition(lambdaTransitionsToPerform[i].destinationState(),lambdaTransitionsToPerform[i].pushString(),nextID);
+		for(index = 0;index < lambdaTransitionsToPerform.size()-1;index++){
+			id.performTransition(lambdaTransitionsToPerform[index].destinationState(),lambdaTransitionsToPerform[index].pushString(),nextID);
 			performedTransition = true;
             ++numberOfTransitions;
 			++numberOfTransitionsInSet;
