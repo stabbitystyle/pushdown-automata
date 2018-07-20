@@ -15,6 +15,7 @@
 #include "inputalphabet.hpp"
 #include "configurationsettings.hpp"
 #include "uppercase.hpp"
+#include "commandsinoperation.hpp"
 
 using namespace std;
 
@@ -351,6 +352,7 @@ void PushdownAutomata::initialize(string inputString)
 	originalInputString = inputString;
 	currentState = initialState;
 	numberOfTransitions = 0;
+	numberOfTransitionsInSet = 0;
 	numberOfCrashes = 0;
 	numberOfTransitionsInSuccessfulPath = 0;
 	used = true;

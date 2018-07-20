@@ -14,7 +14,7 @@
 #include "transitionfunction.hpp"
 #include "instantaneousdescription.hpp"
 #include "configurationsettings.hpp"
-#include "commandsinoperation"
+#include "commandsinoperation.hpp"
 
 using namespace std;
 
