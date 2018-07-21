@@ -18,7 +18,14 @@ int ConfigurationSettings::getMaximumNumberOfCells(){
     return maximumNumberOfCells;
 };
 string ConfigurationSettings::getDisplayFullPath(){
-    return displayFullPath;
+    if (displayFullPath)
+    {
+        return "Yes";
+    }
+    else
+    {
+        return "No";
+    }
 };
 void ConfigurationSettings::setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput){
     if(maximumNumberOfTransitionsInput>0){
@@ -31,11 +38,11 @@ void ConfigurationSettings::setMaximumNumberOfCells(int maximumNumberOfCellsInpu
     }
 };
 void ConfigurationSettings::toggleDisplayFullPath(){
-    if(displayFullPath.compare("yes"))
+    if(displayFullPath)
     {
-        displayFullPath = "no";
+        displayFullPath = false;
     }else{
-        displayFullPath = "yes";
+        displayFullPath = true;
     }
 };
 

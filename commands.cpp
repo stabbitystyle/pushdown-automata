@@ -9,6 +9,7 @@
 #include"pushdownautomata.hpp"
 #include"inputstrings.hpp"
 #include"commands.hpp"
+#include "intinput.hpp"
 using namespace std;
 
 Commands::Commands(){
@@ -82,37 +83,42 @@ void Commands::show(){
             cout << right << setw(showWidth) << "The pushdown automata hasn’t been tested on a string yet." << endl;
         }else if(pda->isOperating()){
             cout << right << setw(showWidth) << "Current Input String:  " << pda->inputString() << endl;
-            cout << "Result of Test:  " << "currently running" << endl; 
+            cout << right << setw(showWidth) << "Result of Test:  " << "currently running" << endl;
             cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
             cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
 
         }else if(pda->isAcceptedInputString()){
-            cout << "Result of Test:  " << "Accepted" << endl; 
+            cout << right << setw(showWidth) << "Result of Test:  " << "Accepted" << endl;
             cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
             cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
-            
 
         }else if(pda->isRejectedInputString()){
-            cout << "Result of Test:  " << "Rejected" << endl; 
+            cout << right << setw(showWidth) << "Result of Test:  " << "Rejected" << endl;
             cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
             cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
-            
 
         }else if(pda->isUsed() && !pda->isOperating() && !pda->isAcceptedInputString() && !pda->isRejectedInputString()){
             cout << right << setw(showWidth) << "Result of Test:  " << "Neither Accepted nor Rejected" << endl;
             cout << right << setw(showWidth) << "Number of Transitions Performed:  " << pda->totalNumberOfTransitions() << endl;
             cout << right << setw(showWidth) << "Number of Crashes:  " << pda->totalNumberOfCrashes() << endl;
-
-        }
-        
-        cout << endl;
+        }        
     }else{
-        cout << "No PDA loaded" << endl;
+        cout << "No pushdown automata definition is currently loaded." << endl;
     }
-    
+    cout << endl;
 }
 void Commands::view(){
-    pda->viewDefinition();
+    cout << endl;
+
+    if (pdaLoaded)
+    {
+        pda->viewDefinition();
+    }
+    else
+    {
+        cout << "Error: No pushdown automata definition is currently loaded." << endl;
+    }
+    cout << endl;
 }
 void Commands::list(){
     if(pdaLoaded){
@@ -123,15 +129,17 @@ void Commands::insert(){
     string stringToAdd;
     std::cout << std::endl;
     if(pdaLoaded){
-        cout << "Enter String to be added: ";
+        cout << "Enter string to be added: ";
         getline(cin,stringToAdd);
         if(pda->isValidInputString(stringToAdd)){
             strings.addToStrings(stringToAdd);
         }else{
-            cout << "ERROR: inlavaid string" << endl << endl;
+            cout << "ERROR: Invaid string." << endl;
+            cout << endl;
         }
     }else{
-        cout <<"no pda loaded" << endl;
+        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << endl;
     }
 
 }
@@ -139,9 +147,10 @@ void Commands::deleteString(){
     string input;
     bool validString = true;
 
+    std::cout << std::endl;
+
     if(pdaLoaded){
-        std::cout << std::endl;
-        cout << "Enter number of String to be removed: ";
+        cout << "Enter number of string to be removed: ";
         getline(cin,input);
 
         for(string::size_type i = 0;i <input.length()-1;i++){
@@ -150,24 +159,36 @@ void Commands::deleteString(){
             }
         }
 
-        if(validString && stoi(input,nullptr) <= strings.numberOfStrings()){
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
             strings.removeFromStrings(stoi(input,nullptr));
         }else{
-            cout << "ERROR: invalid string" << endl;
-
+            cout << "Error: Invalid string." << endl;
+            cout << endl;
         }
     }else{
-        cout << "no pda loaded" << endl;
+        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << endl;
     }
-
 }
 void Commands::set(){
-    string input;
+    int input;
     bool validString = true;
     std::cout << std::endl;
-    std::cout << "Set the maximum number of transitions[" << config.getMaximumNumberOfTransitions() << "]: " << std::endl;
-    getline(cin,input);
-
+    std::cout << "Set the maximum number of transitions[" << config.getMaximumNumberOfTransitions() << "]: ";
+    if (intInput(input))
+    {
+        if (input < 1)
+        {
+            cout << "apparently input can be less than one" << endl;
+        }
+        else
+        {
+            config.setMaximumNumberOfTransitions(input);
+            cout << "Maximum number of transitions set to " << config.getMaximumNumberOfTransitions() << endl;
+        }
+    }
+    /*getline(cin,input);
+    cout << endl;
     for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
             validString = false;
@@ -175,31 +196,31 @@ void Commands::set(){
     }
     if(validString && stoi(input,nullptr) > 0){
         config.setMaximumNumberOfTransitions(stoi(input,nullptr));
+        cout << "Maximum number of transitions set to " << config.getMaximumNumberOfTransitions() << endl;
     }else{
-        cout << "ERROR: invalid input for transitions" << endl; 
-    }
-
+        cout << "Error: invalid input" << endl; 
+    }*/
+    cout << endl;
 }
 void Commands::truncate(){
     string input;
     bool validString = true;
     std::cout << std::endl;
-    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: " << std::endl;
+    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: ";
     getline(cin,input);
-
+    cout << endl;
     for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
             validString = false;
         }
     }
-
-
     if(validString && stoi(input,nullptr) > 0){
         config.setMaximumNumberOfCells(stoi(input,nullptr));
+        cout << "Width to truncate the ID set to " << config.getMaximumNumberOfCells() << endl;
     }else{
-        cout << "ERROR: invalid input for truncation" << endl; 
+        cout << "Error: Invalid input" << endl; 
     }
-
+    cout << endl;
 }
 void Commands::run(){
     string input;
@@ -300,7 +321,7 @@ void Commands::sort(){
 void Commands::inputCommand(){
 
     string lineInput;
-    char commandInput;
+    char commandInput = 'z';
     
     
     
