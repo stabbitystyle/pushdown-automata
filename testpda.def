@@ -13,6 +13,8 @@ TRANSITION_FUNCTION:
   s0 a Y  s1 Y
   s0 a Z  s0 XZ
   s0 a Z  s1 X
+  s0 b X  s0 YX
+  s0 b X  s1 X
   s0 b Y  s0 YY
   s0 b Y  s1 Y
   s0 b Z  s0 YZ

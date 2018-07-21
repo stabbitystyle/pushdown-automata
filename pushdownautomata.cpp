@@ -238,7 +238,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
     if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
     {
         count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
-        for(index = 0; index < count; ++index)
+		for(index = 0; index < count; ++index)
         {
             transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
             id.performTransition(destinationState, pushString, nextID);

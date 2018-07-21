@@ -41,8 +41,7 @@ void InstantaneousDescription::performTransition(string destinationState, string
 {
     nextID.currentState = destinationState;
     nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
-    remainingInputString = nextID.remainingInputString;
-    // nextID.stack = pushString + stack.substr(1, stack.length() - 1);
+    // remainingInputString = nextID.remainingInputString;
     nextID.stack = pushString + (stack.substr(1, stack.length() -1));
 }
 
@@ -50,8 +49,7 @@ void InstantaneousDescription::performLambdaTransition(string destinationState, 
 {
     nextID.currentState = destinationState;
     nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
-    remainingInputString = nextID.remainingInputString;
-    // nextID.stack = pushString + stack.substr(1, stack.length() - 1);
+    // remainingInputString = nextID.remainingInputString;
     nextID.stack = pushString + (stack.substr(1, stack.length() -1));
 }
 
@@ -64,11 +62,12 @@ string InstantaneousDescription::state() const
 // The method inputCharacter returns the first character of the remaining input string.
 char InstantaneousDescription::inputCharacter() const
 {
-    //if(remainingInputString.empty())
-    //{
+    if(remainingInputString.empty())
+    {
     //    // still shakey about this, probably need advice on how to handle exceptions
     //    throw emptyRemainingInputString("Remaining input string is empty");
-    //}
+        // return '\\';
+    }
     return remainingInputString.at(0);
 }
 

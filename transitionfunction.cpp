@@ -209,6 +209,13 @@ void TransitionFunction::view() const
 // The method then returns by reference a vector of all of the valid transitions
 void TransitionFunction::findTransitions(string sourceState, char readCharacter, char topOfStack, vector<Transition>& transitionsParameter) const
 {
+    // for(vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+    // {
+    //     if((*it.sourceState() == sourceState) && (*it.readCharacter() == readCharacter) && (*it.stackCharacter() == topOfStack))
+    //     {
+    //         transitionsParameter.push_back(*it);
+    //     }
+    // }
     for(int index = 0; index < (int)transitions.size(); ++index)
 	{
         if((transitions[index].sourceState() == sourceState) && (transitions[index].readCharacter() == readCharacter) && (transitions[index].stackCharacter() == topOfStack))
