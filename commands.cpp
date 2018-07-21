@@ -177,9 +177,10 @@ void Commands::set(){
     std::cout << "Set the maximum number of transitions[" << config.getMaximumNumberOfTransitions() << "]: ";
     if (intInput(input))
     {
+        cout << endl;
         if (input < 1)
         {
-            cout << "apparently input can be less than one" << endl;
+            cout << "Error: Input was less than 1." << endl;
         }
         else
         {
@@ -203,23 +204,36 @@ void Commands::set(){
     cout << endl;
 }
 void Commands::truncate(){
-    string input;
+    int input;
     bool validString = true;
     std::cout << std::endl;
     std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: ";
-    getline(cin,input);
+    if (intInput(input))
+    {
+        cout << endl;
+        if (input < 1)
+        {
+            cout << "Error: Input was less than 1." << endl;
+        }
+        else
+        {
+            config.setMaximumNumberOfTransitions(input);
+            cout << "Width to truncate the ID set to " << config.getMaximumNumberOfTransitions() << endl;
+        }
+    }
+    /*getline(cin,input);
     cout << endl;
     for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
-            validString = false;
+            validstring = false;
         }
     }
-    if(validString && stoi(input,nullptr) > 0){
-        config.setMaximumNumberOfCells(stoi(input,nullptr));
-        cout << "Width to truncate the ID set to " << config.getMaximumNumberOfCells() << endl;
+    if(validstring && stoi(input,nullptr) > 0){
+        config.setmaximumnumberofcells(stoi(input,nullptr));
+        cout << "width to truncate the id set to " << config.getmaximumnumberofcells() << endl;
     }else{
-        cout << "Error: Invalid input" << endl; 
-    }
+        cout << "error: invalid input" << endl; 
+    }*/
     cout << endl;
 }
 void Commands::run(){
@@ -254,9 +268,15 @@ void Commands::whileOperatingRun(){
 }
 void Commands::quit(){
     cout << endl;
-    cout << "the pushdown automaton is not running on an input string" << endl;
+    if (pda->isOperating())
+    {
+        cout << "When we get run working, we can then do this part. :| :|" << endl;
+    }
+    else
+    {
+        cout << "Error: The pushdown automaton is not currently operating on an input string." << endl;
+    }
     cout << endl;
-
 }
 void Commands::exit(){
     config.writeFile(configFileName);
@@ -291,9 +311,6 @@ void Commands::open(){
         delete pda;
         pda = 0;
     }
-    
-
-    
 }
 void Commands::close(){
     if(pdaLoaded){

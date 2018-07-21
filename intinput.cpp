@@ -25,7 +25,8 @@ bool intInput(int& userInput)
     {
         if(!isdigit(*it))
         {
-            cout << "Input contained an invalid character." << endl;
+            cout << endl;
+            cout << "Error: Input contained an invalid character." << endl;
             validInput = false;
             break;
         }
@@ -36,7 +37,8 @@ bool intInput(int& userInput)
         inputNumber = strtol(inputString.c_str(), NULL, 10);
         if(errno == ERANGE || inputNumber > INT_MAX)
         {
-            cout << "Input was too large for an int.  Maximum int size is: " << INT_MAX << endl;
+            cout << endl;
+            cout << "Error: Input was too large for an int.  Maximum int size is: " << INT_MAX << endl;
             validInput = false;
         }
         else
