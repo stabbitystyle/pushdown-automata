@@ -5,7 +5,7 @@ OBJECTS= *.o
 
 all: pda
 
-pda: main.cpp pushdownautomata.o commands.o commandsinoperation.o configurationsettings.o finalstates.o inputalphabet.o inputstrings.o instantaneousdescription.o intinput.o operations.o stackalphabet.o states.o transition.o transitionfunction.o uppercase.o
+pda: main.cpp inputalphabet.o stackalphabet.o states.o finalstates.o transitionfunction.o instantaneousdescription.o configurationsettings.o commandsinoperation.o commands.o pushdownautomata.o inputstrings.o intinput.o operations.o transition.o uppercase.o
 	$(CC) -o $@ $^ $(CFLAGS)
 
 %.o: %.cpp %.hpp

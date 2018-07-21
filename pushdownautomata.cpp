@@ -237,6 +237,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		{
 			return true;
 		}
+
 		if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
 		{
 			count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
@@ -277,6 +278,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		
 		return false;
 	}
+
 }
 
 // points the configurationSettingsPointer at a configurationSettings object referenced by configurationSettings
@@ -413,4 +415,9 @@ bool PushdownAutomata::isAcceptedInputString() const
 bool PushdownAutomata::isRejectedInputString() const
 {
     return rejected;
+}
+
+void PushdownAutomata::resetTransitionCount()
+{
+	transitionCount = 0;
 }
