@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "commands.hpp"
+#include "commandsinoperation.hpp"
 
 using namespace std;
 

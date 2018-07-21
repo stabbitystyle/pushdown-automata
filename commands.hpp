@@ -13,7 +13,6 @@
 
 using namespace std;
 
-
 class Commands{
 
     private:
@@ -49,6 +48,8 @@ class Commands{
         void display();
         void sort();
         void inputCommand();
+
+        void whileOperatingRun();
 
 };
 

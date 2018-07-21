@@ -25,7 +25,7 @@ class PushdownAutomata
         TransitionFunction transitionFunction;
         States states;
         FinalStates finalStates;
-        
+
         string initialState;
 		char initialStackCharacter;
 		vector<string> description;
@@ -35,6 +35,7 @@ class PushdownAutomata
 		int numberOfTransitionsInSuccessfulPath;
         int numberOfTransitions;
         int numberOfCrashes;
+        int transitionCount;
         bool valid;
         bool used;
         bool operating;
@@ -51,6 +52,7 @@ class PushdownAutomata
         void initialize(string inputString);
         bool isAccepted(InstantaneousDescription id, int numberInCurrentPath);
         void terminateOperation();
+        void resetTransitionCount();
         string inputString() const;
         int totalNumberOfTransitions() const;
 		int totalNumberOfCrashes() const;

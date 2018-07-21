@@ -11,9 +11,6 @@
 #include"commands.hpp"
 using namespace std;
 
-
-
-
 Commands::Commands(){
     pda = 0;
     pdaLoaded = false;
@@ -229,6 +226,10 @@ void Commands::run(){
         cout << "ERROR: no pda loaded" << endl;
     }
 
+}
+void Commands::whileOperatingRun(){
+    pda->resetTransitionCount();
+    return;
 }
 void Commands::quit(){
     cout << endl;
