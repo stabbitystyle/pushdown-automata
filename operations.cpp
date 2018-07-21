@@ -10,11 +10,18 @@ using namespace std;
 // ????
 string truncated(string value, int maxNumberOfCharacters)
 {
-	return value;
+    if ((int)value.length() > maxNumberOfCharacters)
+    value = value.substr(0, maxNumberOfCharacters) + ">";
+    return value;
 }
 
 // ????
 string visible(string value)
 {
+    const string lambda("\\");
+    if (value.empty())
+    {
+        value = lambda;
+    }
 	return value;
 }

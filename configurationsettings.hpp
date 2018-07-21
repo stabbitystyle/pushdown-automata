@@ -16,7 +16,7 @@ class ConfigurationSettings
     private:
         int maximumNumberOfTransitions;
         int maximumNumberOfCells;
-        string displayFullPath;
+        bool displayFullPath;
 
     public:
         int getMaximumNumberOfTransitions();
