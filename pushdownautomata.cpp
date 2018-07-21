@@ -15,6 +15,7 @@
 #include "inputalphabet.hpp"
 #include "configurationsettings.hpp"
 #include "uppercase.hpp"
+#include "commands.hpp"
 
 using namespace std;
 
@@ -278,7 +279,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		
 		return false;
 	}
-
+	commands->inputCommand();
 }
 
 // points the configurationSettingsPointer at a configurationSettings object referenced by configurationSettings
