@@ -35,6 +35,7 @@ class PushdownAutomata
 		int numberOfTransitionsInSuccessfulPath;
         int numberOfTransitions;
         int numberOfCrashes;
+        int transitionCount;
         bool valid;
         bool used;
         bool operating;
