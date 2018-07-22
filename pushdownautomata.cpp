@@ -218,7 +218,7 @@ void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& v
 	}
 }
 
-bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
+bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath, bool& running, string& commandCalled)
 {
 	bool performedTransition = false;
 	int index = 0;
@@ -237,10 +237,33 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		return true;
 	}
 
-	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions()) {
+	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions() && running) {
 		resetTransitionCount();
-		commands->inputCommand();
+		commandCalled = commands->inputCommand();
+
+		if(commandCalled == "exit"){
+			operating = false;
+			running = false;
+		}
+		if(commandCalled == "close"){
+			operating = false;
+			running = false;
+		}
+		if(commandCalled == "open"){
+			operating = false;
+			running = false;
+		}
+		if(commandCalled == "quit"){
+			operating = false;
+			running = false;
+		}
+
+		
 	}
+
+	if(running){
+
+	
 
 	if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
 	{
@@ -251,7 +274,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 			id.performTransition(destinationState, pushString, nextID);
 			performedTransition = true;
 			++numberOfTransitions;
-			if(isAccepted(nextID, numberInCurrentPath + 1))
+			if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
 			{
 				return true;
 			}
@@ -267,7 +290,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 			id.performLambdaTransition(destinationState, pushString, nextID);
 			performedTransition = true;
 			++numberOfTransitions;
-			if(isAccepted(nextID, numberInCurrentPath + 1))
+			if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
 			{
 				return true;
 			}
@@ -278,6 +301,8 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		cout << "Crash " << ++numberOfCrashes << " occured." << endl;
 	}
 	
+	return false;
+	}
 	return false;
 }
 
@@ -332,19 +357,27 @@ void PushdownAutomata::initialize(string inputString)
 	operating = true;
 	accepted = false;
 	rejected = false;
-
+	//callededCommand = "";
+	bool running = true;
+	string command = "";
+	
 	InstantaneousDescription startingId(currentState, originalInputString, initialStackCharacter);
-	accepted = this->isAccepted(startingId, numberOfTransitions);
+	accepted = this->isAccepted(startingId, numberOfTransitions, running, command);
 	rejected = !accepted;
 	resetTransitionCount();
+	if(running){
+		if (accepted)
+		{
+			cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+		}
+		if (rejected)
+		{
+			cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+		}
+	}else{
+		cout << "Input string " << originalInputString << " neither accepted or rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+		rejected = false;
 
-	if (accepted)
-	{
-		cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
-	}
-	if (rejected)
-	{
-		cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
 	}
 }
 
@@ -422,3 +455,8 @@ void PushdownAutomata::resetTransitionCount()
 {
 	transitionCount = 0;
 }
+
+/*void PushdownAutomata::setCalledCommand(string value){
+	callededCommand = value;
+
+}*/

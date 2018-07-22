@@ -18,22 +18,35 @@ void CommandsInOperation::run(){
 void CommandsInOperation::quit(){
     //CommandsInOperation::pda->endRecrustion("quit");
 
+    //CommandsInOperation::pda->terminateOperation();
+    //CommandsInOperation::pda->setCalledCommand("quit");
+
+
 }
 void CommandsInOperation::exit(){
     //CommandsInOperation::pda->endRecrustion("exit");
 
+    //CommandsInOperation::pda->terminateOperation();
+    //CommandsInOperation::pda->setCalledCommand("exit");
+
 }
 void CommandsInOperation::open(){
     //CommandsInOperation::pda->endRecrustion("open");
+
+    //CommandsInOperation::pda->terminateOperation();
+    //CommandsInOperation::pda->setCalledCommand("open");
 } 
 void CommandsInOperation::close(){
     //CommandsInOperation::pda->endRecrustion("close");
+
+    //CommandsInOperation::pda->terminateOperation();
+    //CommandsInOperation::pda->setCalledCommand("close");
 
 }
  void CommandsInOperation::link(PushdownAutomata * linker){
      //CommandsInOperation::pda = linker; 
  }
-void CommandsInOperation::inputCommand(){
+string CommandsInOperation::inputCommand(){
 
     string lineInput;
     char commandInput;
@@ -61,6 +74,7 @@ void CommandsInOperation::inputCommand(){
             {
                 CommandsInOperation::close();
                 keeplooping = false;
+                return "close";
                
                 break;
             }
@@ -86,6 +100,7 @@ void CommandsInOperation::inputCommand(){
             {
                 CommandsInOperation::exit();
                 keeplooping = false;
+                return "exit";
                    
                 break;
             }
@@ -120,6 +135,7 @@ void CommandsInOperation::inputCommand(){
             {
                 CommandsInOperation::open();
                 keeplooping = false;
+                return "open";
                     
                 break;
             }
@@ -129,6 +145,8 @@ void CommandsInOperation::inputCommand(){
             {
                 CommandsInOperation::quit();
                 keeplooping = false;
+                return "quit";
+
                    
                 break;
             }
@@ -138,6 +156,7 @@ void CommandsInOperation::inputCommand(){
             {
                 CommandsInOperation::run();
                 keeplooping = false;
+                return "run";
                     
                 break;
             }
@@ -188,6 +207,7 @@ void CommandsInOperation::inputCommand(){
             }
          }
     }
+    return "";
 }
 
 

@@ -26,7 +26,7 @@ class CommandsInOperation : public Commands
         void exit(); 
         void open(); 
         void close(); 
-        void inputCommand();
+        string inputCommand();
 };
 
 
