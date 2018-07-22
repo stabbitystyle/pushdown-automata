@@ -348,7 +348,7 @@ void PushdownAutomata::viewDefinition() const
 // The method initialize will accept inputString, which is the string to be tested on the Pushdown Automaton.
 // It will store inputString in originalInputString, and then set the operating Boolean to true.
 // It will also set numberOfTransitions, numberOfCrashes, and numberOfTransitionsInSuccessfulPath to 0, and the used Boolean to true.
-void PushdownAutomata::initialize(string inputString)
+string PushdownAutomata::initialize(string inputString)
 {
 	originalInputString = inputString;
 	currentState = initialState;
@@ -381,6 +381,7 @@ void PushdownAutomata::initialize(string inputString)
 		rejected = false;
 
 	}
+	return command;
 }
 
 // The method terminateOperation terminates operation of the Pushdown Automaton.

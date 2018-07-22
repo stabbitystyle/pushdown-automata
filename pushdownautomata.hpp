@@ -54,7 +54,7 @@ class PushdownAutomata
     public:
         PushdownAutomata(string definitionFileName);
         void viewDefinition() const;
-        void initialize(string inputString);
+        string initialize(string inputString);
         bool isAccepted(InstantaneousDescription id, int numberInCurrentPath,bool& running, string& commandCalled);
         void terminateOperation();
         void resetTransitionCount();
