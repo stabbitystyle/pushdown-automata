@@ -25,6 +25,7 @@ ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 {
 	valid = true;
+	used = false;
 
     ifstream definition(definitionFileName.c_str(), ifstream::in);
     string value;
@@ -376,10 +377,12 @@ string PushdownAutomata::initialize(string inputString)
 		if (accepted)
 		{
 			cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+			operating = false;
 		}
 		if (rejected)
 		{
 			cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+			operating = false;
 		}
 	}else{
 		cout << "Input string " << originalInputString << " neither accepted or rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
