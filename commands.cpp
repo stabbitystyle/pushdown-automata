@@ -117,8 +117,8 @@ void Commands::view(){
     else
     {
         cout << "Error: No pushdown automata definition is currently loaded." << endl;
+        cout << endl;
     }
-    cout << endl;
 }
 void Commands::list(){
     cout << endl;
@@ -180,7 +180,6 @@ void Commands::deleteString(){
 }
 void Commands::set(){
     int input;
-    bool validString = true;
     std::cout << std::endl;
     std::cout << "Set the maximum number of transitions[" << config.getMaximumNumberOfTransitions() << "]: ";
     if (intInput(input))
@@ -200,7 +199,6 @@ void Commands::set(){
 }
 void Commands::truncate(){
     int input;
-    bool validString = true;
     std::cout << std::endl;
     std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: ";
     if (intInput(input))

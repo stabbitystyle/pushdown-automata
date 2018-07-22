@@ -35,6 +35,7 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
     }
     while(!definition.fail() && getline(definition, value))
     {
+        cout << "String is: " << value << endl;
         for(string::iterator it = value.begin(); it != value.end(); ++it)
         {
             if(isspace(*it) || (value.find('\\') != string::npos && value.size() != 1))
