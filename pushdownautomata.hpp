@@ -18,6 +18,7 @@
 using namespace std;
 
 class CommandsInOperation;
+class Commands;
 
 class PushdownAutomata
 {
@@ -52,7 +53,7 @@ class PushdownAutomata
 		void loadInitialState(ifstream& definition, string& value, bool& valid);
 		void loadInitialStackCharacter(ifstream& definition, string& value, bool& valid);
     public:
-        PushdownAutomata(string definitionFileName);
+        PushdownAutomata(string definitionFileName, Commands& cmd);
         void viewDefinition() const;
         string initialize(string inputString);
         bool isAccepted(InstantaneousDescription id, int numberInCurrentPath,bool& running, string& commandCalled);
