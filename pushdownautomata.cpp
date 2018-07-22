@@ -231,14 +231,15 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	id.view(configurationSettingsPointer);
 	cout << endl;
 	++transitionCount;
-	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions()) {
-		resetTransitionCount();
-		commands->inputCommand();
-	}
 
 	if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
 	{
 		return true;
+	}
+
+	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions()) {
+		resetTransitionCount();
+		commands->inputCommand();
 	}
 
 	if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
@@ -335,6 +336,7 @@ void PushdownAutomata::initialize(string inputString)
 	InstantaneousDescription startingId(currentState, originalInputString, initialStackCharacter);
 	accepted = this->isAccepted(startingId, numberOfTransitions);
 	rejected = !accepted;
+	resetTransitionCount();
 
 	if (accepted)
 	{
