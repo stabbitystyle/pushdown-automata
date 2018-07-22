@@ -7,11 +7,12 @@
 
 #include<iostream>
 #include"commands.hpp"
-#include"pushdownautomata.hpp"
 #include"inputstrings.hpp"
 #include"configurationsettings.hpp"
 
 using namespace std;
+
+class PushdownAutomata;
 
 class CommandsInOperation : public Commands
 {

@@ -57,10 +57,8 @@ void InstantaneousDescription::performTransition(string destinationState, string
 void InstantaneousDescription::performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID)
 {
     nextID.currentState = destinationState;
-    if (!isEmptyRemainingInputString()) {
-        nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
-    }
-    // remainingInputString = nextID.remainingInputString;
+    nextID.remainingInputString = remainingInputString;
+
     if (pushString == "\\")
     {
         if (stack.size() != 0) {

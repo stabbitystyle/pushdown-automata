@@ -17,7 +17,7 @@
 
 using namespace std;
 
-class Commands;
+class CommandsInOperation;
 
 class PushdownAutomata
 {
@@ -27,7 +27,7 @@ class PushdownAutomata
         TransitionFunction transitionFunction;
         States states;
         FinalStates finalStates;
-        Commands* commands;
+        CommandsInOperation* commands;
 
         string initialState;
 		char initialStackCharacter;

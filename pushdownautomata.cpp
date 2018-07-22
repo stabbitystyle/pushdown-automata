@@ -15,7 +15,7 @@
 #include "inputalphabet.hpp"
 #include "configurationsettings.hpp"
 #include "uppercase.hpp"
-#include "commands.hpp"
+#include "commandsinoperation.hpp"
 
 using namespace std;
 
@@ -220,66 +220,64 @@ void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& v
 
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
-	while(transitionCount < configurationSettingsPointer->getMaximumNumberOfTransitions())
-	{
-		bool performedTransition = false;
-		int index = 0;
-		int count = 0;
-		string destinationState;
-		string pushString;
-		InstantaneousDescription nextID;
+	bool performedTransition = false;
+	int index = 0;
+	int count = 0;
+	string destinationState;
+	string pushString;
+	InstantaneousDescription nextID;
 
-		cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
-		id.view(configurationSettingsPointer);
-		cout << endl;
-
-		if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
-		{
-			cout << "Made it here" << endl;
-			return true;
-		}
-
-		if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
-		{
-			count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
-			for(index = 0; index < count; ++index)
-			{
-				transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
-				id.performTransition(destinationState, pushString, nextID);
-				performedTransition = true;
-				++numberOfTransitions;
-				++transitionCount;
-				if(isAccepted(nextID, numberInCurrentPath + 1))
-				{
-					return true;
-				}
-			}
-		}
-
-		if(!id.isEmptyStack())
-		{
-			count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
-			for(index = 0; index < count; ++index)
-			{
-				transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
-				id.performLambdaTransition(destinationState, pushString, nextID);
-				performedTransition = true;
-				++numberOfTransitions;
-				++transitionCount;
-				if(isAccepted(nextID, numberInCurrentPath + 1))
-				{
-					return true;
-				}
-			}
-		}
-		if(!performedTransition)
-		{
-			cout << "Crash " << ++numberOfCrashes << " occured." << endl;
-		}
-		
-		return false;
+	cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
+	id.view(configurationSettingsPointer);
+	cout << endl;
+	++transitionCount;
+	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions()) {
+		resetTransitionCount();
+		commands->inputCommand();
 	}
-	commands->inputCommand();
+
+	if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
+	{
+		return true;
+	}
+
+	if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
+	{
+		count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
+		for(index = 0; index < count; ++index)
+		{
+			transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
+			id.performTransition(destinationState, pushString, nextID);
+			performedTransition = true;
+			++numberOfTransitions;
+			if(isAccepted(nextID, numberInCurrentPath + 1))
+			{
+				return true;
+			}
+		}
+	}
+
+	if(!id.isEmptyStack())
+	{
+		count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
+		for(index = 0; index < count; ++index)
+		{
+			transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
+			id.performLambdaTransition(destinationState, pushString, nextID);
+			performedTransition = true;
+			++numberOfTransitions;
+			if(isAccepted(nextID, numberInCurrentPath + 1))
+			{
+				return true;
+			}
+		}
+	}
+	if(!performedTransition)
+	{
+		cout << "Crash " << ++numberOfCrashes << " occured." << endl;
+	}
+	
+	return false;
 }
 
 // points the configurationSettingsPointer at a configurationSettings object referenced by configurationSettings
@@ -340,11 +338,11 @@ void PushdownAutomata::initialize(string inputString)
 
 	if (accepted)
 	{
-		cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " with " << numberOfCrashes << " crashes." << endl;
+		cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
 	}
 	if (rejected)
 	{
-		cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " with " << numberOfCrashes << " crashes." << endl;
+		cout << "Input string " << originalInputString << " rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
 	}
 }
 
