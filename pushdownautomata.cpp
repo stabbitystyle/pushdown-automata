@@ -145,7 +145,6 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
 	{
 		cout << "Pushdown Automata definition failed to load correctly." << endl;
 	}
-	cout << endl;
 }
 
 void PushdownAutomata::loadInitialState(ifstream& definition, string& value, bool& valid)

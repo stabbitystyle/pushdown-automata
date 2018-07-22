@@ -190,11 +190,11 @@ void TransitionFunction::view() const
         if(alreadyUsed == false)
         {
             cout << "\u03B4(" << it->sourceState() << ", " << it->readCharacter() << ", " << it->stackCharacter() << ") = {(" << it->destinationState() << ", " << it->pushString() << ")";
-            for(vector<Transition>::const_iterator sub = it; sub != transitions.end(); ++sub)
+            for(vector<Transition>::const_iterator sub = it + 1; sub != transitions.end(); ++sub)
             {
                 if((sub->sourceState() == it->sourceState()) && (sub->readCharacter() == it->readCharacter()) && (sub->stackCharacter() == it->stackCharacter()))
                 {
-                    cout << ", (" << it->destinationState() << ", " << it->pushString() << ")";
+                    cout << ", (" << sub->destinationState() << ", " << sub->pushString() << ")";
                 }
             }
             cout << "}" << endl;
