@@ -25,6 +25,7 @@ ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 {
 	valid = true;
+	used = false;
 
     ifstream definition(definitionFileName.c_str(), ifstream::in);
     string value;
