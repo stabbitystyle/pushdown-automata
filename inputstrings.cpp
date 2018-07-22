@@ -13,8 +13,7 @@
 
 using namespace std;
 
-static bool stringCompaire(const string& right, const string& left);
-static bool sortForslash(const string& right, const string& left);
+static bool stringCompare(const string& right, const string& left);
 
 InputStrings::InputStrings() : stringListModified(false)
 {
@@ -36,7 +35,6 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
     }
     while(!definition.fail() && getline(definition, value))
     {
-        cout << "String is: " << value << endl;
         for(string::iterator it = value.begin(); it != value.end(); ++it)
         {
             if(isspace(*it) || (value.find('\\') != string::npos && value.size() != 1))
@@ -170,18 +168,27 @@ int InputStrings::numberOfStrings() const
 void InputStrings::sort()
 {
     if(notSorted){
-        std::sort(strings.begin(),strings.end());
-        std::sort(strings.begin(),strings.end(),stringCompaire);
-        std::sort(strings.begin(),strings.end(),sortForslash);
-        notSorted =false;
+        std::sort(strings.begin(), strings.end(), stringCompare);
+        for (vector<string>::iterator it = strings.begin(); it != strings.end(); ++it)
+        {
+            for (vector<string>::iterator sub = it; sub != strings.end(); ++sub)
+            {
+                if (sub->length() != it->length())
+                {
+                    std::sort(it, sub);
+                    it = sub - 1;
+                    break;
+                }
+            }
+        }
+        cout << "The string list has been successfully sorted in canonical order." << endl;
+        notSorted = false;
     }else{
-        cout << "strings alrerady sorted" << endl;
+        cout << "Error: The string list was already in canonical order." << endl;
     }
-
-
 }
 
-static bool stringCompaire(const string& right, const string& left){
+static bool stringCompare(const string& right, const string& left){
     
     /*
     if(right.length() > left.length()){
@@ -193,9 +200,4 @@ static bool stringCompaire(const string& right, const string& left){
     */
    return !(right.length() > left.length());
 
-}
-
-static bool sortForslash(const string& right, const string& left){
-    const string slash = "\\"; 
-     return (right == slash);
 }
