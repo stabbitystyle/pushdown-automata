@@ -216,7 +216,7 @@ void Commands::truncate(){
     }
     cout << endl;
 }
-void Commands::run(){
+string Commands::run(){
     string input;
     bool validString = true;
     if(pdaLoaded){
@@ -232,7 +232,7 @@ void Commands::run(){
 
         if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
 
-            pda->initialize(strings.getInputString(stoi(input,nullptr)));
+           return pda->initialize(strings.getInputString(stoi(input,nullptr)));
 
         }else{
             cout << "Error: Invalid input string" << endl;
@@ -240,6 +240,7 @@ void Commands::run(){
     }else{
         cout << "Error: No pushdown automata definition currently loaded." << endl;
     }
+    return "";
 
 }
 void Commands::quit(){
@@ -330,6 +331,7 @@ void Commands::inputCommand(){
 
     string lineInput;
     char commandInput = 'z';
+    string command = "";
     
     
     
@@ -429,7 +431,7 @@ void Commands::inputCommand(){
             case 'R':
             case 'r':
             {
-                run();
+                command = run();
                     
                 break;
             }
@@ -478,6 +480,18 @@ void Commands::inputCommand(){
             {
                 break;
             }
+         }
+         if(command == "open"){
+             open();
+         }
+         if(command == "exit"){
+             exit();
+         }
+         if(command == "close"){
+             close();
+         }
+         if(command == "quit"){
+             quit();
          }
     }
 }

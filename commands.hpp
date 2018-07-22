@@ -41,7 +41,7 @@ class Commands{
         void deleteString();
         void set();
         void truncate();
-        void run();
+        string run();
         void quit();
         void exit();
         void open();
