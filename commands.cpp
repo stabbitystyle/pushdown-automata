@@ -15,19 +15,19 @@ using namespace std;
 Commands::Commands(){
     pda = 0;
     pdaLoaded = false;
-    config.load(configFileName);
+    config.load();
 }
 
 
 Commands::Commands(string fileName){
     pda = 0;
     pdaLoaded = false;
-    config.load(configFileName);
+    config.load();
 
     pdaName = fileName;
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
-    configFileName = fileName + ".cfg";
+    //configFileName = fileName + ".cfg";
     pda = new PushdownAutomata(definitionFileName, *this);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
@@ -263,7 +263,7 @@ void Commands::quit(){
     cout << endl;
 }
 void Commands::exit(){
-    config.writeFile(configFileName);
+    config.writeFile();
     if(pdaLoaded){
         strings.saveToFile(stringFileName);
         delete pda;
