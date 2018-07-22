@@ -275,6 +275,7 @@ void Commands::open(){
         delete pda;
         pda = 0;
         strings.saveToFile(stringFileName);
+        strings.clearAllStrings();
         stringFileName = "";
         definitionFileName = "";
         pdaName = "";
