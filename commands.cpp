@@ -251,7 +251,8 @@ void Commands::quit(){
     }
     else if (pda->isOperating())
     {
-        cout << "When we get run working, we can then do this part. :| :|" << endl;
+        //Change the current status of the pda for the show command
+        pda->terminateOperation();
     }
     else
     {
@@ -432,7 +433,19 @@ void Commands::inputCommand(){
             case 'r':
             {
                 command = run();
-                    
+                if(command == "open"){
+                    open();
+                }
+                if(command == "exit"){
+                    commandInput = 'x';
+                    exit();
+                }
+                if(command == "close"){
+                    close();
+                }
+                if(command == "quit"){
+                    quit();
+                }
                 break;
             }
             // Set
@@ -480,18 +493,6 @@ void Commands::inputCommand(){
             {
                 break;
             }
-         }
-         if(command == "open"){
-             open();
-         }
-         if(command == "exit"){
-             exit();
-         }
-         if(command == "close"){
-             close();
-         }
-         if(command == "quit"){
-             quit();
          }
     }
 }

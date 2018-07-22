@@ -258,7 +258,6 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 			running = false;
 		}
 		if(commandCalled == "quit"){
-			operating = false;
 			running = false;
 		}
 
