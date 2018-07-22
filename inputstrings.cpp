@@ -13,7 +13,7 @@
 
 using namespace std;
 
-static bool stringCompaire(const string& right, const string& left);
+static bool stringCompare(const string& right, const string& left);
 static bool sortForslash(const string& right, const string& left);
 
 InputStrings::InputStrings() : stringListModified(false)
@@ -36,7 +36,6 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
     }
     while(!definition.fail() && getline(definition, value))
     {
-        cout << "String is: " << value << endl;
         for(string::iterator it = value.begin(); it != value.end(); ++it)
         {
             if(isspace(*it) || (value.find('\\') != string::npos && value.size() != 1))
@@ -165,7 +164,7 @@ void InputStrings::sort()
 {
     if(notSorted){
         std::sort(strings.begin(),strings.end());
-        std::sort(strings.begin(),strings.end(),stringCompaire);
+        std::sort(strings.begin(),strings.end(),stringCompare);
         std::sort(strings.begin(),strings.end(),sortForslash);
         notSorted =false;
     }else{
@@ -175,7 +174,7 @@ void InputStrings::sort()
 
 }
 
-static bool stringCompaire(const string& right, const string& left){
+static bool stringCompare(const string& right, const string& left){
     
     /*
     if(right.length() > left.length()){
