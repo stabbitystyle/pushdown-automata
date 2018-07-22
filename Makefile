@@ -1,19 +1,18 @@
-CC = g++
-CFLAGS = -g -Wall
-OBJECTS = main.o
+CFLAGS= -g -Wall -std=c++11
+CC= g++
+ALL= pda *.o
+OBJECTS= *.o
 
 all: pda
 
-pda: $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $@
+pda: main.cpp inputalphabet.o stackalphabet.o states.o finalstates.o transitionfunction.o instantaneousdescription.o configurationsettings.o commandsinoperation.o commands.o pushdownautomata.o inputstrings.o intinput.o operations.o transition.o uppercase.o
+	$(CC) -o $@ $^ $(CFLAGS)
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+%.o: %.cpp %.hpp
+	$(CC) -c $< $(CFLAGS)
 
-.PHONY: clean
 clean:
-	rm -f *.o
+	rm -f $(OBJECTS)
 
-.PHONY: immaculate
 immaculate:
-	rm -f pda *.o
+	rm -f $(ALL)
