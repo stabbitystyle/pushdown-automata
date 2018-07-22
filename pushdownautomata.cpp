@@ -16,12 +16,13 @@
 #include "configurationsettings.hpp"
 #include "uppercase.hpp"
 #include "commandsinoperation.hpp"
+#include "commands.hpp"
 
 using namespace std;
 
 ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 
-PushdownAutomata::PushdownAutomata(string definitionFileName)
+PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 {
 	valid = true;
 
@@ -29,6 +30,7 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
     string value;
 
 	commands = new CommandsInOperation();
+	commands->link(cmd);
 
     cout << endl;
     if(definition.fail())

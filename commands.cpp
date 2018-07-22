@@ -28,7 +28,7 @@ Commands::Commands(string fileName){
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
     configFileName = fileName + ".cfg";
-    pda = new PushdownAutomata(definitionFileName);
+    pda = new PushdownAutomata(definitionFileName, *this);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);
@@ -284,7 +284,7 @@ void Commands::open(){
     definitionFileName = pdaName + ".def";
     stringFileName = pdaName + ".str";
 
-    pda = new PushdownAutomata(definitionFileName);
+    pda = new PushdownAutomata(definitionFileName, *this);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);

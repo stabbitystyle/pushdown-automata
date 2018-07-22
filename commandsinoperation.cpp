@@ -44,7 +44,7 @@ void CommandsInOperation::close(){
 
 }
  void CommandsInOperation::link(Commands& linker){
-     commandsPointer = &linker; 
+     commandsPointer = &linker;
  }
 string CommandsInOperation::inputCommand(){
 
@@ -82,7 +82,7 @@ string CommandsInOperation::inputCommand(){
             case 'D':
             case 'd':
             {
-                deleteString();
+                commandsPointer->deleteString();
                     
                 break;
             }
@@ -90,7 +90,7 @@ string CommandsInOperation::inputCommand(){
             case 'P':
             case 'p':
             {
-                display();
+                commandsPointer->display();
                 
                 break;
             }
@@ -109,7 +109,7 @@ string CommandsInOperation::inputCommand(){
             case 'H':
             case 'h':
             {
-                help();
+                commandsPointer->help();
                     
                 break;
             }
@@ -117,7 +117,7 @@ string CommandsInOperation::inputCommand(){
             case 'I':
             case 'i':
             {
-                insert();
+                commandsPointer->insert();
                     
                 break;
             }
@@ -125,7 +125,7 @@ string CommandsInOperation::inputCommand(){
             case 'L':
             case 'l':
             {
-                list();
+                commandsPointer->list();
                     
                 break;
             }
@@ -164,7 +164,7 @@ string CommandsInOperation::inputCommand(){
             case 'E':
             case 'e':
             {
-                set();
+                commandsPointer->set();
                     
                 break;
             }
@@ -172,7 +172,7 @@ string CommandsInOperation::inputCommand(){
             case 'W':
             case 'w':
             {
-                show();
+                commandsPointer->show();
                 
                 break;
             }
@@ -181,7 +181,7 @@ string CommandsInOperation::inputCommand(){
             case 'S':
             case 's':
             {
-                sort();
+                commandsPointer->sort();
                     
                 break;
             }
@@ -189,14 +189,14 @@ string CommandsInOperation::inputCommand(){
             case 'T':
             case 't':
             {
-                   truncate();
+                   commandsPointer->truncate();
                 break;
             }
             // View
             case 'V':
             case 'v':
             {   
-                view();
+                commandsPointer->view();
                    
                 break;
             }
