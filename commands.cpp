@@ -152,27 +152,29 @@ void Commands::insert(){
     cout << endl;
 }
 void Commands::deleteString(){
-    string input;
-    bool validString = true;
+    int input;
 
     std::cout << std::endl;
 
     if(pdaLoaded){
         cout << "Enter number of string in string file to be removed: ";
-        getline(cin,input);
-
-        for(string::size_type i = 0;i <input.length()-1;i++){
-            if(!isdigit(input.at(i))){
-                validString = false;
+        if (intInput(input))
+        {
+            if ((input <= strings.numberOfStrings()) && (input > 0) && (strings.numberOfStrings() > 0))
+            {
+                cout << "String number " << input << " which was " << strings.getInputString(input) << " was successfully deleted." << std::endl;
+                strings.removeFromStrings(input);
+            }
+            else
+            {
+                cout << "Error:  String number " << input << " does not exist." << endl;
             }
         }
-
-        if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
-            strings.removeFromStrings(stoi(input,nullptr));
-        }else{
+        else
+        {
             cout << "Error: Invalid string number." << endl;
-            cout << endl;
         }
+        cout << endl;
     }else{
         cout << "Error: No pushdown automata definition currently loaded." << endl;
         cout << endl;
