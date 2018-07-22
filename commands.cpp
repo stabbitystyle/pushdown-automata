@@ -231,9 +231,8 @@ void Commands::run(){
         }
 
         if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
-            //if not running
+
             pda->initialize(strings.getInputString(stoi(input,nullptr)));
-            //if running
 
         }else{
             cout << "Error: Invalid input string" << endl;
@@ -242,10 +241,6 @@ void Commands::run(){
         cout << "Error: No pushdown automata definition currently loaded." << endl;
     }
 
-}
-void Commands::whileOperatingRun(){
-    pda->resetTransitionCount();
-    return;
 }
 void Commands::quit(){
     cout << endl;
