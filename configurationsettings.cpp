@@ -48,10 +48,10 @@ void ConfigurationSettings::toggleDisplayFullPath(){
 
 //this method loads the config file for the pushdown automaton
 //and sets defaults if any are wrong or missing 
-void ConfigurationSettings::load(string configFileName){
+void ConfigurationSettings::load(){
 
     //string filename = "pda.cfg";
-    ifstream config(configFileName);
+    ifstream config("pda.cfg");
     string configline;
     size_t found;
     bool tranNotFound = true;
@@ -199,8 +199,8 @@ void ConfigurationSettings::load(string configFileName){
     }
 };
 
-void ConfigurationSettings::writeFile(string configFileName){
-    ofstream configFile(configFileName);
+void ConfigurationSettings::writeFile(){
+    ofstream configFile("pda.cfg");
 
     if(configFile.is_open()){
         configFile << "MAXIMUM_TRANSITIONS=" << maximumNumberOfTransitions << endl;
