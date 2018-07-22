@@ -10,10 +10,10 @@
 
 using namespace std;
 
+CommandsPointer CommandsInOperation::commandsPointer = 0;
 
 void CommandsInOperation::run(){
     //dont know what this should do
-
 }
 void CommandsInOperation::quit(){
     //CommandsInOperation::pda->endRecrustion("quit");
@@ -30,8 +30,8 @@ void CommandsInOperation::close(){
     //CommandsInOperation::pda->endRecrustion("close");
 
 }
- void CommandsInOperation::link(PushdownAutomata * linker){
-     //CommandsInOperation::pda = linker; 
+ void CommandsInOperation::link(Commands& linker){
+     commandsPointer = &linker; 
  }
 void CommandsInOperation::inputCommand(){
 

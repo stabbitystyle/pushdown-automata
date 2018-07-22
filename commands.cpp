@@ -242,10 +242,6 @@ void Commands::run(){
     }
 
 }
-void Commands::whileOperatingRun(){
-    pda->resetTransitionCount();
-    return;
-}
 void Commands::quit(){
     cout << endl;
     if (!pdaLoaded)

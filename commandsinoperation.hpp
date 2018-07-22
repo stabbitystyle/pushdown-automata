@@ -19,8 +19,10 @@ class CommandsInOperation : public Commands
     private:
         PushdownAutomata * pda;
 
+        static CommandsPointer commandsPointer;
+
     public:
-        void link(PushdownAutomata * linker);
+        void link(Commands& linker);
         void run(); 
         void quit(); 
         void exit(); 

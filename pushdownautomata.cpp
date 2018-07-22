@@ -28,6 +28,8 @@ PushdownAutomata::PushdownAutomata(string definitionFileName)
     ifstream definition(definitionFileName.c_str(), ifstream::in);
     string value;
 
+	commands = new CommandsInOperation();
+
     cout << endl;
     if(definition.fail())
     {

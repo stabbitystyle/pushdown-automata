@@ -50,8 +50,7 @@ class Commands{
         void sort();
         void inputCommand();
 
-        void whileOperatingRun();
-
 };
+typedef Commands* CommandsPointer;
 
 #endif
