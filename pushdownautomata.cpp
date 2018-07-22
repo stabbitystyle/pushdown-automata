@@ -272,13 +272,15 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
 		for(index = 0; index < count; ++index)
 		{
-			transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
-			id.performTransition(destinationState, pushString, nextID);
-			performedTransition = true;
-			++numberOfTransitions;
-			if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
-			{
-				return true;
+			if(running){
+				transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
+				id.performTransition(destinationState, pushString, nextID);
+				performedTransition = true;
+				++numberOfTransitions;
+				if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
+				{
+					return true;
+				}
 			}
 		}
 	}
@@ -288,13 +290,15 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
 		for(index = 0; index < count; ++index)
 		{
-			transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
-			id.performLambdaTransition(destinationState, pushString, nextID);
-			performedTransition = true;
-			++numberOfTransitions;
-			if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
-			{
-				return true;
+			if(running){
+				transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
+				id.performLambdaTransition(destinationState, pushString, nextID);
+				performedTransition = true;
+				++numberOfTransitions;
+				if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
+				{
+					return true;
+				}
 			}
 		}
 	}
