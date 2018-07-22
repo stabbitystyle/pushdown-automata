@@ -30,6 +30,7 @@ class InputStrings
         bool isElement(string inputString) const;
         void addToStrings(string inputString);
         void removeFromStrings(int stringIndex);
+        void clearAllStrings();
         void saveToFile(string stringFileName);
         int numberOfStrings() const;
 		void sort();

@@ -300,6 +300,7 @@ void Commands::close(){
         delete pda;
         pda = 0;
         strings.saveToFile(stringFileName);
+        strings.clearAllStrings();
         stringFileName = "";
         definitionFileName = "";
         pdaName = "";

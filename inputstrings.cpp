@@ -120,6 +120,12 @@ void InputStrings::removeFromStrings(int stringIndex)
     notSorted = true;
 }
 
+// This method removes the entire string list from the vector stores in the app.
+void InputStrings::clearAllStrings()
+{
+    strings.erase(strings.begin(), strings.end());
+}
+
 // The method saveToFile accepts a string stringFileName as a parameter.
 // It then checks the attribute stringListModified to see if the string list has been modified and therefore the string list needs to be written to file.
 // If the file needs to be written, the method attempts to write the list to file and prints a message upon success or failure.
