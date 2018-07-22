@@ -14,6 +14,7 @@
 using namespace std;
 
 static bool stringCompaire(const string& right, const string& left);
+static bool sortForslash(const string& right, const string& left);
 
 InputStrings::InputStrings() : stringListModified(false)
 {
@@ -165,6 +166,7 @@ void InputStrings::sort()
     if(notSorted){
         std::sort(strings.begin(),strings.end());
         std::sort(strings.begin(),strings.end(),stringCompaire);
+        std::sort(strings.begin(),strings.end(),sortForslash);
         notSorted =false;
     }else{
         cout << "strings alrerady sorted" << endl;
@@ -187,3 +189,7 @@ static bool stringCompaire(const string& right, const string& left){
 
 }
 
+static bool sortForslash(const string& right, const string& left){
+    const string slash = "\\"; 
+     return (right == slash);
+}
