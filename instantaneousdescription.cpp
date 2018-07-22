@@ -40,17 +40,36 @@ void InstantaneousDescription::view(ConfigurationSettingsPointer configurationSe
 void InstantaneousDescription::performTransition(string destinationState, string pushString, InstantaneousDescription& nextID)
 {
     nextID.currentState = destinationState;
-    nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
-    // remainingInputString = nextID.remainingInputString;
-    nextID.stack = pushString + (stack.substr(1, stack.length() -1));
+    if (!isEmptyRemainingInputString()) {
+        nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
+    }
+    if (pushString == "\\")
+    {
+        if (stack.size() != 0) {
+            nextID.stack = (stack.substr(1, stack.length() -1));
+        }
+    }
+    else {
+        nextID.stack = pushString + (stack.substr(1, stack.length() -1));
+    }
 }
 
 void InstantaneousDescription::performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID)
 {
     nextID.currentState = destinationState;
-    nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
+    if (!isEmptyRemainingInputString()) {
+        nextID.remainingInputString = remainingInputString.substr(1, remainingInputString.length() - 1);
+    }
     // remainingInputString = nextID.remainingInputString;
-    nextID.stack = pushString + (stack.substr(1, stack.length() -1));
+    if (pushString == "\\")
+    {
+        if (stack.size() != 0) {
+            nextID.stack = (stack.substr(1, stack.length() -1));
+        }
+    }
+    else {
+        nextID.stack = pushString + (stack.substr(1, stack.length() -1));
+    }
 }
 
 // The method state reteurns the currentState.

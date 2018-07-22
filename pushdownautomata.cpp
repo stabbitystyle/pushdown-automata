@@ -236,6 +236,7 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 
 		if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
 		{
+			cout << "Made it here" << endl;
 			return true;
 		}
 
