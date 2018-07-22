@@ -33,6 +33,8 @@ class PushdownAutomata
 		char initialStackCharacter;
 		vector<string> description;
 
+        //string commandcallpasser;
+
         string currentState;
         string originalInputString;
 		int numberOfTransitionsInSuccessfulPath;
@@ -53,7 +55,7 @@ class PushdownAutomata
         PushdownAutomata(string definitionFileName);
         void viewDefinition() const;
         void initialize(string inputString);
-        bool isAccepted(InstantaneousDescription id, int numberInCurrentPath);
+        bool isAccepted(InstantaneousDescription id, int numberInCurrentPath,bool& running, string& commandCalled);
         void terminateOperation();
         void resetTransitionCount();
         string inputString() const;
@@ -63,8 +65,9 @@ class PushdownAutomata
         bool isValidInputString(string value) const;
         bool isUsed() const;
         bool isOperating() const;
-        bool isAcceptedInputString() const;
+        bool isAcceptedInputString() const; 
         bool isRejectedInputString() const;
+        void setCalledCommand(string value);
 
         static void link(ConfigurationSettings& configurationSettings);
 };
