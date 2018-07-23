@@ -13,23 +13,23 @@ using namespace std;
 
 int ConfigurationSettings::getMaximumNumberOfTransitions(){
     return maximumNumberOfTransitions;
-};
+}
 int ConfigurationSettings::getMaximumNumberOfCells(){
     return maximumNumberOfCells;
-};
+}
 string ConfigurationSettings::getDisplayFullPath(){
     return displayFullPath;
-};
+}
 void ConfigurationSettings::setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput){
     if(maximumNumberOfTransitionsInput>0){
         maximumNumberOfTransitions = maximumNumberOfTransitionsInput;
     }
-};
+}
 void ConfigurationSettings::setMaximumNumberOfCells(int maximumNumberOfCellsInput){
     if(maximumNumberOfCellsInput>0){
         maximumNumberOfCells = maximumNumberOfCellsInput;
     }
-};
+}
 void ConfigurationSettings::toggleDisplayFullPath(){
     if(displayFullPath.compare("yes"))
     {
@@ -37,14 +37,14 @@ void ConfigurationSettings::toggleDisplayFullPath(){
     }else{
         displayFullPath = "yes";
     }
-};
+}
 
 //this method loads the config file for the pushdown automaton
 //and sets defaults if any are wrong or missing 
-void ConfigurationSettings::load(string configFileName){
+void ConfigurationSettings::load(){
 
     //string filename = "pda.cfg";
-    ifstream config(configFileName);
+    ifstream config("pda.cfg");
     string configline;
     size_t found;
     bool tranNotFound = true;
@@ -190,13 +190,13 @@ void ConfigurationSettings::load(string configFileName){
             }
         }
     }
-};
-void ConfigurationSettings::writeFile(string configFileName){
-    ofstream configFile(configFileName);
+}
+void ConfigurationSettings::writeFile(){
+    ofstream configFile("pda.cfg");
 
     if(configFile.is_open()){
         configFile << "MAXIMUM_TRANSITIONS=" << maximumNumberOfTransitions << endl;
         configFile << "MAXIMUM_CHARACTERS=" << maximumNumberOfCells << endl;
         configFile << "COMPLETE_PATHS=" << displayFullPath << endl;
     }
-};
+}

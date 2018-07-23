@@ -11,30 +11,27 @@
 #include"commands.hpp"
 using namespace std;
 
-
-
-
 Commands::Commands(){
     pda = 0;
     pdaLoaded = false;
-    config.load();
-
+    config.load(configFileName);
 }
 
 
 Commands::Commands(string fileName){
     pda = 0;
     pdaLoaded = false;
-    config.load(configFileName);
+    config.load();
 
     pdaName = fileName;
     definitionFileName = fileName + ".def";
     stringFileName = fileName + ".str";
-    configFileName = fileName + ".cfg";
+    
     pda = new PushdownAutomata(definitionFileName);
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);
+        pda->link(config);
     }else{
 		delete pda;
     }
@@ -115,7 +112,12 @@ void Commands::show(){
     
 }
 void Commands::view(){
-    pda->viewDefinition();
+    if(pdaLoaded){
+        pda->viewDefinition();
+    }else{
+        cout << "No PDA loaded" << endl;
+    }
+    
 }
 void Commands::list(){
     if(pdaLoaded){
@@ -153,7 +155,7 @@ void Commands::deleteString(){
             }
         }
 
-        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings()){
             strings.removeFromStrings(stoi(input,nullptr));
         }else{
             cout << "ERROR: invalid string" << endl;
@@ -187,8 +189,9 @@ void Commands::truncate(){
     string input;
     bool validString = true;
     std::cout << std::endl;
-    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: " << std::endl;
+    std::cout << "Set the maximum number of characters to truncate[" << config.getMaximumNumberOfCells() << "]: ";
     getline(cin,input);
+    cout <<endl;
 
     for(string::size_type i = 0;i <input.length()-1;i++){
         if(!isdigit(input.at(i))){
@@ -217,8 +220,11 @@ void Commands::run(){
             }
         }
 
-        if(validString && stoi(input,nullptr) < strings.numberOfStrings()){
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
+            //if not running
             pda->initialize(strings.getInputString(stoi(input,nullptr)));
+            //if running
+
         }else{
             cout << "ERROR: Invalid input string" << endl;
         }
@@ -227,6 +233,10 @@ void Commands::run(){
     }
 
 }
+void Commands::whileOperatingRun(){
+    pda->resetTransitionCount();
+    return;
+}
 void Commands::quit(){
     cout << endl;
     cout << "the pushdown automaton is not running on an input string" << endl;
@@ -234,7 +244,7 @@ void Commands::quit(){
 
 }
 void Commands::exit(){
-    config.writeFile(configFileName);
+    config.writeFile();
     if(pdaLoaded){
         strings.saveToFile(stringFileName);
         delete pda;

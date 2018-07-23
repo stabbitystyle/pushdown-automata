@@ -15,6 +15,7 @@
 #include "inputalphabet.hpp"
 #include "configurationsettings.hpp"
 #include "uppercase.hpp"
+#include "commandsinoperation.hpp"
 
 using namespace std;
 
@@ -220,11 +221,21 @@ void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& v
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath)
 {
     bool performedTransition = false;
-    int index = 0;
-    int count = 0;
+    unsigned int index = 0;
+    //int count = 0;
     string destinationState;
     string pushString;
     InstantaneousDescription nextID;
+	vector<Transition> transitionsToPerform;
+	vector<Transition> lambdaTransitionsToPerform;
+
+	//stop runing after a number of transitions here
+	if(configurationSettingsPointer->getMaximumNumberOfTransitions() == numberOfTransitionsInSet){
+
+		numberOfTransitionsInSet = 0;
+		commandsInOperation.inputCommand();
+
+	}
 
     cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
     id.view(configurationSettingsPointer);
@@ -236,8 +247,9 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
     }
     if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
     {
-        count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
-        for(index = 0; index < count; ++index)
+        //count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
+		transitionFunction.getTransitions(id.state(),id.inputCharacter(),id.topOfStack(), transitionsToPerform);
+        /*for(index = 0; index < count; ++index)
         {
             transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
             id.performTransition(destinationState, pushString, nextID);
@@ -247,12 +259,23 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
             {
                 return true;
             }
-        }
+
+        }*/
+		for(index = 0;index < transitionsToPerform.size()-1;index++){
+			id.performTransition(transitionsToPerform[index].destinationState(),transitionsToPerform[index].pushString(),nextID);
+			performedTransition = true;
+            ++numberOfTransitions;
+			++numberOfTransitionsInSet;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+		}
     }
 
     if(!id.isEmptyStack())
     {
-        count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
+       /* count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
         for(index = 0; index < count; ++index)
         {
             transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
@@ -263,7 +286,18 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
             {
                 return true;
             }
-        }
+        }*/
+		transitionFunction.getLambdaTransitions(id.state(),id.topOfStack(), lambdaTransitionsToPerform);
+		for(index = 0;index < lambdaTransitionsToPerform.size()-1;index++){
+			id.performTransition(lambdaTransitionsToPerform[index].destinationState(),lambdaTransitionsToPerform[index].pushString(),nextID);
+			performedTransition = true;
+            ++numberOfTransitions;
+			++numberOfTransitionsInSet;
+            if(isAccepted(nextID, numberInCurrentPath + 1))
+            {
+                return true;
+            }
+		}
     }
     if(!performedTransition)
     {
@@ -318,6 +352,7 @@ void PushdownAutomata::initialize(string inputString)
 	originalInputString = inputString;
 	currentState = initialState;
 	numberOfTransitions = 0;
+	numberOfTransitionsInSet = 0;
 	numberOfCrashes = 0;
 	numberOfTransitionsInSuccessfulPath = 0;
 	used = true;

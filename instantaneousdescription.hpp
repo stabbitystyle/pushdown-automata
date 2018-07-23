@@ -20,8 +20,8 @@ class InstantaneousDescription
 		InstantaneousDescription();
 		InstantaneousDescription(string initialState, string inputString, char startCharacter);
 		void view(ConfigurationSettingsPointer configurationSettingsPointer) const;
-		void performTransition(string destinationState, string pushString, InstantaneousDescription& nextID) const;
-		void performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID) const;
+		void performTransition(string destinationState, string pushString, InstantaneousDescription& nextID);
+		void performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID);
 		string state() const;
 		char inputCharacter() const;
 		char topOfStack() const;

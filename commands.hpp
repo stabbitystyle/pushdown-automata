@@ -7,12 +7,12 @@
 #include<string>
 #include<iostream>
 
-#include"pushdownautomata.hpp"
 #include"inputstrings.hpp"
 #include"configurationsettings.hpp"
 
 using namespace std;
 
+class PushdownAutomata;
 
 class Commands{
 
@@ -21,7 +21,6 @@ class Commands{
         string pdaName;
         string definitionFileName;
         string stringFileName;
-        string configFileName;
         bool valid;
         bool pdaLoaded;
 
@@ -49,6 +48,8 @@ class Commands{
         void display();
         void sort();
         void inputCommand();
+
+        void whileOperatingRun();
 
 };
 

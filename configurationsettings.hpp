@@ -25,8 +25,8 @@ class ConfigurationSettings
         void setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput);
         void setMaximumNumberOfCells(int maximumNumberOfCellsInput);
         void toggleDisplayFullPath();
-        void load(string configFileName);
-        void writeFile(string configFileName);
+        void load();
+        void writeFile();
 };
 typedef ConfigurationSettings* ConfigurationSettingsPointer;
 
