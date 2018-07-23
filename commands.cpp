@@ -226,7 +226,7 @@ void Commands::set(){
 }
 
 // The method truncate accepts an integer from the user,
-//      which is then used as the number of characters to display on either side of the current character in the instantaneous description of the pushdown automata.
+// which is then used as the number of characters to display on either side of the current character in the instantaneous description of the pushdown automata.
 // If the number given is invalid, then an error message is displayed.
 void Commands::truncate(){
     int input;

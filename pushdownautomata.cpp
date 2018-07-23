@@ -501,6 +501,7 @@ bool PushdownAutomata::isRejectedInputString() const
     return rejected;
 }
 
+// The method resetTransitionCount sets the tranisitonCount to zero.
 void PushdownAutomata::resetTransitionCount()
 {
 	transitionCount = 0;
