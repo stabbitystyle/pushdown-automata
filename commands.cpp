@@ -66,6 +66,7 @@ void Commands::show(){
     cout << right << setw(showWidth) << "Semester:  " << "Summer" << endl;
     cout << right << setw(showWidth) << "Year:  " << "2018" << endl;
     cout << right << setw(showWidth) << "Instructor:  " << "Neil B. Corrigan" << endl;
+    cout << right << setw(showWidth) << "Team Name:  " << "Nicolas Cage Fan Society" << endl;
     cout << right << setw(showWidth) << "Authors:  " << "Emmanuel Bonilla, Ryan Breitenfeldt, William Robert Frank," << endl;
     cout << right << setw(showWidth) << "  " << "Carlos Martinez, Mike Snyder, Cole Woodford" << endl;
     cout << right << setw(showWidth) << "Version:  " << "1.0" << endl;
@@ -219,45 +220,29 @@ void Commands::truncate(){
     cout << endl;
 }
 string Commands::run(){
-    int input;
-    cout << endl;
+    string input;
+    bool validString = true;
     if(pdaLoaded){
         // int input needed here
         cout <<  "Enter number of string in string file to run: ";
-        /*getline(cin,input);
+        getline(cin,input);
 
         for(string::size_type i = 0;i <input.length()-1;i++){
                 if(!isdigit(input.at(i))){
                     validString = false;
             }
-        }*/
-        if (intInput(input))
-        {
-            cout << endl;
-            if (input == 0)
-            {
-                cout << "Error: Input was less than 1." << endl;
-            }
-            else if (input > strings.numberOfStrings())
-            {
-                cout << "Error:  String number " << input << " does not exist." << endl;
-            }
-            else
-            {
-                return pda->initialize(strings.getInputString(input));
-            }
         }
-        //if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
 
-        //   return pda->initialize(strings.getInputString(stoi(input,nullptr)));
+        if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
 
-        //}else{
-        //    cout << "Error: Invalid input string" << endl;
-        //}
+           return pda->initialize(strings.getInputString(stoi(input,nullptr)));
+
+        }else{
+            cout << "Error: Invalid input string" << endl;
+        }
     }else{
         cout << "Error: No pushdown automata definition currently loaded." << endl;
     }
-    cout << endl;
     return "";
 
 }
