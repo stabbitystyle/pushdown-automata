@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// ????
+// 
 string truncated(string value, int maxNumberOfCharacters)
 {
     if ((int)value.length() > maxNumberOfCharacters)
@@ -15,7 +15,7 @@ string truncated(string value, int maxNumberOfCharacters)
     return value;
 }
 
-// ????
+// 
 string visible(string value)
 {
     const string lambda("\\");

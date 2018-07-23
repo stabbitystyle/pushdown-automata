@@ -1,22 +1,27 @@
 // configurationsetting class
 // rev0 7/06/18 by Ryan Breitenfeldt
 
-#include<string>
-#include<fstream>
-#include<iostream>
-#include<algorithm>
-#include<ctype.h>
-#include"configurationsettings.hpp"
-#include"uppercase.hpp"
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <ctype.h>
+#include "configurationsettings.hpp"
+#include "uppercase.hpp"
 
 using namespace std;
 
+// The method getMaximumNumberOfTransitions returns the maxiumumNumberOfTransitions attribute.
 int ConfigurationSettings::getMaximumNumberOfTransitions(){
     return maximumNumberOfTransitions;
 };
+
+// The method getMaximumNumberOfCells returns the maximumNumberOfCells attribute.
 int ConfigurationSettings::getMaximumNumberOfCells(){
     return maximumNumberOfCells;
 };
+
+// The method getDisplayFullPath returns the displayFullPath attribute.
 string ConfigurationSettings::getDisplayFullPath(){
     if (displayFullPath)
     {
@@ -27,16 +32,22 @@ string ConfigurationSettings::getDisplayFullPath(){
         return "No";
     }
 };
+
+// The method setMaximumNumberOfTransitions accepts an integer maximumNumberOfTransitionsInput and sets the attribute maximumNumberOfTransitions equal to it.
 void ConfigurationSettings::setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput){
     if(maximumNumberOfTransitionsInput>0){
         maximumNumberOfTransitions = maximumNumberOfTransitionsInput;
     }
 };
+
+// The method setMaximumNumberOfCells accepts an integer maximumNumberOfCellsInput and sets the attribute maximumNumberOfCells equal to it.
 void ConfigurationSettings::setMaximumNumberOfCells(int maximumNumberOfCellsInput){
     if(maximumNumberOfCellsInput>0){
         maximumNumberOfCells = maximumNumberOfCellsInput;
     }
 };
+
+// The method toggleDisplayFullPath sets the attribute displayFullPath depending on what it is currently. If it is "yes" then it will set it to "no" and vis-versa.
 void ConfigurationSettings::toggleDisplayFullPath(){
     if(displayFullPath)
     {
@@ -84,14 +95,12 @@ void ConfigurationSettings::load(){
             //cheak for a  = sign on the line
             if(found != string::npos){
 
-                //checks for the number of transitins setting
-
+                //checks for the number of transitions setting
                 found = configline.find("MAXIMUM_TRANSITIONS");
                 if(found != string::npos){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
-
                         //gives you a string of everything after the = sign
                         configline = configline.substr(found+1,configline.length()-1);
                         //cheaks if there are any letters mixed with the numbers
@@ -102,10 +111,9 @@ void ConfigurationSettings::load(){
                         //reset cheack conditions 
                         firstNumFound = false;
                         spaceAfterNum = false;
-                        
 
-                        //cheaks if is any spaces or letters mixed in with numbers
-                        // if it finds a space in middle of the number is will invalidate the string
+                        // checks if any spaces or letters are mixed in with numbers
+                        // if it finds a space in middle of the number it will invalidate the string
                         for(string::size_type i=0;i<(configline.length())-1;i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
@@ -119,7 +127,7 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
-                        //skips the  line
+                        // skips the line
                         if(invalidString){
                             invalidString = false;
                             continue;
@@ -133,7 +141,6 @@ void ConfigurationSettings::load(){
                 }
 
                 //cheaks for the charaters to truncate setting
-
                 found = configline.find("MAXIMUM_CHARACTERS");
                 if(found != string::npos){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
@@ -142,7 +149,7 @@ void ConfigurationSettings::load(){
                         //gives you a string of everything after the = sign
                         configline = configline.substr(found+1,configline.length()-1);
 
-                        //cheaks if there are any letters mixed with the numbers
+                        //checks if there are any letters mixed with the numbers
                         if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
                             continue;
                         }
@@ -150,7 +157,6 @@ void ConfigurationSettings::load(){
                         //reset cheack conditions 
                         firstNumFound = false;
                         spaceAfterNum = false;
-                        
 
                         //cheaks if is any spaces or letters mixed in with numbers
                         // if it finds a space in middle of the number is will invalidate the string
@@ -199,6 +205,10 @@ void ConfigurationSettings::load(){
     }
 };
 
+// The method writeFile will write the configuration settings to a file.
+// The name of the file is the name of the application with ".cfg" appended to it.
+// It will put each setting on its own line with no whitespace.
+// It will also overwrite any existing configuration file.  
 void ConfigurationSettings::writeFile(){
     ofstream configFile("pda.cfg");
 

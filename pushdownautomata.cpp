@@ -22,6 +22,13 @@ using namespace std;
 
 ConfigurationSettingsPointer PushdownAutomata::configurationSettingsPointer = 0;
 
+// The method PushdownAutomaton is the constructor for the class PushdownAutomaton.
+// It accepts a definitionFileName string as a parameter.
+// The constructor pulls out the description from the start of the definition file to the first keyword “States: ”, which is then puts in the description attribute.
+// The constructor will also pull the initial state from the definition file and store it in the initialState attribute.
+// The constructor then passes the definition file, along with the valid attribute, InputAlphabet object, StackAlphabet object, TransitionFunction object, States object, and FinalStates object.
+// Each of those objects will parse their respective sections of the definition file and modify the valid attribute based on whether the definition was valid or not.
+// The constructor will check that valid is still true between each of those checks by the respective objects and will continue to find errors.
 PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 {
 	valid = true;
@@ -152,6 +159,8 @@ PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 	}
 }
 
+// loadInitialState is a local method used by PushdownAutomata to parse the initial state out of the ifstream.
+// It also can modify the argument valid for use outside the method if the formatting is incorrect.
 void PushdownAutomata::loadInitialState(ifstream& definition, string& value, bool& valid)
 {
 	if ((definition >> value))
@@ -196,6 +205,8 @@ void PushdownAutomata::loadInitialState(ifstream& definition, string& value, boo
 	}
 }
 
+// loadInitialStackCharacter is a local method used by PushdownAutomata to parse the initial stack character out of the ifstream.
+// It also can modify the argument valid for use outside the method if the formatting is incorrect.
 void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& value, bool& valid)
 {
 	if ((definition >> value) && (value.length() == 1) && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != '>') && (value[0] != ','))
@@ -223,6 +234,10 @@ void PushdownAutomata::loadInitialStackCharacter(ifstream& definition, string& v
 	}
 }
 
+// The method isAccepted is a recursive method that will find if a string is accepted by the Pushdown Automaton.
+// It will check if the Pushdown Automaton is still operating.
+// It will check the non-lambda transitions first and if none work it will then try the lambda transitions.
+// If it goes though all possible transitions and not fined a path that leads to success, it will return false.
 bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurrentPath, bool& running, string& commandCalled)
 {
 	bool performedTransition = false;
@@ -261,55 +276,49 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 		if(commandCalled == "quit"){
 			running = false;
 		}
-
-		
 	}
 
 	if(running){
+	    if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
+	    {
+		    count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
+		    for(index = 0; index < count; ++index)
+		    {
+			    if(running){
+				    transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
+				    id.performTransition(destinationState, pushString, nextID);
+				    performedTransition = true;
+				    ++numberOfTransitions;
+				    if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
+				    {
+					    return true;
+				    }
+			    }
+		    }
+	    }
 
-	
-
-	if(!id.isEmptyRemainingInputString() && !id.isEmptyStack())
-	{
-		count = transitionFunction.transitionCount(id.state(), id.inputCharacter(), id.topOfStack());
-		for(index = 0; index < count; ++index)
-		{
-			if(running){
-				transitionFunction.getTransition(index, id.state(), id.inputCharacter(), id.topOfStack(), destinationState, pushString);
-				id.performTransition(destinationState, pushString, nextID);
-				performedTransition = true;
-				++numberOfTransitions;
-				if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
-				{
-					return true;
-				}
-			}
-		}
-	}
-
-	if(!id.isEmptyStack())
-	{
-		count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
-		for(index = 0; index < count; ++index)
-		{
-			if(running){
-				transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
-				id.performLambdaTransition(destinationState, pushString, nextID);
-				performedTransition = true;
-				++numberOfTransitions;
-				if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
-				{
-					return true;
-				}
-			}
-		}
-	}
-	if(!performedTransition)
-	{
-		cout << "Crash " << ++numberOfCrashes << " occured." << endl;
-	}
-	
-	return false;
+	    if(!id.isEmptyStack())
+	    {
+		    count = transitionFunction.lambdaTransitionCount(id.state(), id.topOfStack());
+		    for(index = 0; index < count; ++index)
+		    {
+			    if(running){
+				    transitionFunction.getLambdaTransition(index, id.state(), id.topOfStack(), destinationState, pushString);
+				    id.performLambdaTransition(destinationState, pushString, nextID);
+				    performedTransition = true;
+				    ++numberOfTransitions;
+				    if(isAccepted(nextID, numberInCurrentPath + 1, running, commandCalled))
+				    {
+					    return true;
+				    }
+			    }
+		    }
+	    }
+	    if(!performedTransition)
+	    {
+		    cout << "Crash " << ++numberOfCrashes << " occured." << endl;
+	    }
+	    return false;
 	}
 	return false;
 }

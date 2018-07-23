@@ -10,7 +10,7 @@
 
 using namespace std;
 
-// The class StackAlphabet is a class which is responsible for storing the tape alphabet and providing information about the tape alphabet.
+// The class StackAlphabet is a class which is responsible for storing the stack alphabet and providing information about the stack alphabet.
 class StackAlphabet
 {
     private:

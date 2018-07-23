@@ -188,6 +188,7 @@ void InputStrings::sort()
     }
 }
 
+// helper function used when sorting the lengths of the strings in the vector
 static bool stringCompare(const string& right, const string& left){
     
     /*
@@ -199,5 +200,4 @@ static bool stringCompare(const string& right, const string& left){
     return true;
     */
    return !(right.length() > left.length());
-
 }

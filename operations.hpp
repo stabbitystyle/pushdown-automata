@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// truncaed and visible are helper functions which are used in InstantaneousDescription
 string truncated(string value, int maxNumberOfCharacters);
 string visible(string value);
 

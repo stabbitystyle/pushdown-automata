@@ -54,6 +54,9 @@ void InstantaneousDescription::performTransition(string destinationState, string
     }
 }
 
+// The method performLambdaTransition performs the specified transition on the instantaneous description,
+//		generating the next instantaneous description of the pushdown automaton.
+// The input character is read in performing this transition.
 void InstantaneousDescription::performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID)
 {
     nextID.currentState = destinationState;

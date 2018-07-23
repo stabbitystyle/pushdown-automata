@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// uppercase is a helper function used to convert and return a string in all uppercase
 string uppercase(const string value);
 
 #endif
