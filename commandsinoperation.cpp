@@ -12,36 +12,15 @@ using namespace std;
 
 CommandsPointer CommandsInOperation::commandsPointer = 0;
 
-void CommandsInOperation::run(){
-    //dont know what this should do
-}
-void CommandsInOperation::quit(){
-    //CommandsInOperation::pda->endRecrustion("quit");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("quit");
-}
-void CommandsInOperation::exit(){
-    //CommandsInOperation::pda->endRecrustion("exit");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("exit");
-}
-void CommandsInOperation::open(){
-    //CommandsInOperation::pda->endRecrustion("open");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("open");
-} 
-void CommandsInOperation::close(){
-    //CommandsInOperation::pda->endRecrustion("close");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("close");
-}
+//this method link the commands class to commandsinoperation.
+// this is done so we can get access to method that have access to the needed data.
  void CommandsInOperation::link(Commands& linker){
      commandsPointer = &linker;
  }
+
+
+ //this method is the the command loop while the pda is running 
+ // this will be called from inside isAccepted method in pushdown automata class
 string CommandsInOperation::inputCommand(){
 
     string lineInput;
@@ -68,7 +47,7 @@ string CommandsInOperation::inputCommand(){
             case 'C':
             case 'c':
             {
-                CommandsInOperation::close();
+                
                 keeplooping = false;
                 return "close";
                 break;
@@ -91,7 +70,7 @@ string CommandsInOperation::inputCommand(){
             case 'X':
             case 'x':
             {
-                CommandsInOperation::exit();
+                
                 keeplooping = false;
                 return "exit";
                 break;
@@ -122,7 +101,7 @@ string CommandsInOperation::inputCommand(){
             case 'O':
             case 'o':
             {
-                CommandsInOperation::open();
+                
                 keeplooping = false;
                 return "open";
                 break;
@@ -131,7 +110,7 @@ string CommandsInOperation::inputCommand(){
             case 'Q':
             case 'q':
             {
-                CommandsInOperation::quit();
+                
                 keeplooping = false;
                 return "quit";
                 break;
@@ -140,7 +119,7 @@ string CommandsInOperation::inputCommand(){
             case 'R':
             case 'r':
             {
-                CommandsInOperation::run();
+                
                 keeplooping = false;
                 return "run";
                 break;
