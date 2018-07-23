@@ -20,15 +20,9 @@ class PushdownAutomata;
 class CommandsInOperation : public Commands
 {
     private:
-        PushdownAutomata * pda;
         static CommandsPointer commandsPointer;
     public:
         void link(Commands& linker);
-        void run(); 
-        void quit(); 
-        void exit(); 
-        void open(); 
-        void close(); 
         string inputCommand();
 };
 
