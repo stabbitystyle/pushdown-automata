@@ -247,18 +247,31 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	string pushString;
 	InstantaneousDescription nextID;
 
-	cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
-	id.view(configurationSettingsPointer);
-	cout << endl;
+	string pieceOfPath = std::to_string(numberOfTransitions) + std::string(". [") + std::to_string(numberInCurrentPath) + std::string("] ") + id.view(configurationSettingsPointer);
+	pathContainer.push_back(pieceOfPath);
+	
+	if (configurationSettingsPointer->getDisplayFullPath() == "Yes" || numberOfTransitions == 0){
+		cout << pieceOfPath;
+		cout << endl;
+	}
+
 	if (numberOfTransitions != 0) {
 		++transitionCount;
 	}
 	if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
 	{
+		if (configurationSettingsPointer->getDisplayFullPath() == "No"){
+			cout << pieceOfPath;
+			cout << endl;
+		}
 		return true;
 	}
 
 	if (transitionCount == configurationSettingsPointer->getMaximumNumberOfTransitions() && running) {
+		if (configurationSettingsPointer->getDisplayFullPath() == "No"){
+			cout << pieceOfPath;
+			cout << endl;
+		}
 		resetTransitionCount();
 		commandCalled = commands->inputCommand();
 
@@ -317,8 +330,12 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	    }
 	    if(!performedTransition)
 	    {
-		    cout << "Crash " << ++numberOfCrashes << " occured." << endl;
+			++numberOfCrashes;
+			if (configurationSettingsPointer->getDisplayFullPath() == "Yes"){
+		    	cout << "Crash " << numberOfCrashes << " occured." << endl;
+			}
 	    }
+		pathContainer.pop_back();
 	    return false;
 	}
 	return false;
@@ -387,6 +404,18 @@ string PushdownAutomata::initialize(string inputString)
 		if (accepted)
 		{
 			cout << "Input string " << originalInputString << " accepted in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+			if (configurationSettingsPointer->getDisplayFullPath() == "Yes"){
+				int i = 0;
+				for(vector<string>::const_iterator it = pathContainer.begin(); it != pathContainer.end(); ++it)
+    			{
+        			i++;
+    			}
+				cout << "Successful path of " + std::to_string(i - 1) + " transitions through the pda:" << endl;
+				for(vector<string>::const_iterator it = pathContainer.begin(); it != pathContainer.end(); ++it)
+    			{
+        			cout << *it << endl;
+    			}
+			}
 			operating = false;
 		}
 		if (rejected)

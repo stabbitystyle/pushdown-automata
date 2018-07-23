@@ -21,7 +21,7 @@ class CommandsInOperation;
 class Commands;
 
 // The PushdownAutomaton class is a class which is responsible for most of the implementation of the PushdownAutomaton,
-//      through a combination of utilizing classes it’s composed of and its own methods and attributes.
+//      through a combination of utilizing classes itï¿½s composed of and its own methods and attributes.
 class PushdownAutomata
 {
     private:
@@ -35,6 +35,7 @@ class PushdownAutomata
         string initialState;
 		char initialStackCharacter;
 		vector<string> description;
+        vector<string> pathContainer;
 
         //string commandcallpasser;
 

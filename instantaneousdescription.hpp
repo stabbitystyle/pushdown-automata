@@ -23,7 +23,7 @@ class InstantaneousDescription
 	public:
 		InstantaneousDescription();
 		InstantaneousDescription(string initialState, string inputString, char startCharacter);
-		void view(ConfigurationSettingsPointer configurationSettingsPointer) const;
+		string view(ConfigurationSettingsPointer configurationSettingsPointer) const;
 		void performTransition(string destinationState, string pushString, InstantaneousDescription& nextID);
 		void performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID);
 		string state() const;
