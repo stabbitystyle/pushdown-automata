@@ -66,6 +66,7 @@ void Commands::show(){
     cout << right << setw(showWidth) << "Semester:  " << "Summer" << endl;
     cout << right << setw(showWidth) << "Year:  " << "2018" << endl;
     cout << right << setw(showWidth) << "Instructor:  " << "Neil B. Corrigan" << endl;
+    cout << right << setw(showWidth) << "Team Name:  " << "Nicolas Cage Fan Society" << endl;
     cout << right << setw(showWidth) << "Authors:  " << "Emmanuel Bonilla, Ryan Breitenfeldt, William Robert Frank," << endl;
     cout << right << setw(showWidth) << "  " << "Carlos Martinez, Mike Snyder, Cole Woodford" << endl;
     cout << right << setw(showWidth) << "Version:  " << "1.0" << endl;
