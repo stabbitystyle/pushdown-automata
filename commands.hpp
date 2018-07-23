@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include <stdlib.h>
 
 #include "inputstrings.hpp"
 #include "configurationsettings.hpp"

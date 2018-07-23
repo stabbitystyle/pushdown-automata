@@ -250,8 +250,9 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	cout << numberOfTransitions << ". [" << numberInCurrentPath << "] ";
 	id.view(configurationSettingsPointer);
 	cout << endl;
-	++transitionCount;
-
+	if (numberOfTransitions != 0) {
+		++transitionCount;
+	}
 	if(finalStates.isElement(id.state()) && id.isEmptyRemainingInputString())
 	{
 		return true;

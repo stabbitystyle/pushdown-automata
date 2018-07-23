@@ -5,6 +5,7 @@
 #include<iostream>
 #include<iomanip>
 #include<ctype.h>
+#include<stdlib.h>
 
 #include"pushdownautomata.hpp"
 #include"inputstrings.hpp"
@@ -305,6 +306,7 @@ void Commands::exit(){
         strings.saveToFile(stringFileName);
         delete pda;
     }
+    std::exit(EXIT_SUCCESS);
 }
 
 // The method open lets the user enter a new Pushdown Automaton definition file.
