@@ -116,7 +116,7 @@ void ConfigurationSettings::load(){
 
 
                         //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
+                        configline = configline.substr(found+1,configline.length());
                         //cheaks if there are any letters mixed with the numbers
                         if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
                             continue;
@@ -128,7 +128,7 @@ void ConfigurationSettings::load(){
 
                         // checks if any spaces or letters are mixed in with numbers
                         // if it finds a space in middle of the number it will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -194,7 +194,7 @@ void ConfigurationSettings::load(){
 
 
                         //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
+                        configline = configline.substr(found+1,configline.length());
 
                         //checks if there are any letters mixed with the numbers
                         if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
@@ -207,7 +207,7 @@ void ConfigurationSettings::load(){
 
                         //cheaks if is any spaces or letters mixed in with numbers
                         // if it finds a space in middle of the number is will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -245,13 +245,13 @@ void ConfigurationSettings::load(){
 
                         if(configline.find_first_of(" ") != string::npos){
                             continue;
-                        }
+                        }*/
 
                         //skips the  line
                         if(invalidString){
                             invalidString = false;
                             continue;
-                        }*/
+                        }
 
                         if(charNotFound && (stoi(configline,nullptr) > 0)){
                             maximumNumberOfCells= stoi(configline, nullptr);
