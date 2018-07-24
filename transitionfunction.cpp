@@ -147,11 +147,6 @@ void TransitionFunction::load(ifstream& definition, string& value, bool& valid)
  {
      for(int index = 0; index < (int)transitions.size(); ++index)
  	{
- 		if(finalStates.isElement(transitions[index].sourceState()))
-         {
-             cout << "Source state " << transitions[index].sourceState() << " is in final states.\n";
-             valid = false;
-         }
          if(! states.isElement(transitions[index].sourceState()))
          {
              cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
