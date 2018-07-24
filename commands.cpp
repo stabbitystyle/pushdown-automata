@@ -50,21 +50,21 @@ Commands::Commands(string fileName){
 void Commands::help(){
     const int helpWidth = 12;
     cout << endl;
-    cout << right << setw(helpWidth) << "(C)lose  " << "Close a pushdown automata definition" << endl;
+    cout << right << setw(helpWidth) << "(C)lose  " << "Close a pushdown automaton definition" << endl;
     cout << right << setw(helpWidth) << "(D)elete  " << "Delete input string from list" << endl;
     cout << right << setw(helpWidth) << "Dis(p)lay  " << "Display the complete paths through the pushdown automaton" << endl;
     cout << right << setw(helpWidth) << "E(x)it  " << "Exit application" << endl;
     cout << right << setw(helpWidth) << "(H)elp  " << "Help user" << endl;
     cout << right << setw(helpWidth) << "(I)nsert  " << "Insert input string into list" << endl;
     cout << right << setw(helpWidth) << "(L)ist  " << "List input strings" << endl;
-    cout << right << setw(helpWidth) << "(O)pen  " << "Open a pushdown automata definition" << endl;
-    cout << right << setw(helpWidth) << "(Q)uit  " << "Quit operation of pushdown automata on input string" << endl;
-    cout << right << setw(helpWidth) << "(R)un  " << "Run pushdown automata on input string" << endl;
+    cout << right << setw(helpWidth) << "(O)pen  " << "Open a pushdown automaton definition" << endl;
+    cout << right << setw(helpWidth) << "(Q)uit  " << "Quit operation of pushdown automaton on input string" << endl;
+    cout << right << setw(helpWidth) << "(R)un  " << "Run pushdown automaton on input string" << endl;
     cout << right << setw(helpWidth) << "S(e)t  " << "Set maximum number of transitions to perform" << endl;
     cout << right << setw(helpWidth) << "Sho(w)  " << "Show status of application" << endl;
     cout << right << setw(helpWidth) << "(S)ort  " << "Sort the strings in the input string list" << endl;
     cout << right << setw(helpWidth) << "(T)runcate  " << "Truncate instantaneous descriptions" << endl;
-    cout << right << setw(helpWidth) << "(V)iew  " << "View pushdown automata" << endl;
+    cout << right << setw(helpWidth) << "(V)iew  " << "View pushdown automaton" << endl;
     cout << endl;
 }
 
@@ -87,11 +87,11 @@ void Commands::show(){
     cout << endl;
 
     if(pdaLoaded){
-        cout << right << setw(showWidth) << "Name of Pushdown Automata:  " << pdaName << endl;
+        cout << right << setw(showWidth) << "Name of Pushdown Automaton:  " << pdaName << endl;
         // If currently running, need to output input string and # of transitions performed so far
         // If completed, need to output input string, result, and # of transitions performed
         if(!pda->isUsed()){
-            cout << right << setw(showWidth) << "The pushdown automata hasn’t been tested on a string yet." << endl;
+            cout << right << setw(showWidth) << "The pushdown automaton hasn’t been tested on a string yet." << endl;
         }else if(pda->isOperating()){
             cout << right << setw(showWidth) << "Current Input String:  " << pda->inputString() << endl;
             cout << right << setw(showWidth) << "Result of Test:  " << "currently running" << endl;
@@ -129,7 +129,7 @@ void Commands::view(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition is currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition is currently loaded." << endl;
         cout << endl;
     }
 }
@@ -142,7 +142,7 @@ void Commands::list(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }
@@ -166,7 +166,7 @@ void Commands::insert(){
             cout << "Error: String contained symbols not found in the input alphabet." << endl;
         }
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }
@@ -184,7 +184,7 @@ void Commands::deleteString(){
         {
             if ((input <= strings.numberOfStrings()) && (input > 0) && (strings.numberOfStrings() > 0))
             {
-                cout << "String number " << input << " which was " << strings.getInputString(input) << " was successfully deleted." << std::endl;
+                // cout << "String number " << input << " which was " << strings.getInputString(input) << " was successfully deleted." << std::endl;
                 strings.removeFromStrings(input);
             }
             else
@@ -198,7 +198,7 @@ void Commands::deleteString(){
         }
         cout << endl;
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
         cout << endl;
     }
 }
@@ -269,10 +269,11 @@ string Commands::run(){
             else
             {
                 return pda->initialize(strings.getInputString(input));
+                cout << endl;
             }
         }
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
     return "";
@@ -284,7 +285,7 @@ void Commands::quit(){
     cout << endl;
     if (!pdaLoaded)
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     else if (pda->isOperating())
     {
@@ -323,7 +324,7 @@ void Commands::open(){
         pdaName = "";
     }
     std::cout << std::endl;
-    cout << "Enter the name of the pushdown automata: ";
+    cout << "Enter the name of the pushdown automaton: ";
     getline(cin,pdaName);
     definitionFileName = pdaName + ".def";
     stringFileName = pdaName + ".str";
@@ -354,7 +355,7 @@ void Commands::close(){
     else
     {
         cout << endl;
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
         cout << endl;
     }
 }
@@ -376,7 +377,7 @@ void Commands::sort(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }

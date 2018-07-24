@@ -151,11 +151,11 @@ PushdownAutomata::PushdownAutomata(string definitionFileName, Commands& cmd)
 	}
 	if (valid == true)
 	{
-		cout << "Pushdown Automata definition loaded correctly." << endl;
+		cout << "Pushdown Automaton definition loaded correctly." << endl;
 	}
 	else
 	{
-		cout << "Pushdown Automata definition failed to load correctly." << endl;
+		cout << "Pushdown Automaton definition failed to load correctly." << endl;
 	}
 }
 
@@ -374,6 +374,9 @@ void PushdownAutomata::viewDefinition() const
 	cout << "q0 = " << initialState;
 	cout << endl << endl;
 
+	cout << "Start Character = " << initialStackCharacter;
+	cout << endl << endl;
+
 	finalStates.view();
 	cout << endl;
 }
@@ -415,6 +418,7 @@ string PushdownAutomata::initialize(string inputString)
     			{
         			cout << *it << endl;
     			}
+				pathContainer.erase(pathContainer.begin(), pathContainer.end());
 			}
 			operating = false;
 		}
@@ -424,8 +428,9 @@ string PushdownAutomata::initialize(string inputString)
 			operating = false;
 		}
 	}else{
-		cout << "Input string " << originalInputString << " neither accepted or rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
+		cout << "Input string " << originalInputString << " neither accepted nor rejected in " << numberOfTransitions << " transitions with " << numberOfCrashes << " crashes." << endl;
 		rejected = false;
+		cout << endl;
 
 	}
 	return command;
