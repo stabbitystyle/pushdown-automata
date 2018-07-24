@@ -248,7 +248,8 @@ bool PushdownAutomata::isAccepted(InstantaneousDescription id, int numberInCurre
 	InstantaneousDescription nextID;
 
 	string pieceOfPath = std::to_string(numberOfTransitions) + std::string(". [") + std::to_string(numberInCurrentPath) + std::string("] ") + id.view(configurationSettingsPointer);
-	pathContainer.push_back(pieceOfPath);
+	string pathToVector = std::string("[") + std::to_string(numberInCurrentPath) + std::string("] ") + id.view(configurationSettingsPointer);
+	pathContainer.push_back(pathToVector);
 	
 	if (configurationSettingsPointer->getDisplayFullPath() == "Yes" || numberOfTransitions == 0){
 		cout << pieceOfPath;
