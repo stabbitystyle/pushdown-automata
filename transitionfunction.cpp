@@ -147,11 +147,6 @@ void TransitionFunction::load(ifstream& definition, string& value, bool& valid)
  {
      for(int index = 0; index < (int)transitions.size(); ++index)
  	{
- 		if(finalStates.isElement(transitions[index].sourceState()))
-         {
-             cout << "Source state " << transitions[index].sourceState() << " is in final states.\n";
-             valid = false;
-         }
          if(! states.isElement(transitions[index].sourceState()))
          {
              cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
@@ -190,11 +185,11 @@ void TransitionFunction::view() const
         if(alreadyUsed == false)
         {
             cout << "\u03B4(" << it->sourceState() << ", " << it->readCharacter() << ", " << it->stackCharacter() << ") = {(" << it->destinationState() << ", " << it->pushString() << ")";
-            for(vector<Transition>::const_iterator sub = it; sub != transitions.end(); ++sub)
+            for(vector<Transition>::const_iterator sub = it + 1; sub != transitions.end(); ++sub)
             {
                 if((sub->sourceState() == it->sourceState()) && (sub->readCharacter() == it->readCharacter()) && (sub->stackCharacter() == it->stackCharacter()))
                 {
-                    cout << ", (" << it->destinationState() << ", " << it->pushString() << ")";
+                    cout << ", (" << sub->destinationState() << ", " << sub->pushString() << ")";
                 }
             }
             cout << "}" << endl;
@@ -209,6 +204,13 @@ void TransitionFunction::view() const
 // The method then returns by reference a vector of all of the valid transitions
 void TransitionFunction::findTransitions(string sourceState, char readCharacter, char topOfStack, vector<Transition>& transitionsParameter) const
 {
+    // for(vector<Transition>::iterator it = transitions.begin(); it != transitions.end(); ++it)
+    // {
+    //     if((*it.sourceState() == sourceState) && (*it.readCharacter() == readCharacter) && (*it.stackCharacter() == topOfStack))
+    //     {
+    //         transitionsParameter.push_back(*it);
+    //     }
+    // }
     for(int index = 0; index < (int)transitions.size(); ++index)
 	{
         if((transitions[index].sourceState() == sourceState) && (transitions[index].readCharacter() == readCharacter) && (transitions[index].stackCharacter() == topOfStack))
@@ -218,22 +220,38 @@ void TransitionFunction::findTransitions(string sourceState, char readCharacter,
 	}
 }
 
+//Returns the number of transitions available for a given configuration of state, lambdacharacter, and stackcharacter
 int TransitionFunction::lambdaTransitionCount(string state, char topOfStack)
 {
-    return 0;
+    vector<Transition> temp;
+    findTransitions(state, '\\', topOfStack, temp);
+    return temp.size();
 }
 
+//Returns the number of transitions available for a given configuration of state, inputcharacter, and stackcharacter
 int TransitionFunction::transitionCount(string state, char inputCharacter, char stackCharacter)
 {
-    return 0;
+    vector<Transition> temp;
+    findTransitions(state, inputCharacter, stackCharacter, temp);
+    return temp.size();
 }
 
-void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string destinationState, string pushString)
+//Find the transitions that matches the state, inputCharacter, and stackCharacter params sent in. Then chooses one based
+//on what index value is set. Sets the destinationState and pushString values by reference for the user.
+void TransitionFunction::getTransition(int index, string state, char inputCharacter, char stackCharacter, string& destinationState, string& pushString)
 {
-
+    vector<Transition> temp;
+    findTransitions(state, inputCharacter, stackCharacter, temp);
+    destinationState = temp[index].destinationState();
+    pushString = temp[index].pushString();
 }
 
-void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string destinationState, string pushString)
+//Find the transitions that matches the state, lambdaCharacter, and stackCharacter params sent in. Then chooses one based
+//on what index value is set. Sets the destinationState and pushString values by reference for the user.
+void TransitionFunction::getLambdaTransition(int index, string state, char stackCharacter, string& destinationState, string& pushString)
 {
-
+    vector<Transition> temp;
+    findTransitions(state, '\\', stackCharacter, temp);
+    destinationState = temp[index].destinationState();
+    pushString = temp[index].pushString();
 }

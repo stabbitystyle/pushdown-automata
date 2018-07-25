@@ -17,6 +17,11 @@
 
 using namespace std;
 
+class CommandsInOperation;
+class Commands;
+
+// The PushdownAutomaton class is a class which is responsible for most of the implementation of the PushdownAutomaton,
+//      through a combination of utilizing classes it�s composed of and its own methods and attributes.
 class PushdownAutomata
 {
     private:
@@ -25,16 +30,21 @@ class PushdownAutomata
         TransitionFunction transitionFunction;
         States states;
         FinalStates finalStates;
-        
+        CommandsInOperation* commands;
+
         string initialState;
 		char initialStackCharacter;
 		vector<string> description;
+        vector<string> pathContainer;
+
+        //string commandcallpasser;
 
         string currentState;
         string originalInputString;
 		int numberOfTransitionsInSuccessfulPath;
         int numberOfTransitions;
         int numberOfCrashes;
+        int transitionCount;
         bool valid;
         bool used;
         bool operating;
@@ -46,11 +56,12 @@ class PushdownAutomata
 		void loadInitialState(ifstream& definition, string& value, bool& valid);
 		void loadInitialStackCharacter(ifstream& definition, string& value, bool& valid);
     public:
-        PushdownAutomata(string definitionFileName);
+        PushdownAutomata(string definitionFileName, Commands& cmd);
         void viewDefinition() const;
-        void initialize(string inputString);
-        bool isAccepted(InstantaneousDescription id, int numberInCurrentPath);
+        string initialize(string inputString);
+        bool isAccepted(InstantaneousDescription id, int numberInCurrentPath,bool& running, string& commandCalled);
         void terminateOperation();
+        void resetTransitionCount();
         string inputString() const;
         int totalNumberOfTransitions() const;
 		int totalNumberOfCrashes() const;
@@ -58,8 +69,9 @@ class PushdownAutomata
         bool isValidInputString(string value) const;
         bool isUsed() const;
         bool isOperating() const;
-        bool isAcceptedInputString() const;
+        bool isAcceptedInputString() const; 
         bool isRejectedInputString() const;
+        //void setCalledCommand(string value);
 
         static void link(ConfigurationSettings& configurationSettings);
 };

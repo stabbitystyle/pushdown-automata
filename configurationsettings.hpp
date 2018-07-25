@@ -10,13 +10,13 @@
 
 using namespace std;
 
-//class ConfigurationSettings
+// The class ConfigurationSettings is responsible for loading, storing, setting, and getting the three configuration values for the Pushdown Automaton.
 class ConfigurationSettings
 {
     private:
         int maximumNumberOfTransitions;
         int maximumNumberOfCells;
-        string displayFullPath;
+        bool displayFullPath;
 
     public:
         int getMaximumNumberOfTransitions();
@@ -25,8 +25,8 @@ class ConfigurationSettings
         void setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput);
         void setMaximumNumberOfCells(int maximumNumberOfCellsInput);
         void toggleDisplayFullPath();
-        void load(string configFileName);
-        void writeFile(string configFileName);
+        void load();
+        void writeFile();
 };
 typedef ConfigurationSettings* ConfigurationSettingsPointer;
 

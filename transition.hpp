@@ -5,7 +5,7 @@
 
 using namespace std;
 
-// The class Transition is a class which stores the information about a single transition for the Turing machine.
+// The class Transition is a class which stores the information about a single transition for the pushdown automata.
 class Transition
 {
 	private:

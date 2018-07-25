@@ -4,18 +4,20 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
 
-#include<string>
-#include<iostream>
+#include <string>
+#include <iostream>
+#include <stdlib.h>
 
-#include"pushdownautomata.hpp"
-#include"inputstrings.hpp"
-#include"configurationsettings.hpp"
+#include "inputstrings.hpp"
+#include "configurationsettings.hpp"
 
 using namespace std;
 
+// needed to forward declare PushdownAutomata for stuff to work
+class PushdownAutomata;
 
+// The Commands class is a class which is responsible for handling the user input and then performing the requested actions through other classes.
 class Commands{
-
     private:
         char command;
         string pdaName;
@@ -28,8 +30,6 @@ class Commands{
         PushdownAutomata * pda;
         InputStrings strings;
         ConfigurationSettings config;
-        
-
     public:
         Commands();
         Commands(string fileName);
@@ -41,7 +41,7 @@ class Commands{
         void deleteString();
         void set();
         void truncate();
-        void run();
+        string run();
         void quit();
         void exit();
         void open();
@@ -49,7 +49,7 @@ class Commands{
         void display();
         void sort();
         void inputCommand();
-
 };
+typedef Commands* CommandsPointer;
 
 #endif

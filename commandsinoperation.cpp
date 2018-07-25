@@ -10,30 +10,18 @@
 
 using namespace std;
 
+CommandsPointer CommandsInOperation::commandsPointer = 0;
 
-void CommandsInOperation::run(){
-    //dont know what this should do
-
-}
-void CommandsInOperation::quit(){
-    CommandsInOperation::pda->endRecrustion("quit");
-
-}
-void CommandsInOperation::exit(){
-    CommandsInOperation::pda->endRecrustion("exit");
-
-}
-void CommandsInOperation::open(){
-    CommandsInOperation::pda->endRecrustion("open");
-} 
-void CommandsInOperation::close(){
-    CommandsInOperation::pda->endRecrustion("close");
-
-}
- void CommandsInOperation::link(PushdownAutomata * linker){
-     CommandsInOperation::pda = linker; 
+//this method link the commands class to commandsinoperation.
+// this is done so we can get access to method that have access to the needed data.
+ void CommandsInOperation::link(Commands& linker){
+     commandsPointer = &linker;
  }
-void CommandsInOperation::inputCommand(){
+
+
+ //this method is the the command loop while the pda is running 
+ // this will be called from inside isAccepted method in pushdown automata class
+string CommandsInOperation::inputCommand(){
 
     string lineInput;
     char commandInput;
@@ -59,34 +47,32 @@ void CommandsInOperation::inputCommand(){
             case 'C':
             case 'c':
             {
-                CommandsInOperation::close();
+                
                 keeplooping = false;
-               
+                return "close";
                 break;
             }
             // Delete
             case 'D':
             case 'd':
             {
-                deleteString();
-                    
+                commandsPointer->deleteString(); 
                 break;
             }
             // Display
             case 'P':
             case 'p':
             {
-                display();
-                
+                commandsPointer->display();
                 break;
             }
             // Exit
             case 'X':
             case 'x':
             {
-                CommandsInOperation::exit();
+                
                 keeplooping = false;
-                   
+                return "exit";
                 break;
             }
             // Help
@@ -94,67 +80,62 @@ void CommandsInOperation::inputCommand(){
             case 'H':
             case 'h':
             {
-                help();
-                    
+                commandsPointer->help();
                 break;
             }
             // Insert
             case 'I':
             case 'i':
             {
-                insert();
-                    
+                commandsPointer->insert();
                 break;
             }
             // List
             case 'L':
             case 'l':
             {
-                list();
-                    
+                commandsPointer->list();
                 break;
             }
             // Open
             case 'O':
             case 'o':
             {
-                CommandsInOperation::open();
+                
                 keeplooping = false;
-                    
+                return "open";
                 break;
             }
             // Quit
             case 'Q':
             case 'q':
             {
-                CommandsInOperation::quit();
+                
                 keeplooping = false;
-                   
+                return "quit";
                 break;
             }
             // Run
             case 'R':
             case 'r':
             {
-                CommandsInOperation::run();
+                
                 keeplooping = false;
-                    
+                return "run";
                 break;
             }
             // Set
             case 'E':
             case 'e':
             {
-                set();
-                    
+                commandsPointer->set();  
                 break;
             }
             // Show
             case 'W':
             case 'w':
             {
-                show();
-                
+                commandsPointer->show();
                 break;
             }
             // Sort
@@ -162,23 +143,21 @@ void CommandsInOperation::inputCommand(){
             case 'S':
             case 's':
             {
-                sort();
-                    
+                commandsPointer->sort();   
                 break;
             }
             // Truncate
             case 'T':
             case 't':
             {
-                   truncate();
+                commandsPointer->truncate();
                 break;
             }
             // View
             case 'V':
             case 'v':
             {   
-                view();
-                   
+                commandsPointer->view();
                 break;
             }
                 // Invalid character, multiple characters, or no characters
@@ -188,6 +167,7 @@ void CommandsInOperation::inputCommand(){
             }
          }
     }
+    return "";
 }
 
 

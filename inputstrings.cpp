@@ -6,11 +6,14 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
+#include<algorithm>
 
 #include "inputstrings.hpp"
 #include "pushdownautomata.hpp"
 
 using namespace std;
+
+static bool stringCompare(const string& right, const string& left);
 
 InputStrings::InputStrings() : stringListModified(false)
 {
@@ -25,9 +28,12 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
 {
     ifstream definition(stringFileName.c_str(), ifstream::in);
     string value;
+    notSorted = true;
     if(definition.fail())
     {
         cout << "Failed to open input string file." << endl;
+    }else{
+        cout << "Input string file successfully opened." << endl;
     }
     while(!definition.fail() && getline(definition, value))
     {
@@ -103,6 +109,7 @@ void InputStrings::addToStrings(string inputString)
 {
     strings.push_back(inputString);
     stringListModified = true;
+    notSorted = true;
 }
 
 // The method removeFromStrings accepts an integer stringIndex, which is the index of the string to delete + 1, as a parameter.
@@ -111,6 +118,13 @@ void InputStrings::removeFromStrings(int stringIndex)
 {
     strings.erase(strings.begin() + (stringIndex - 1));
     stringListModified = true;
+    notSorted = true;
+}
+
+// This method removes the entire string list from the vector stores in the app.
+void InputStrings::clearAllStrings()
+{
+    strings.erase(strings.begin(), strings.end());
 }
 
 // The method saveToFile accepts a string stringFileName as a parameter.
@@ -155,5 +169,37 @@ int InputStrings::numberOfStrings() const
 // The method sort sorts the inputStrings strings vector attribute into canonical order
 void InputStrings::sort()
 {
+    if(notSorted){
+        std::sort(strings.begin(), strings.end(), stringCompare);
+        for (vector<string>::iterator it = strings.begin(); it != strings.end(); ++it)
+        {
+            for (vector<string>::iterator sub = it; sub != strings.end(); ++sub)
+            {
+                if (sub->length() != it->length())
+                {
+                    std::sort(it, sub);
+                    it = sub - 1;
+                    break;
+                }
+            }
+        }
+        cout << "The string list has been successfully sorted in canonical order." << endl;
+        notSorted = false;
+    }else{
+        cout << "Error: The string list was already in canonical order." << endl;
+    }
+}
 
+// helper function used when sorting the lengths of the strings in the vector
+static bool stringCompare(const string& right, const string& left){
+    
+    /*
+    if(right.length() > left.length()){
+        return false;
+    }else if(right > left){
+        return false;
+    }
+    return true;
+    */
+   return !(right.length() > left.length());
 }
