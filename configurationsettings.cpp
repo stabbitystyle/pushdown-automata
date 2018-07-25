@@ -71,11 +71,15 @@ void ConfigurationSettings::load(){
     bool firstNumFound = false;
     bool spaceAfterNum = false;
     bool invalidString = false; 
-
+    string maxChar = "MAXIMUM_CHARACTERS";
+    string maxTrans = "MAXIMUM_TRANSITIONS";
+    string displayTest="COMPLETE_PATHS";
+    string test = "";
+   
     //set the defaults
     maximumNumberOfCells=32;
     maximumNumberOfTransitions=1;
-    displayFullPath="no";
+    displayFullPath=false;
 
     //config.open(filename.c_str());
 
@@ -101,10 +105,19 @@ void ConfigurationSettings::load(){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
+
+                        test = configline.substr(0,found-1);
+                        test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                        if(test.length() != maxTrans.length()-1){
+                            test = "";
+                            continue;
+                        }
+
+
                         //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
+                        configline = configline.substr(found+1,configline.length());
                         //cheaks if there are any letters mixed with the numbers
-                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
+                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
                             continue;
                         }
 
@@ -114,7 +127,7 @@ void ConfigurationSettings::load(){
 
                         // checks if any spaces or letters are mixed in with numbers
                         // if it finds a space in middle of the number it will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -127,6 +140,30 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
+
+                        /*for(int index = 0; index <(int)configline.length()-1;index++){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(index, configline.length()-1);
+                                break;
+                            }
+                        }
+                        for(int index =(int)configline.length(); index>0;index--){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(0, index);
+                                break;
+                            }
+                        }
+                        for(int index =0;index <(int)configline.length()-1;index++){
+                            if(!isdigit(configline[index])){
+                                invalidString = true;
+                                break;
+                            }
+                        }
+                        //configline = configline.substr(configline.find_first_of("1234567890"),configline.find_last_of("1234567890"));
+                        if(configline.find_first_of(" ") != string::npos){
+                            continue;
+                        }*/
+
                         // skips the line
                         if(invalidString){
                             invalidString = false;
@@ -146,11 +183,20 @@ void ConfigurationSettings::load(){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
+
+                        test = configline.substr(0,found-1);
+                        test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                        if(test.length() != maxChar.length()-1){
+                            test = "";
+                            continue;
+                        }
+
+
                         //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
+                        configline = configline.substr(found+1,configline.length());
 
                         //checks if there are any letters mixed with the numbers
-                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
+                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
                             continue;
                         }
 
@@ -160,7 +206,7 @@ void ConfigurationSettings::load(){
 
                         //cheaks if is any spaces or letters mixed in with numbers
                         // if it finds a space in middle of the number is will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -173,6 +219,33 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
+
+
+                        /*for(int index = 0; index < (int)configline.length()-1;index++){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(index, configline.length()-1);
+                                break;
+                            }
+                        }
+                        for(int index =(int)configline.length(); index>0;index--){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(0, index);
+                                break;
+                            }
+                        }
+                        for(int index =0;index <(int)configline.length()-1;index++){
+                            if(!isdigit(configline[index])){
+                                invalidString = true;
+                                break;
+                            }
+                        }
+
+                        //configline = configline.substr(configline.find_first_of("1234567890"),configline.find_last_of("1234567890"));
+
+                        if(configline.find_first_of(" ") != string::npos){
+                            continue;
+                        }*/
+
                         //skips the  line
                         if(invalidString){
                             invalidString = false;
@@ -189,15 +262,36 @@ void ConfigurationSettings::load(){
                 //cheaks for the display paths setting 
                 found = configline.find("COMPLETE_PATHS");
                 if(found != string::npos){
+                    found = configline.find("=");
+                    
+
+                    test = configline.substr(0,found-1);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    if(test.length() != displayTest.length()-1){
+                        test = "";
+                        continue;
+                    }
+                    test ="";
+                    test = configline.substr(found+1,configline.length()-1);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    if(test.at(0) == 'N' && test.at(1) == 'O' && test.length() == 2){
+
+                    }else if(test.at(0) == 'Y' && test.at(1) == 'E' && test.at(2) == 'S' && test.length() == 3){
+
+                    }else{
+                        continue;
+                    }
+                    
+                   
                     found = configline.find("YES");
-                    if(found != string::npos && displayNotFound){
-                        displayFullPath="yes";
+                    if(found != string::npos && displayNotFound){            
+                         displayFullPath=true;
                         displayNotFound = false;
                         
                     }
                     found = configline.find("NO");
                     if(found != string::npos && displayNotFound){
-                        displayNotFound = false;
+                        displayNotFound = false;  
                     }
                 }
             }
@@ -213,8 +307,17 @@ void ConfigurationSettings::writeFile(){
     ofstream configFile("pda.cfg");
 
     if(configFile.is_open()){
+
+        string yes ="yes";
+        string no = "no";
+        
         configFile << "MAXIMUM_TRANSITIONS=" << maximumNumberOfTransitions << endl;
         configFile << "MAXIMUM_CHARACTERS=" << maximumNumberOfCells << endl;
-        configFile << "COMPLETE_PATHS=" << displayFullPath << endl;
+        if(displayFullPath){
+            configFile << "COMPLETE_PATHS=" << yes << endl;
+        }else{
+            configFile << "COMPLETE_PATHS=" << no << endl;
+        }
+        
     }
 };

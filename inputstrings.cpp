@@ -32,6 +32,8 @@ void InputStrings::load(string stringFileName, const PushdownAutomata& pushdownA
     if(definition.fail())
     {
         cout << "Failed to open input string file." << endl;
+    }else{
+        cout << "Input string file successfully opened." << endl;
     }
     while(!definition.fail() && getline(definition, value))
     {
