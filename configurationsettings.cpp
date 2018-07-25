@@ -106,9 +106,11 @@ void ConfigurationSettings::load(){
                     found = configline.find("=");
                     if(found+1 != configline.length()){
 
-                        test = configline.substr(0,found-1);
+                        test = configline.substr(0,found);
                         test.erase(remove(test.begin(), test.end(), ' '), test.end());
-                        if(test.length() != maxTrans.length()-1){
+                        test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+
+                        if(test.length() != maxTrans.length()){
                             test = "";
                             continue;
                         }
@@ -184,9 +186,12 @@ void ConfigurationSettings::load(){
                     found = configline.find("=");
                     if(found+1 != configline.length()){
 
-                        test = configline.substr(0,found-1);
+                        test = configline.substr(0,found);
                         test.erase(remove(test.begin(), test.end(), ' '), test.end());
-                        if(test.length() != maxChar.length()-1){
+                        test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+
+
+                        if(test.length() != maxChar.length()){
                             test = "";
                             continue;
                         }
@@ -265,15 +270,17 @@ void ConfigurationSettings::load(){
                     found = configline.find("=");
                     
 
-                    test = configline.substr(0,found-1);
+                    test = configline.substr(0,found);
                     test.erase(remove(test.begin(), test.end(), ' '), test.end());
-                    if(test.length() != displayTest.length()-1){
+                    test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+                    if(test.length() != displayTest.length()){
                         test = "";
                         continue;
                     }
                     test ="";
                     test = configline.substr(found+1,configline.length()-1);
                     test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    test.erase(remove(test.begin(), test.end(), '\t'), test.end());
                     if(test.at(0) == 'N' && test.at(1) == 'O' && test.length() == 2){
 
                     }else if(test.at(0) == 'Y' && test.at(1) == 'E' && test.at(2) == 'S' && test.length() == 3){
