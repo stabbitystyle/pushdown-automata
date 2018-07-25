@@ -31,7 +31,18 @@ void InputAlphabet::load(ifstream& definition, string& value, bool& valid)
         }
         if(value.length() == 1 && (value[0] != '\\') && (value[0] != '(') && (value[0] != ')') && (value[0] != '>') && (value[0] != ','))
         {
-            alphabet.push_back(value[0]);
+            bool duplicate = false;
+            for(vector<char>::const_iterator it = alphabet.begin(); it != alphabet.end(); ++it)
+            {
+                if (*it == value[0]) {
+                    cout << "Duplicate input alphabet character: " << value << endl;
+                    valid = false;
+                    duplicate = true;
+                }
+            }
+            if (duplicate == false){
+                alphabet.push_back(value[0]);
+            }
         }
         else
         {
