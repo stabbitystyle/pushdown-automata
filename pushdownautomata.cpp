@@ -419,7 +419,6 @@ string PushdownAutomata::initialize(string inputString)
     			{
         			cout << *it << endl;
     			}
-				pathContainer.erase(pathContainer.begin(), pathContainer.end());
 			}
 			operating = false;
 		}
@@ -434,6 +433,7 @@ string PushdownAutomata::initialize(string inputString)
 		cout << endl;
 
 	}
+	pathContainer.erase(pathContainer.begin(), pathContainer.end());
 	return command;
 }
 
