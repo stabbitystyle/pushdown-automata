@@ -71,12 +71,11 @@ void ConfigurationSettings::load(){
     bool firstNumFound = false;
     bool spaceAfterNum = false;
     bool invalidString = false; 
-    string chartest ="";
-    string transtest = "";
     string maxChar = "MAXIMUM_CHARACTERS";
     string maxTrans = "MAXIMUM_TRANSITIONS";
+    string displayTest="COMPLETE_PATHS";
     string test = "";
-
+   
     //set the defaults
     maximumNumberOfCells=32;
     maximumNumberOfTransitions=1;
@@ -263,15 +262,36 @@ void ConfigurationSettings::load(){
                 //cheaks for the display paths setting 
                 found = configline.find("COMPLETE_PATHS");
                 if(found != string::npos){
+                    found = configline.find("=");
+                    
+
+                    test = configline.substr(0,found-1);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    if(test.length() != displayTest.length()-1){
+                        test = "";
+                        continue;
+                    }
+                    test ="";
+                    test = configline.substr(found+1,configline.length()-1);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    if(test.at(0) == 'N' && test.at(1) == 'O' && test.length() == 2){
+
+                    }else if(test.at(0) == 'Y' && test.at(1) == 'E' && test.at(2) == 'S' && test.length() == 3){
+
+                    }else{
+                        continue;
+                    }
+                    
+                   
                     found = configline.find("YES");
-                    if(found != string::npos && displayNotFound){
-                        displayFullPath=true;
+                    if(found != string::npos && displayNotFound){            
+                         displayFullPath=true;
                         displayNotFound = false;
                         
                     }
                     found = configline.find("NO");
                     if(found != string::npos && displayNotFound){
-                        displayNotFound = false;
+                        displayNotFound = false;  
                     }
                 }
             }
