@@ -333,6 +333,7 @@ void Commands::open(){
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);
+        pda->link(config);
     }else{
         delete pda;
         pda = 0;
