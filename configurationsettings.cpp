@@ -1,22 +1,27 @@
 // configurationsetting class
 // rev0 7/06/18 by Ryan Breitenfeldt
 
-#include<string>
-#include<fstream>
-#include<iostream>
-#include<algorithm>
-#include<ctype.h>
-#include"configurationsettings.hpp"
-#include"uppercase.hpp"
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+#include <ctype.h>
+#include "configurationsettings.hpp"
+#include "uppercase.hpp"
 
 using namespace std;
 
+// The method getMaximumNumberOfTransitions returns the maxiumumNumberOfTransitions attribute.
 int ConfigurationSettings::getMaximumNumberOfTransitions(){
     return maximumNumberOfTransitions;
 };
+
+// The method getMaximumNumberOfCells returns the maximumNumberOfCells attribute.
 int ConfigurationSettings::getMaximumNumberOfCells(){
     return maximumNumberOfCells;
 };
+
+// The method getDisplayFullPath returns the displayFullPath attribute.
 string ConfigurationSettings::getDisplayFullPath(){
     if (displayFullPath)
     {
@@ -27,16 +32,22 @@ string ConfigurationSettings::getDisplayFullPath(){
         return "No";
     }
 };
+
+// The method setMaximumNumberOfTransitions accepts an integer maximumNumberOfTransitionsInput and sets the attribute maximumNumberOfTransitions equal to it.
 void ConfigurationSettings::setMaximumNumberOfTransitions(int maximumNumberOfTransitionsInput){
     if(maximumNumberOfTransitionsInput>0){
         maximumNumberOfTransitions = maximumNumberOfTransitionsInput;
     }
 };
+
+// The method setMaximumNumberOfCells accepts an integer maximumNumberOfCellsInput and sets the attribute maximumNumberOfCells equal to it.
 void ConfigurationSettings::setMaximumNumberOfCells(int maximumNumberOfCellsInput){
     if(maximumNumberOfCellsInput>0){
         maximumNumberOfCells = maximumNumberOfCellsInput;
     }
 };
+
+// The method toggleDisplayFullPath sets the attribute displayFullPath depending on what it is currently. If it is "yes" then it will set it to "no" and vis-versa.
 void ConfigurationSettings::toggleDisplayFullPath(){
     if(displayFullPath)
     {
@@ -60,11 +71,15 @@ void ConfigurationSettings::load(){
     bool firstNumFound = false;
     bool spaceAfterNum = false;
     bool invalidString = false; 
-
+    string maxChar = "MAXIMUM_CHARACTERS";
+    string maxTrans = "MAXIMUM_TRANSITIONS";
+    string displayTest="COMPLETE_PATHS";
+    string test = "";
+   
     //set the defaults
     maximumNumberOfCells=32;
     maximumNumberOfTransitions=1;
-    displayFullPath="no";
+    displayFullPath=false;
 
     //config.open(filename.c_str());
 
@@ -84,29 +99,37 @@ void ConfigurationSettings::load(){
             //cheak for a  = sign on the line
             if(found != string::npos){
 
-                //checks for the number of transitins setting
-
+                //checks for the number of transitions setting
                 found = configline.find("MAXIMUM_TRANSITIONS");
                 if(found != string::npos){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
 
+                        test = configline.substr(0,found);
+                        test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                        test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+
+                        if(test.length() != maxTrans.length()){
+                            test = "";
+                            continue;
+                        }
+
+
                         //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
+                        configline = configline.substr(found+1,configline.length());
                         //cheaks if there are any letters mixed with the numbers
-                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
+                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
                             continue;
                         }
 
                         //reset cheack conditions 
                         firstNumFound = false;
                         spaceAfterNum = false;
-                        
 
-                        //cheaks if is any spaces or letters mixed in with numbers
-                        // if it finds a space in middle of the number is will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        // checks if any spaces or letters are mixed in with numbers
+                        // if it finds a space in middle of the number it will invalidate the string
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -119,7 +142,31 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
-                        //skips the  line
+
+                        /*for(int index = 0; index <(int)configline.length()-1;index++){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(index, configline.length()-1);
+                                break;
+                            }
+                        }
+                        for(int index =(int)configline.length(); index>0;index--){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(0, index);
+                                break;
+                            }
+                        }
+                        for(int index =0;index <(int)configline.length()-1;index++){
+                            if(!isdigit(configline[index])){
+                                invalidString = true;
+                                break;
+                            }
+                        }
+                        //configline = configline.substr(configline.find_first_of("1234567890"),configline.find_last_of("1234567890"));
+                        if(configline.find_first_of(" ") != string::npos){
+                            continue;
+                        }*/
+
+                        // skips the line
                         if(invalidString){
                             invalidString = false;
                             continue;
@@ -133,28 +180,38 @@ void ConfigurationSettings::load(){
                 }
 
                 //cheaks for the charaters to truncate setting
-
                 found = configline.find("MAXIMUM_CHARACTERS");
                 if(found != string::npos){
                     //configline.erase(remove(configline.begin(), configline.end(), ' '), configline.end());
                     found = configline.find("=");
                     if(found+1 != configline.length()){
-                        //gives you a string of everything after the = sign
-                        configline = configline.substr(found+1,configline.length()-1);
 
-                        //cheaks if there are any letters mixed with the numbers
-                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ") != string::npos){
+                        test = configline.substr(0,found);
+                        test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                        test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+
+
+                        if(test.length() != maxChar.length()){
+                            test = "";
+                            continue;
+                        }
+
+
+                        //gives you a string of everything after the = sign
+                        configline = configline.substr(found+1,configline.length());
+
+                        //checks if there are any letters mixed with the numbers
+                        if(configline.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ,./<>?;':\"[]{}\\!@#$^&*()_+-=%") != string::npos){
                             continue;
                         }
 
                         //reset cheack conditions 
                         firstNumFound = false;
                         spaceAfterNum = false;
-                        
 
                         //cheaks if is any spaces or letters mixed in with numbers
                         // if it finds a space in middle of the number is will invalidate the string
-                        for(string::size_type i=0;i<(configline.length())-1;i++){
+                        for(string::size_type i=0;i<(configline.length());i++){
                             if(isdigit(configline[i])  && !firstNumFound){
                                 firstNumFound = true;
                             
@@ -167,6 +224,33 @@ void ConfigurationSettings::load(){
                                 spaceAfterNum = true;
                             }
                         }
+
+
+                        /*for(int index = 0; index < (int)configline.length()-1;index++){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(index, configline.length()-1);
+                                break;
+                            }
+                        }
+                        for(int index =(int)configline.length(); index>0;index--){
+                            if(isdigit(configline[index])){
+                                configline = configline.substr(0, index);
+                                break;
+                            }
+                        }
+                        for(int index =0;index <(int)configline.length()-1;index++){
+                            if(!isdigit(configline[index])){
+                                invalidString = true;
+                                break;
+                            }
+                        }
+
+                        //configline = configline.substr(configline.find_first_of("1234567890"),configline.find_last_of("1234567890"));
+
+                        if(configline.find_first_of(" ") != string::npos){
+                            continue;
+                        }*/
+
                         //skips the  line
                         if(invalidString){
                             invalidString = false;
@@ -183,15 +267,38 @@ void ConfigurationSettings::load(){
                 //cheaks for the display paths setting 
                 found = configline.find("COMPLETE_PATHS");
                 if(found != string::npos){
+                    found = configline.find("=");
+                    
+
+                    test = configline.substr(0,found);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+                    if(test.length() != displayTest.length()){
+                        test = "";
+                        continue;
+                    }
+                    test ="";
+                    test = configline.substr(found+1,configline.length()-1);
+                    test.erase(remove(test.begin(), test.end(), ' '), test.end());
+                    test.erase(remove(test.begin(), test.end(), '\t'), test.end());
+                    if(test.at(0) == 'N' && test.at(1) == 'O' && test.length() == 2){
+
+                    }else if(test.at(0) == 'Y' && test.at(1) == 'E' && test.at(2) == 'S' && test.length() == 3){
+
+                    }else{
+                        continue;
+                    }
+                    
+                   
                     found = configline.find("YES");
-                    if(found != string::npos && displayNotFound){
-                        displayFullPath="yes";
+                    if(found != string::npos && displayNotFound){            
+                         displayFullPath=true;
                         displayNotFound = false;
                         
                     }
                     found = configline.find("NO");
                     if(found != string::npos && displayNotFound){
-                        displayNotFound = false;
+                        displayNotFound = false;  
                     }
                 }
             }
@@ -199,12 +306,25 @@ void ConfigurationSettings::load(){
     }
 };
 
+// The method writeFile will write the configuration settings to a file.
+// The name of the file is the name of the application with ".cfg" appended to it.
+// It will put each setting on its own line with no whitespace.
+// It will also overwrite any existing configuration file.  
 void ConfigurationSettings::writeFile(){
     ofstream configFile("pda.cfg");
 
     if(configFile.is_open()){
+
+        string yes ="yes";
+        string no = "no";
+        
         configFile << "MAXIMUM_TRANSITIONS=" << maximumNumberOfTransitions << endl;
         configFile << "MAXIMUM_CHARACTERS=" << maximumNumberOfCells << endl;
-        configFile << "COMPLETE_PATHS=" << displayFullPath << endl;
+        if(displayFullPath){
+            configFile << "COMPLETE_PATHS=" << yes << endl;
+        }else{
+            configFile << "COMPLETE_PATHS=" << no << endl;
+        }
+        
     }
 };

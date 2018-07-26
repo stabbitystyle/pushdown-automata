@@ -12,40 +12,15 @@ using namespace std;
 
 CommandsPointer CommandsInOperation::commandsPointer = 0;
 
-void CommandsInOperation::run(){
-    //dont know what this should do
-}
-void CommandsInOperation::quit(){
-    //CommandsInOperation::pda->endRecrustion("quit");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("quit");
-
-
-}
-void CommandsInOperation::exit(){
-    //CommandsInOperation::pda->endRecrustion("exit");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("exit");
-
-}
-void CommandsInOperation::open(){
-    //CommandsInOperation::pda->endRecrustion("open");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("open");
-} 
-void CommandsInOperation::close(){
-    //CommandsInOperation::pda->endRecrustion("close");
-
-    //CommandsInOperation::pda->terminateOperation();
-    //CommandsInOperation::pda->setCalledCommand("close");
-
-}
+//this method link the commands class to commandsinoperation.
+// this is done so we can get access to method that have access to the needed data.
  void CommandsInOperation::link(Commands& linker){
      commandsPointer = &linker;
  }
+
+
+ //this method is the the command loop while the pda is running 
+ // this will be called from inside isAccepted method in pushdown automata class
 string CommandsInOperation::inputCommand(){
 
     string lineInput;
@@ -72,18 +47,16 @@ string CommandsInOperation::inputCommand(){
             case 'C':
             case 'c':
             {
-                CommandsInOperation::close();
+                
                 keeplooping = false;
                 return "close";
-               
                 break;
             }
             // Delete
             case 'D':
             case 'd':
             {
-                commandsPointer->deleteString();
-                    
+                commandsPointer->deleteString(); 
                 break;
             }
             // Display
@@ -91,17 +64,15 @@ string CommandsInOperation::inputCommand(){
             case 'p':
             {
                 commandsPointer->display();
-                
                 break;
             }
             // Exit
             case 'X':
             case 'x':
             {
-                CommandsInOperation::exit();
+                
                 keeplooping = false;
                 return "exit";
-                   
                 break;
             }
             // Help
@@ -110,7 +81,6 @@ string CommandsInOperation::inputCommand(){
             case 'h':
             {
                 commandsPointer->help();
-                    
                 break;
             }
             // Insert
@@ -118,7 +88,6 @@ string CommandsInOperation::inputCommand(){
             case 'i':
             {
                 commandsPointer->insert();
-                    
                 break;
             }
             // List
@@ -126,46 +95,40 @@ string CommandsInOperation::inputCommand(){
             case 'l':
             {
                 commandsPointer->list();
-                    
                 break;
             }
             // Open
             case 'O':
             case 'o':
             {
-                CommandsInOperation::open();
+                
                 keeplooping = false;
                 return "open";
-                    
                 break;
             }
             // Quit
             case 'Q':
             case 'q':
             {
-                CommandsInOperation::quit();
+                
                 keeplooping = false;
                 return "quit";
-
-                   
                 break;
             }
             // Run
             case 'R':
             case 'r':
             {
-                CommandsInOperation::run();
+                
                 keeplooping = false;
                 return "run";
-                    
                 break;
             }
             // Set
             case 'E':
             case 'e':
             {
-                commandsPointer->set();
-                    
+                commandsPointer->set();  
                 break;
             }
             // Show
@@ -173,7 +136,6 @@ string CommandsInOperation::inputCommand(){
             case 'w':
             {
                 commandsPointer->show();
-                
                 break;
             }
             // Sort
@@ -181,15 +143,14 @@ string CommandsInOperation::inputCommand(){
             case 'S':
             case 's':
             {
-                commandsPointer->sort();
-                    
+                commandsPointer->sort();   
                 break;
             }
             // Truncate
             case 'T':
             case 't':
             {
-                   commandsPointer->truncate();
+                commandsPointer->truncate();
                 break;
             }
             // View
@@ -197,7 +158,6 @@ string CommandsInOperation::inputCommand(){
             case 'v':
             {   
                 commandsPointer->view();
-                   
                 break;
             }
                 // Invalid character, multiple characters, or no characters

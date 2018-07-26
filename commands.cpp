@@ -5,6 +5,7 @@
 #include<iostream>
 #include<iomanip>
 #include<ctype.h>
+#include<stdlib.h>
 
 #include"pushdownautomata.hpp"
 #include"inputstrings.hpp"
@@ -12,13 +13,20 @@
 #include "intinput.hpp"
 using namespace std;
 
+// The method Commands is the defualt constructor for the Commands class.
+// It loads in the configuration settings.
 Commands::Commands(){
     pda = 0;
     pdaLoaded = false;
     config.load();
 }
 
-
+// The method Commands is the constructor for the Commands class.
+// It accepts passedFileName String as a parameter.
+// It appends the “.def” and “.str” strings to the file to put into the definitionFileName and stringFileName attributes respectively.
+// It then goes about initializing the pushdown automata and checking that the definition file is valid through other class’ methods.
+// Finally, it passes the stringFileName file to the InputStrings class to be parsed.
+// It loads in the configuration settings.
 Commands::Commands(string fileName){
     pda = 0;
     pdaLoaded = false;
@@ -36,29 +44,31 @@ Commands::Commands(string fileName){
     }else{
 		delete pda;
     }
-
-
 }
+
+// The method help displays help text for the user.
 void Commands::help(){
     const int helpWidth = 12;
     cout << endl;
-    cout << right << setw(helpWidth) << "(C)lose  " << "Close a pushdown automata definition" << endl;
+    cout << right << setw(helpWidth) << "(C)lose  " << "Close a pushdown automaton definition" << endl;
     cout << right << setw(helpWidth) << "(D)elete  " << "Delete input string from list" << endl;
     cout << right << setw(helpWidth) << "Dis(p)lay  " << "Display the complete paths through the pushdown automaton" << endl;
     cout << right << setw(helpWidth) << "E(x)it  " << "Exit application" << endl;
     cout << right << setw(helpWidth) << "(H)elp  " << "Help user" << endl;
     cout << right << setw(helpWidth) << "(I)nsert  " << "Insert input string into list" << endl;
     cout << right << setw(helpWidth) << "(L)ist  " << "List input strings" << endl;
-    cout << right << setw(helpWidth) << "(O)pen  " << "Open a pushdown automata definition" << endl;
-    cout << right << setw(helpWidth) << "(Q)uit  " << "Quit operation of pushdown automata on input string" << endl;
-    cout << right << setw(helpWidth) << "(R)un  " << "Run pushdown automata on input string" << endl;
+    cout << right << setw(helpWidth) << "(O)pen  " << "Open a pushdown automaton definition" << endl;
+    cout << right << setw(helpWidth) << "(Q)uit  " << "Quit operation of pushdown automaton on input string" << endl;
+    cout << right << setw(helpWidth) << "(R)un  " << "Run pushdown automaton on input string" << endl;
     cout << right << setw(helpWidth) << "S(e)t  " << "Set maximum number of transitions to perform" << endl;
     cout << right << setw(helpWidth) << "Sho(w)  " << "Show status of application" << endl;
     cout << right << setw(helpWidth) << "(S)ort  " << "Sort the strings in the input string list" << endl;
     cout << right << setw(helpWidth) << "(T)runcate  " << "Truncate instantaneous descriptions" << endl;
-    cout << right << setw(helpWidth) << "(V)iew  " << "View pushdown automata" << endl;
+    cout << right << setw(helpWidth) << "(V)iew  " << "View pushdown automaton" << endl;
     cout << endl;
 }
+
+// The method shows displays program information for the user including configuration settings and Pushdown Automaton status.
 void Commands::show(){
     const int showWidth = 34;
     cout << endl;
@@ -66,6 +76,7 @@ void Commands::show(){
     cout << right << setw(showWidth) << "Semester:  " << "Summer" << endl;
     cout << right << setw(showWidth) << "Year:  " << "2018" << endl;
     cout << right << setw(showWidth) << "Instructor:  " << "Neil B. Corrigan" << endl;
+    cout << right << setw(showWidth) << "Team Name:  " << "Nicolas Cage Fan Society" << endl;
     cout << right << setw(showWidth) << "Authors:  " << "Emmanuel Bonilla, Ryan Breitenfeldt, William Robert Frank," << endl;
     cout << right << setw(showWidth) << "  " << "Carlos Martinez, Mike Snyder, Cole Woodford" << endl;
     cout << right << setw(showWidth) << "Version:  " << "1.0" << endl;
@@ -76,11 +87,11 @@ void Commands::show(){
     cout << endl;
 
     if(pdaLoaded){
-        cout << right << setw(showWidth) << "Name of Pushdown Automata:  " << pdaName << endl;
+        cout << right << setw(showWidth) << "Name of Pushdown Automaton:  " << pdaName << endl;
         // If currently running, need to output input string and # of transitions performed so far
         // If completed, need to output input string, result, and # of transitions performed
         if(!pda->isUsed()){
-            cout << right << setw(showWidth) << "The pushdown automata hasn’t been tested on a string yet." << endl;
+            cout << right << setw(showWidth) << "The pushdown automaton hasn’t been tested on a string yet." << endl;
         }else if(pda->isOperating()){
             cout << right << setw(showWidth) << "Current Input String:  " << pda->inputString() << endl;
             cout << right << setw(showWidth) << "Result of Test:  " << "currently running" << endl;
@@ -107,6 +118,8 @@ void Commands::show(){
     }
     cout << endl;
 }
+
+// The method view displays the Pushdown Automaton definition and description for the user.
 void Commands::view(){
     cout << endl;
 
@@ -116,10 +129,12 @@ void Commands::view(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition is currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition is currently loaded." << endl;
         cout << endl;
     }
 }
+
+// The method list lists the strings stored in the InputStrings object.
 void Commands::list(){
     cout << endl;
     if(pdaLoaded){
@@ -127,10 +142,14 @@ void Commands::list(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }
+
+// The method insert accepts a string from the user and then checks whether it’s a valid string.
+// If it’s valid, then it’s given to the InputStrings object to store in the list.
+// Otherwise, it’s rejected, and the user is informed of the error.
 void Commands::insert(){
     string stringToAdd;
     std::cout << std::endl;
@@ -147,10 +166,13 @@ void Commands::insert(){
             cout << "Error: String contained symbols not found in the input alphabet." << endl;
         }
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }
+
+// The method delete accepts an integer from the user, which is the index + 1 of a string on the input string list.
+// This is then passed to InputStrings to deal with. Depending on the result, a success or failure message is displayed.
 void Commands::deleteString(){
     int input;
 
@@ -162,7 +184,7 @@ void Commands::deleteString(){
         {
             if ((input <= strings.numberOfStrings()) && (input > 0) && (strings.numberOfStrings() > 0))
             {
-                cout << "String number " << input << " which was " << strings.getInputString(input) << " was successfully deleted." << std::endl;
+                // cout << "String number " << input << " which was " << strings.getInputString(input) << " was successfully deleted." << std::endl;
                 strings.removeFromStrings(input);
             }
             else
@@ -176,10 +198,13 @@ void Commands::deleteString(){
         }
         cout << endl;
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
         cout << endl;
     }
 }
+
+// The method set accepts an integer from the user, which is then used as the number of transitions to perform by the pushdown automata.
+// If the number given is invalid, then an error message is displayed.
 void Commands::set(){
     int input;
     std::cout << std::endl;
@@ -199,6 +224,10 @@ void Commands::set(){
     }
     cout << endl;
 }
+
+// The method truncate accepts an integer from the user,
+// which is then used as the number of characters to display on either side of the current character in the instantaneous description of the pushdown automata.
+// If the number given is invalid, then an error message is displayed.
 void Commands::truncate(){
     int input;
     std::cout << std::endl;
@@ -218,19 +247,14 @@ void Commands::truncate(){
     }
     cout << endl;
 }
+
+// The method run runs the Pushdown Automaton as many times as indicated by the configuration setting.
+// If the string is accepted or rejected, then operation stops on the Pushdown Automaton and the user is informed of the result.
 string Commands::run(){
     int input;
     cout << endl;
     if(pdaLoaded){
-        // int input needed here
         cout <<  "Enter number of string in string file to run: ";
-        /*getline(cin,input);
-
-        for(string::size_type i = 0;i <input.length()-1;i++){
-                if(!isdigit(input.at(i))){
-                    validString = false;
-            }
-        }*/
         if (intInput(input))
         {
             cout << endl;
@@ -245,27 +269,23 @@ string Commands::run(){
             else
             {
                 return pda->initialize(strings.getInputString(input));
+                cout << endl;
             }
         }
-        //if(validString && stoi(input,nullptr) <= strings.numberOfStrings() && stoi(input,nullptr) > 0){
-
-        //   return pda->initialize(strings.getInputString(stoi(input,nullptr)));
-
-        //}else{
-        //    cout << "Error: Invalid input string" << endl;
-        //}
     }else{
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
     return "";
-
 }
+
+// The method quit stops the pushdown automata from running anymore on the current string.
+// If it wasn’t running on a string, an error message is produced for the user.
 void Commands::quit(){
     cout << endl;
     if (!pdaLoaded)
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     else if (pda->isOperating())
     {
@@ -278,13 +298,20 @@ void Commands::quit(){
     }
     cout << endl;
 }
+
+// The method exit lets the user exit the program.
+// It performs any cleanup operations which are necessary and then lets the InputStrings object write the string list to the file if necessary.
 void Commands::exit(){
     config.writeFile();
     if(pdaLoaded){
         strings.saveToFile(stringFileName);
         delete pda;
     }
+    std::exit(EXIT_SUCCESS);
 }
+
+// The method open lets the user enter a new Pushdown Automaton definition file.
+// It will destroy the current Pushdown Automaton and attempt to load a new one. 
 void Commands::open(){
     if(pdaLoaded){
         pdaLoaded = false;
@@ -296,10 +323,8 @@ void Commands::open(){
         definitionFileName = "";
         pdaName = "";
     }
-
-    
     std::cout << std::endl;
-    cout << "Enter the name of the pushdown automata: ";
+    cout << "Enter the name of the pushdown automaton: ";
     getline(cin,pdaName);
     definitionFileName = pdaName + ".def";
     stringFileName = pdaName + ".str";
@@ -308,11 +333,15 @@ void Commands::open(){
     if(pda->isValidDefinition()){
         pdaLoaded = true;
         strings.load(stringFileName, *pda);
+        pda->link(config);
     }else{
         delete pda;
         pda = 0;
     }
 }
+
+// The method close lets the user to remove the loaded Pushdown Automaton from the program.
+// It will destroy the current Pushdown Automaton.
 void Commands::close(){
     if(pdaLoaded){
         pdaLoaded = false;
@@ -327,16 +356,21 @@ void Commands::close(){
     else
     {
         cout << endl;
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
         cout << endl;
     }
 }
+
+// The method display will toggle, "yes" or "no", whether the Pushdown Automaton will show all the Full path though the Pushdown Automaton.
 void Commands::display(){
     config.toggleDisplayFullPath();
     std::cout << std::endl;
     cout << "The Display Path setting is " << config.getDisplayFullPath() << endl;
     cout << endl;
 }
+
+// The method sort will sort the list of input strings in canonical order.
+// If the list is already sorted it will show on screen that is already sorted. 
 void Commands::sort(){
     cout << endl;
     if(pdaLoaded){
@@ -344,20 +378,20 @@ void Commands::sort(){
     }
     else
     {
-        cout << "Error: No pushdown automata definition currently loaded." << endl;
+        cout << "Error: No pushdown automaton definition currently loaded." << endl;
     }
     cout << endl;
 }
-void Commands::inputCommand(){
 
+// The method inputCommand lets the user input a command.
+// If the command is invalid, the user is given, and error message and the command attribute is set to a dummy character.
+// Otherwise, the correct command is stored in the command attribute and the appropriate command method is called.
+// This is where the Command: loop exists and where most of the user-interaction is implemented.
+void Commands::inputCommand(){
     string lineInput;
     char commandInput = 'z';
     string command = "";
     
-    
-    
-        
-        
     cout << endl;
     while(commandInput != 'x' && commandInput != 'X')
     {

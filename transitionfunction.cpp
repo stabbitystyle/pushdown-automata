@@ -147,25 +147,31 @@ void TransitionFunction::load(ifstream& definition, string& value, bool& valid)
  {
      for(int index = 0; index < (int)transitions.size(); ++index)
  	{
- 		if(finalStates.isElement(transitions[index].sourceState()))
-         {
-             cout << "Source state " << transitions[index].sourceState() << " is in final states.\n";
-             valid = false;
-         }
-         if(! states.isElement(transitions[index].sourceState()))
+         if(!states.isElement(transitions[index].sourceState()))
          {
              cout << "Source state " << transitions[index].sourceState() << " is not in states.\n";
              valid = false;
          }
-         if(! inputAlphabet.isElement(transitions[index].readCharacter()))
+        if(!states.isElement(transitions[index].destinationState()))
+         {
+             cout << "Destination state " << transitions[index].destinationState() << " is not in states.\n";
+             valid = false;
+         }
+         if(!inputAlphabet.isElement(transitions[index].readCharacter()))
          {
              cout << "Read character " << transitions[index].readCharacter() << " is not in input alphabet.\n";
              valid = false;
          }
-         if(! stackAlphabet.isElement(transitions[index].stackCharacter()))
+         if(!stackAlphabet.isElement(transitions[index].stackCharacter()))
          {
              cout << "Stack character " << transitions[index].stackCharacter() << " is not in stack alphabet.\n";
              valid = false;
+         }
+         for(size_t i = 0; i < transitions[index].pushString().size();i++){
+             if(!stackAlphabet.isElement(transitions[index].pushString()[i]) && transitions[index].pushString()[i] != '\\'){
+                 cout << "Push string " << transitions[index].pushString() << " contains characters not in stack alphabet.\n";
+                 valid = false;
+             }
          }
      }
  }

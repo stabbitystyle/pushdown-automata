@@ -20,6 +20,8 @@ using namespace std;
 class CommandsInOperation;
 class Commands;
 
+// The PushdownAutomaton class is a class which is responsible for most of the implementation of the PushdownAutomaton,
+//      through a combination of utilizing classes it�s composed of and its own methods and attributes.
 class PushdownAutomata
 {
     private:
@@ -33,6 +35,7 @@ class PushdownAutomata
         string initialState;
 		char initialStackCharacter;
 		vector<string> description;
+        vector<string> pathContainer;
 
         //string commandcallpasser;
 
@@ -68,7 +71,7 @@ class PushdownAutomata
         bool isOperating() const;
         bool isAcceptedInputString() const; 
         bool isRejectedInputString() const;
-        void setCalledCommand(string value);
+        //void setCalledCommand(string value);
 
         static void link(ConfigurationSettings& configurationSettings);
 };

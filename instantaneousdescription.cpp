@@ -27,11 +27,14 @@ InstantaneousDescription::InstantaneousDescription(string initialState, string i
 // The method view displays the formatted instantaneous description of the pushdown automaton on the console,
 //		truncating the remaining input string with the reserved character '>' if the length exceeds the maximum number of characters to display.
 // Truncation of the stack is performed the same way. 
-void InstantaneousDescription::view(ConfigurationSettingsPointer configurationSettingsPointer) const
+string InstantaneousDescription::view(ConfigurationSettingsPointer configurationSettingsPointer) const
 {
+    string formattedID;
     int maximumNumberOfCharacters = configurationSettingsPointer->getMaximumNumberOfCells();
-    cout << "(" << currentState << "," << truncated(visible(remainingInputString), maximumNumberOfCharacters) << ","
-        << truncated(visible(stack), maximumNumberOfCharacters) << ")";
+    formattedID = "(" + currentState + "," + truncated(visible(remainingInputString), maximumNumberOfCharacters) + ","
+        + truncated(visible(stack), maximumNumberOfCharacters) + ")";
+
+    return formattedID;
 }
 
 // The method performTransition performs the specified transition on the instantaneous description,
@@ -54,6 +57,9 @@ void InstantaneousDescription::performTransition(string destinationState, string
     }
 }
 
+// The method performLambdaTransition performs the specified transition on the instantaneous description,
+//		generating the next instantaneous description of the pushdown automaton.
+// The input character is read in performing this transition.
 void InstantaneousDescription::performLambdaTransition(string destinationState, string pushString, InstantaneousDescription& nextID)
 {
     nextID.currentState = destinationState;

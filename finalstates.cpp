@@ -37,7 +37,18 @@ void FinalStates::load(ifstream& definition, string& value, bool& valid)
                 valid = false;
             }
         }
-        names.push_back(value);
+        bool duplicate = false;
+        for(vector<string>::const_iterator it = names.begin(); it != names.end(); ++it)
+        {
+            if (*it == value) {
+                cout << "Duplicate final state: " << value << endl;
+                valid = false;
+                duplicate = true;
+            }
+        }
+        if (duplicate == false){
+            names.push_back(value);
+        }
     }
 }
 

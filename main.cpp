@@ -22,7 +22,6 @@ int main(int argc, char* argv[])
 		{
 			Commands commands;
 			commands.inputCommand();
-			
 		}
 		// too many arguments
 		else if (argc > 2)
